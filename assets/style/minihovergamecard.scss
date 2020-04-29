@@ -1,0 +1,224 @@
+.minihovercompletegamecard {
+  height: 22.5em;
+  width: 22.75em;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background-size: cover;
+}
+
+.minihoverblackrectangle {
+  background-color: #101318;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 22.75em;
+  width: 22.75em;
+  opacity: 0.85;
+}
+
+.minihovertopgamecontainer{
+  height: 6em;
+  width: 22.75em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-bottom: 1em;
+}
+
+.minihoverflexlogocontainer{
+  flex-basis: 10%;
+  align-self: center;
+}
+
+.minihovertopgameinfocontainer{
+  height: 8em;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+  width: 19em;
+  display: flex;
+}
+
+
+.minihoverflexfirstrow{
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  font-family:"Exo-Black";
+  font-size: 18px;
+  color: #FFFFFF;
+}
+
+.minihoverflexthirdrow{
+   flex-wrap: nowrap;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  display: flex;
+  font-family:"Exo-Black";
+}
+
+.minihoverflexdynamicthird{
+  color: #F8B700;
+  font-size: 14px;
+  padding-right: 1em;
+}
+
+.minihoverflexsecondclanname{
+  font-size: 16px;
+  color: #FFFFFF;
+  align-self: flex-start;
+  font-family:"Exo2-Light";
+  letter-spacing: 0.5px;
+  }
+
+.minihoverflexchampions{
+  font-size: 16px;
+  color: #FFFFFF;
+  align-self: flex-start;
+  font-family:"Exo2-Light"
+}
+/*
+.minihoverflexthirdandfourthrow{
+  flex-wrap: nowrap;
+  flex-direction: row;
+  display: flex;
+  font-family: "Exo2";
+  font-size: 14px;
+  color: #FFFFFF;
+}*/
+
+.gamelogoMinihover {
+  width: 2.375em;
+  height: 2.375em;
+  margin-right: 8px;
+  margin-left: auto;
+  border-radius: 30%;
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.minihoverbottomgamecontainer{
+  height: 8.6875em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.hoverbadgecontainer{
+  display: flex;
+  flex-direction: column;
+  width: 13.5625em;
+  justify-content: space-around;
+  font-family: "Exo2";
+  letter-spacing: 0.25px;
+  align-items: center;
+}
+
+.hoverbadge{
+  display: flex;
+  flex-direction: column;
+  width: 8.43em;
+  background-color: #000000;
+  text-align: center;
+}
+
+.hoverbadgeheadline{
+  color: #52B1B1;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.hoverbadgebottomline{
+  color: #ECFEFF;
+  font-size: 11px;
+}
+
+.minihoverleft{
+  width: 10.875em;
+  height: 8.9em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1em;
+}
+
+.hover2x2minipanel {
+  display: flex;
+  flex-direction: column;
+  width: 8.4em;
+  align-self: flex-start;
+}
+
+.hoverflexfirstrow{
+  font-family:"Exo-Black";
+  color: #FFFFFF;
+  font-size: 14px;
+  letter-spacing: 1.25px;
+}
+
+.hoverfortrow b{
+  font-family:"Exo2";
+}
+
+.hoverfortrow{
+  font-family:"Exo-Black";
+  color: #ECFEFF;
+  font-size: 14px;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  flex-direction: row;
+  }
+
+  .hoverwowlefttop{
+  display: flex;
+  flex-direction: column;
+  height: 8em;
+  justify-content: space-around;
+  align-items: center;
+  }
+
+.hoverwowlefttank{
+  font-family:"Exo-Black";
+  font-size: 14px;
+  color: #ECFEFF;
+}
+
+.hoverwowlefttoppic{
+  height: 2.1875em;
+  width:  2.1875em;
+  background-color: #2CAFA5;
+}
+
+.hoverwowlefttoppiccontainer{
+  display: flex;
+  flex-direction: row;
+  width: 8.44em;
+  justify-content: space-between;
+  }
+
+.hoverwowseemore{
+  font-family: "Exo2-Light";
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+}
+
+.line-6 {	
+  box-sizing: border-box;	
+  height: 141px;	
+  width: 2px;	
+  border: 1px solid #979797;
+}
+
+.showmore{
+  text-align: center;
+  padding-top: 3em;
+  padding-left: 15em;
+  }

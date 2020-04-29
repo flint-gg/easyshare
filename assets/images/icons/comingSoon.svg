@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="29px" height="18px" viewBox="0 0 29 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>comingSoon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Discover" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="MVP_Desktop_discover_soon_Combi_FINAL" transform="translate(-1060.000000, -197.000000)">
+            <g id="comingSoon" transform="translate(1060.000000, 197.000000)">
+                <g id="Group-Copy-2" fill="#5D6A75">
+                    <path d="M26.6956681,14.3508285 L25.9782764,14.5799176 L24.543493,15.0345032 L23.8261013,15.2635924 L22.3913179,15.7199328 L21.6739262,15.947221 L20.2391428,16.4036075 L19.5217511,16.6308957 L18.0869677,17.0872823 L17.369576,17.3145705 L15.9347926,17.7709108 L15.2174009,18 L13.7826175,18 L13.0652258,17.7709108 L11.6304424,17.3145705 L10.9130507,17.0872823 L9.47826726,16.6308957 L8.76087555,16.4036075 L7.32609215,15.947221 L6.60870044,15.7199328 L5.17391704,15.2635924 L4.45652533,15.0345032 L3.02174193,14.5799176 L2.30435022,14.3508285 L0.869566814,13.8944419 L0.837280744,13.8836222 C0.458856047,13.7645682 0.152165928,13.344252 0.152165928,12.9456353 L-1.0658141e-13,6.83897383e-13 L29,6.83897383e-13 L28.8478341,12.9456353 C28.8478341,13.344289 28.5411485,13.7645729 28.1627193,13.8836222 L28.1304378,13.8944419 L26.6956681,14.3508285 Z" id="Fill-1"></path>
+                </g>
+                <g id="Group" transform="translate(3.000000, 1.000000)" fill="#141F2A" font-family="Exo-Black, Exo Black" font-weight="700">
+                    <text id="SOON" font-size="8">
+                        <tspan x="0" y="10">SOON</tspan>
+                    </text>
+                    <text id="TM" font-size="4">
+                        <tspan x="18" y="4">TM</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,16 @@
+{
+  "AWSEBDockerrunVersion": "1",
+
+  "Ports": [
+    {
+      "ContainerPort": "5000"
+    }
+  ],
+  "Volumes": [
+    {
+      "HostDirectory": "/app/host",
+      "ContainerDirectory": "/app/container"
+    }
+  ],
+  "Command": "npm run start"
+}

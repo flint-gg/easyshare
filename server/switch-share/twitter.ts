@@ -1,0 +1,212 @@
+import Twitter from 'twitter-lite';
+import Axios from 'axios';
+import {
+  userTokensFromAuth,
+  requestTokenResponse,
+  requestToken,
+  twitterMediaType,
+  twitterMedia,
+  twitterImageSize,
+  twitterStatus,
+} from '../../types/twitter';
+import { queryToObject } from '../../scripts/helper/helperFunctions';
+import flintURL from '../../scripts/flintURL';
+import { uploadMedia } from './gphotos';
+import {
+  getUser,
+  createUser,
+  cachedUsers,
+  fillCache,
+  addEvent,
+} from './db-queries';
+import { switchHashtag, switchEvent, switchAccountType } from './enums';
+
+if (
+  !(
+    process.env.TW_CONSUMER_SECRET
+    && process.env.TW_ACCESS_KEY
+    && process.env.TW_ACCESS_SECRET
+  )
+) {
+  throw new Error('Missing Twitter secret!');
+}
+
+const twitterAPI = new Twitter({
+  consumer_key: 'mWXh7Ckerb965P11kXd8xgcgq',
+  consumer_secret: process.env.TW_CONSUMER_SECRET,
+  access_token_key: process.env.TW_ACCESS_KEY, // from your User (oauth_token)
+  access_token_secret: process.env.TW_ACCESS_SECRET, // from your User (oauth_token_secret)
+});
+
+// hashtags directly map to enum switchHashtag -1
+export const hashtagsToFollow = [
+  'NintendoSwitch',
+  'switchshare',
+  'flintggshare',
+  'flintgg',
+  'easyshare',
+];
+
+const switchShareSource = '<a href="https://www.nintendo.com/countryselector" rel="nofollow">Nintendo Switch Share</a>';
+
+function getImageUrl(
+  media: twitterMedia,
+  size: twitterImageSize,
+  png?: boolean,
+) {
+  return media.type === twitterMediaType.photo
+    ? `${media.media_url_https}?format=${png ? 'png' : 'jpg'}&name=${size}`
+    : media.video_info.variants
+      .filter((a) => a.bitrate)
+      .sort((a, b) => b.bitrate! - a.bitrate!)[0].url;
+}
+
+function isSharedMediaBySwitch(status: twitterStatus) {
+  return (
+    status.extended_entities
+    && (status.source === switchShareSource
+      || status.source.includes('Nintendo Switch Share'))
+  );
+}
+
+/** Remove any statuses that have not been posted by Nintendo Switch Share.
+ It would be great if we could include this in the API query,
+ but for now it seems this is all we can do.
+ */
+/* function cleanStatuses(statuses: Array<twitterStatus>) {
+  return statuses.filter((s) => isSharedMediaBySwitch(s));
+}
+ */
+
+async function destroyTweet(tweetId: flintId, client: Twitter) {
+  await client.post('statuses/destroy' /* /${tweetId}` */, {
+    id: tweetId,
+  });
+}
+
+/* async function getUsersMedia(
+  username: string,
+  latestID?: flintId | bigint | number,
+  hashtag?: string,
+) {
+  const response = await twitterAPI.getBearerToken();
+  const app = new Twitter({
+    bearer_token: response.access_token,
+  });
+
+  const resp: { statuses: Array<twitterStatus> } = await app.get(
+    'search/tweets',
+    {
+      q: `from:${username} #${hashtag || defaultHashTag} filter:media`,
+      result_type: 'recent',
+      count: 100,
+      since_id: latestID || 0,
+    },
+  );
+
+  return cleanStatuses(resp.statuses)
+    .map((stat) => stat.extended_entities!.media)
+    .flat();
+} */
+
+function checkHashtags(
+  userHashtags: Array<switchHashtag>,
+  hashtagsInTweet: Array<{ text: string; indices: Array<number> }>,
+) {
+  const hashtags: Array<string> = [];
+  userHashtags.forEach((i) => hashtags.push(hashtagsToFollow[i - 1]));
+  return (
+    hashtagsInTweet.filter((h) => hashtags.find((hs) => hs === h.text)).length > 0
+  );
+}
+
+async function listenToStream() {
+  const parameters = {
+    track: `#${hashtagsToFollow.join(',#')}`,
+    filter_level: 'none', // none, low, or medium ; this is a rating twitter adds, and does not go hand in hand with our query
+  };
+  const stream = twitterAPI.stream('statuses/filter', parameters);
+  stream
+    .on('start', (/* response */) => console.log('start'))
+    .on('data', async (tweet: twitterStatus) => {
+      if (!isSharedMediaBySwitch(tweet)) {
+        /* console.log('[INCOMING] non switch tweet'); */
+        return;
+      }
+      const user = cachedUsers.get(tweet.user.id_str);
+      if (
+        user
+        && user.ph_album
+        && checkHashtags(user.hashtags, tweet.entities.hashtags)
+      ) {
+        console.log('[INCOMING] tracked user', user.name);
+
+        const imageURLs = tweet.extended_entities!.media.map((m) => {
+          const imageURL = getImageUrl(m, twitterImageSize.large);
+          return imageURL;
+        });
+        try {
+          await uploadMedia(user, imageURLs);
+        } catch (e) {
+          console.error(e);
+        }
+        // we are finished with the media, so we can delete the tweet
+        await destroyTweet(
+          tweet.id_str,
+          new Twitter({
+            consumer_key: 'mWXh7Ckerb965P11kXd8xgcgq',
+            consumer_secret: process.env.TW_CONSUMER_SECRET,
+            access_token_key: user.token,
+            access_token_secret: user.token_secret,
+          }),
+        );
+      } else {
+        /* console.log('[INCOMING] non tracked user'); */
+      }
+    })
+    .on('ping', () => console.log('ping'))
+    .on('error', (error) => console.log('error:', error))
+    .on('end', (/* response */) => console.log('end'));
+}
+
+export async function run() {
+  /*  const media = await getUsersMedia(myUserName);
+  const mediaURLs = media.map((stat) => getImageUrl(stat, twitterImageSize.large));
+  console.log(JSON.stringify(mediaURLs, null, 2));
+  */
+  await fillCache();
+  listenToStream();
+}
+
+export async function getAuthFlowToken() {
+  const tokenresp: requestToken = await twitterAPI.getRequestToken(
+    `${flintURL.getURL()}callback/twitter`,
+  );
+  if (tokenresp.oauth_callback_confirmed) {
+    return tokenresp.oauth_token;
+  }
+  throw new Error('Failed to get RequestToken');
+}
+
+export async function getTokensetFromCompletedAuthFlow(
+  tokens: requestTokenResponse,
+) {
+  const twitterAccessResponse = await Axios.post(
+    `${twitterAPI.oauth}/access_token`,
+    {},
+    { params: tokens },
+  );
+  const response: userTokensFromAuth = queryToObject(
+    twitterAccessResponse.data,
+  );
+  /* Once my patch is out, we can use this:
+  const response: userTokensFromAuth = await twitterAPI.getAccessToken(tokens);
+  console.log('auth response:', response);
+ */
+  let user = await getUser(response.user_id);
+  if (!user) {
+    user = await createUser(response.user_id, response, switchAccountType.twitter);
+  }
+  await addEvent(response.user_id, switchEvent.login);
+  return user;
+}

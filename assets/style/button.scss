@@ -1,0 +1,20 @@
+@import "variables.scss";
+
+.flint-button {
+  background: $flint-turquoise-lighter;
+  border-radius: 4px;
+  color: $flint-white;
+  font-family: Exo-Bold;
+  min-width: 100px;
+  padding: 17px 15px;
+  text-align: center;
+  text-transform: uppercase;
+
+  &__secondary {
+    background: $blue-grey;
+  }
+
+  &:focus, &:hover {
+    background: $flint-turquoise;
+  }
+}

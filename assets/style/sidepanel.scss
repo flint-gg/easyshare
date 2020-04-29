@@ -1,0 +1,153 @@
+.flex-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.logo-flint {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  width: 50%;
+}
+
+.flint-gg {
+  margin: 0 auto;
+  position: relative;
+  font-family: 'Exo-Black';
+  font-size: 1em;
+  line-height: 1.5em;
+  color: #FFFFFF;
+}
+
+.flex-cont {
+  margin-bottom: 57px;
+}
+
+.menuitems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.menuitem {
+  height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-around;
+}
+
+.highlightedmenuitem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-around;
+  width: 7rem;
+  height: 5.5rem;
+  border-radius: 4px;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
+  /* background-image: linear-gradient(to bottom, #33e4d8, #33e4d8); */
+  background-color: #33e4d8;
+  color: #ffffff;
+  font-family: 'Exo-Light';
+  font-size: 1em;
+  letter-spacing: 0.15px;
+  line-height: 1.313em;
+}
+
+.line-20 {
+  width: 20px;
+  height: 1px;
+  background-color: #424c55;
+}
+
+.heartcentral {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #465562;
+  font-family: 'Exo-Light';
+  font-size: 1em;
+  letter-spacing: 0.15px;
+  line-height: 1.313em;
+  text-align: center;
+}
+
+.icontext {
+  color: #465562;
+  font-family: 'Exo-Light';
+  font-size: 1em;
+  letter-spacing: 0.15px;
+  line-height: 1.313em;
+  text-align: center;
+}
+
+.icon--default {
+  height: 26px;
+  width: 26px;
+  opacity: 0.5;
+
+  use {
+    fill: #fff;
+  }
+}
+
+.icon--white {
+  height: 32px;
+  width: 32px;
+
+  use {
+    fill: #fff;
+  }
+}
+
+.icontextwhite {
+  color: #ffffff;
+  font-family: 'Exo-Bold';
+  font-size: 1em;
+  letter-spacing: 0.15px;
+  line-height: 1.313em;
+  text-align: center;
+}
+
+.profile-pic {
+  width: 50%;
+  border-radius: 50%;
+  padding-top: 0.7em;
+  padding-bottom: 1em;
+}
+
+.profile-name {
+  font-size: 1.5em;
+  font-family: 'Exo-Black';
+  text-align: center;
+  line-height: 2em;
+  color: #FFFFFF;
+}
+
+.flintLink {
+  text-decoration: none;
+  color: #465562;
+
+  &:hover {
+    color: #2bafa6;
+  }
+}
+
+.flintLinkLogo {
+  text-decoration: none;
+  font-family: 'Exo-Black';
+  font-size: 1.8em;
+  line-height: 2.188em;
+  color: #FFFFFF;
+
+  &:hover {
+    color: #2bafa6;
+  }
+}

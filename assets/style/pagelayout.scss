@@ -1,0 +1,50 @@
+// Styling for Header in Pages Settings, Discover, Rivalries
+// classes to mark things visible/invisible on certain screen sizes
+.mobile, .desktop {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .desktop {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile {
+    display: none !important;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.heading {
+  font-family: Exo-Bold;
+  font-size: 42px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.05;
+  letter-spacing: 0.31px;
+  color: #ffffff;
+  margin: 0;
+}
+
+//for all coming soon tags..
+.coming-soon{
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #596067 !important;
+  position: relative;
+}
+
+.icon-top-right{
+  position: absolute;
+  z-index: 2; /* put .green-box above .dashed-box */
+  top: 0px;
+  right: 0px;
+}
+
+

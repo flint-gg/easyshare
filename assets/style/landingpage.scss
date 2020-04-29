@@ -1,0 +1,985 @@
+#page {
+  background-color: #172a3a;
+  color: #fff;
+  font-family: "Exo", Arial, Helvetica, sans-serif;
+  margin: 0;
+  overflow: hidden;
+  background-image: url("~assets/images/landingpage/parallax.png");
+  background-repeat: repeat;
+  background-size: auto;
+}
+
+img {
+  position: relative;
+  width: auto;
+  max-width: 100%;
+}
+
+.button {
+  font-family: Exo-Bold;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.29;
+  letter-spacing: 2px;
+  text-align: center;
+  color: #172a3a;
+  width: min(160px, 35vw);
+  height: 50px;
+  background-color: #33e4d8;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container {
+  display: block;
+  max-width: 1440px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0;
+}
+
+main {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+}
+
+.vs-section {
+  min-height: calc(var(--vh, 1vh) * 30);
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+  z-index: 1;
+
+  margin: auto;
+  > section {
+    > section {
+      > h2 {
+        font-family: "Exo-Black";
+        text-transform: uppercase;
+        > img {
+          margin-right: 1rem;
+          width: 50px;
+        }
+      }
+    }
+  }
+}
+
+.vision {
+  background-color: #141f2a;
+  border-radius: 12px;
+  padding: 1rem;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  padding-left: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 70%;
+  float: left;
+  margin-left: 5vw;
+  z-index: 2;
+  > section {
+    float: left;
+    max-width: max(58vw, 700px);
+    // padding-right: 10vw;
+
+    > h2 {
+      padding-bottom: 24px;
+      margin-bottom: 0px;
+    }
+    > h3 {
+      font-family: "Exo-Black";
+      font-size: 48px;
+      line-height: 56px;
+      padding-bottom: 24px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      letter-spacing: 1.1px;
+    }
+    > p {
+      padding-bottom: 24px;
+      font-size: 20px;
+      line-height: 28px;
+    }
+  }
+}
+.vision-upper-part {
+  padding-right: 3vw;
+}
+.vision-second-part {
+  padding-right: 60%;
+}
+
+.solution {
+  background-color: #33e4d8;
+  color: #141f2a;
+  border-radius: 6px;
+  padding: 1rem;
+  padding-top: 0;
+  padding-bottom: 24px;
+  padding-right: 2rem;
+  margin-top: -15rem;
+  margin-right: 5vw;
+  margin-bottom: 2rem;
+  width: 50%;
+  float: right;
+
+  z-index: 2;
+  > section {
+    max-width: max(58vw, 720px);
+    padding: 24px;
+    > h2 {
+      padding-bottom: 24px;
+    }
+    > h3 {
+      font-family: "Exo-Black";
+      font-size: 42px;
+      line-height: 44px;
+      padding-bottom: 24px;
+      margin-top: 0px;
+      letter-spacing: 1.1px;
+    }
+    > p {
+      line-height: 28px;
+      font-size: 20px;
+    }
+  }
+}
+.solution-part {
+  column-count: 2;
+  column-gap: 40px;
+}
+
+.flint-explained-subheader {
+  font-family: "Exo-Black";
+  font-size: 42px;
+  line-height: 48px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin: auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.team-section {
+  align-self: center;
+  max-width: 980px;
+}
+
+@media screen and (max-width: 769px) {
+  .vs-section {
+    padding: 1rem;
+  }
+
+  .vision {
+    border-radius: 6px;
+    margin-top: 0;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 0;
+    max-width: 100%;
+    width: 100%;
+    float: none;
+    > section {
+      float: none;
+      max-width: none;
+      padding-right: 0;
+      > h3,
+      h2 {
+        font-family: "Exo-Black", Arial, Helvetica, sans-serif;
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 1.33;
+        letter-spacing: 0.18px;
+      }
+    }
+  }
+  .vision-second-part {
+    padding-right: 3vw;
+  }
+
+  .solution {
+    border-radius: 6px;
+    padding: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+    float: none;
+    > section {
+      float: none;
+      max-width: none;
+      padding-right: 0;
+      padding: 0px;
+      > h3,
+      h2 {
+        font-family: "Exo-Black", Arial, Helvetica, sans-serif;
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 1.33;
+        letter-spacing: 0.18px;
+      }
+    }
+  }
+  .solution-part {
+    column-count: 1;
+  }
+
+  .flint-explained-subheader {
+    font-family: "Exo-Black", Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 1.33;
+    letter-spacing: 0.18px;
+    margin-bottom: 15px;
+    text-align: center;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    > strong {
+      color: #33e4d8;
+    }
+  }
+}
+
+/* SECTION: welcome */
+.welcome {
+  padding: 16px 8px 20px 8px;
+  z-index: 1;
+}
+
+.carousel-whole-page-width {
+  margin-right: -8px;
+  margin-left: -8px;
+}
+
+.flint-explained {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 5rem;
+  > div {
+    margin: 1rem;
+  }
+}
+
+.flint-explained-card {
+  background-color: #141f2a;
+  width: 270px;
+  height: 350px;
+  color: #ffffff;
+  padding: 1rem;
+  border-radius: 5px;
+  z-index: 1;
+  transition: all 0.1s ease-in-out;
+  > section {
+    display: flex;
+    align-items: center;
+    > svg {
+      height: 50px;
+      margin: 1rem;
+      margin-left: 0;
+      > * {
+        fill: #fff;
+      }
+    }
+    > h3 {
+      font-family: "Exo-Black";
+      margin-top: 10px;
+    }
+  }
+}
+
+.flint-explained-card:hover {
+  transform: scale(1.05);
+  background-color: #33e4d8;
+  color: #141f2a;
+  > section {
+    > svg > * {
+      fill: #141f2a;
+    }
+  }
+}
+
+.welcome--text {
+  text-transform: uppercase;
+  font-size: 17px;
+  font-family: Exo-Bold;
+  font-weight: 300;
+  line-height: 1.19;
+  letter-spacing: 0.15px;
+  padding: 5px 0;
+  text-align: center;
+}
+
+.welcome--text h1 {
+  font-family: "Exo-Black", Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.33;
+  letter-spacing: 0.18px;
+  margin-bottom: 15px;
+  text-align: center;
+  > strong {
+    color: #33e4d8;
+  }
+}
+
+.welcome--text p {
+  margin: 5px 0;
+  font-size: 16px;
+  text-transform: none;
+  > strong {
+    color: #33e4d8;
+  }
+}
+
+.welcome--preview.welcome--preview__mobile {
+  display: flex;
+  justify-content: center;
+}
+
+.welcome--preview__mobile img {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.welcome--preview.welcome--preview__desktop {
+  display: none;
+}
+
+.welcome .welcome--card-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
+}
+
+.welcome--container {
+  border-radius: 32px;
+  background-color: #2d4255;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  max-width: 400px;
+  width: 100%;
+  margin: 30px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 1;
+  box-shadow: 0 18px 36px 0 rgba(0, 0, 0, 0.2),
+    0 36px 24px -24px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  color: #ffffff;
+  text-align: center;
+}
+
+.welcome--container.create-gamecard {
+  max-width: 400px;
+  height: 60px;
+  background-color: #5274eb;
+  margin: auto;
+}
+.create-gamecard {
+  max-width: 350px;
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  z-index: 1;
+  transition: all 0.1s ease-in-out;
+}
+.create-gamecard:hover {
+  transform: scale(1.05);
+}
+
+.gamecard-slide {
+  background: transparent;
+  border: none;
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.welcome--container.start-rivalry {
+  background-color: #f04747;
+}
+
+.welcome--container img {
+  display: none;
+}
+
+.welcome--container .welcome--text {
+  white-space: nowrap;
+  font-size: min(17px, 4.5vw);
+}
+
+@media screen and (min-width: 800px) {
+  .welcome {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 31px 0 31px;
+  }
+
+  .carousel-whole-page-width {
+    margin-right: -31px;
+    margin-left: -31px;
+  }
+
+  .welcome--text {
+    font-size: 28px;
+  }
+  .welcome--container .welcome--text {
+    font-size: min(28px, 3vw);
+  }
+
+  .welcome--text h1 {
+    font-size: 48px;
+    margin-bottom: 30px;
+  }
+
+  .welcome--text p {
+    font-size: 16px;
+    text-transform: none;
+  }
+
+  .welcome .welcome--card-container {
+    grid-template-rows: 100%;
+    grid-template-columns: 50% 50%;
+  }
+
+  .welcome--container {
+    padding: 20px;
+    height: 300px;
+    margin: 30px 15px 0px 15px;
+    width: calc(100% - 30px);
+    max-width: none;
+  }
+
+  .welcome--container.create-gamecard:hover {
+    background-color: #5274eb;
+  }
+
+  .welcome--container.start-rivalry:hover {
+    background-color: #f04747;
+  }
+
+  .welcome--container img {
+    display: unset;
+  }
+
+  .welcome .scrollto {
+    display: block;
+    height: 35px;
+    margin: 30px auto 30px auto;
+    width: 35px;
+  }
+
+  .scrollto--arrow {
+    display: block;
+    box-sizing: border-box;
+    height: 25px;
+    width: 25px;
+    border-style: solid;
+    border-color: #fff;
+    border-width: 0px 1px 1px 0px;
+    transform: rotate(45deg);
+    transition: border-width 150ms ease-in-out;
+  }
+
+  .scrollto--arrow:hover {
+    border-bottom-width: 4px;
+    border-right-width: 4px;
+  }
+}
+
+/* SECTION: howtoflint */
+.howtoflint {
+  padding-top: 40px;
+  z-index: 1;
+  background-color: #141f2a;
+}
+
+.howtoflint .swiper-container {
+  width: 100%;
+}
+
+.howtoflint--snapshot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 263px;
+  z-index: 1;
+}
+
+.howtoflint--snapshot img {
+  max-height: 263px;
+}
+
+.howtoflint--explanation {
+  color: #ffffff;
+  text-align: center;
+  background-color: #172a3a;
+  padding: 60px 18px 20px 18px;
+  margin-top: -30px;
+  cursor: pointer;
+}
+
+.howtoflint--roofline {
+  font-family: "Exo2", Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1.25;
+  letter-spacing: 0.15px;
+  margin: 0;
+}
+
+.howtoflint--headline {
+  font-family: "Exo-Black", Arial, Helvetica, sans-serif;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 0.25px;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.howtoflint--description {
+  font-family: "Exo-Light", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.31;
+  letter-spacing: 0.15px;
+  text-align: left;
+}
+
+.howtoflint .swiper-button-prev,
+.howtoflint .swiper-button-next {
+  top: 88px;
+  background: none;
+}
+
+.howtoflint .swiper-button-prev .arrow__prev,
+.howtoflint .swiper-button-next .arrow__next {
+  display: block;
+  box-sizing: border-box;
+  height: 35px;
+  width: 35px;
+  border-style: solid;
+  border-color: #33e4d8;
+  border-width: 0px 4px 4px 0px;
+  opacity: 0.33;
+  position: relative;
+  transform: rotate(135deg);
+  transition: opacity 150ms ease-in-out;
+  top: 5px;
+}
+
+.howtoflint .swiper-button-prev .arrow__prev {
+  left: 5px;
+}
+
+.howtoflint .swiper-button-next .arrow__next {
+  transform: rotate(-45deg);
+  top: 5px;
+  right: 15px;
+}
+
+.howtoflint .swiper-button-prev .arrow__prev:hover,
+.howtoflint .swiper-button-next .arrow__next:hover {
+  opacity: 1;
+}
+
+.howtoflint .swiper-button-prev {
+  left: 36px;
+}
+
+.howtoflint .swiper-button-next {
+  right: 36px;
+}
+
+.howtoflint--grid {
+  display: none;
+}
+@media screen and (min-width: 2800px) {
+  .vision-second-part {
+    padding-right: 70%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .howtoflint {
+    padding: 16px 31px 104px 31px;
+  }
+
+  .howtoflint .swiper-container {
+    display: none;
+  }
+
+  .howtoflint--grid {
+    display: grid;
+    grid-template-areas: "eOne img eThree" "eTwo img eFour";
+    grid-template-columns: 1fr 252px 1fr;
+    min-height: 424px;
+    max-width: 1380px;
+    margin: 0 auto;
+  }
+
+  .howtoflint--grid .howtoflint--roofline {
+    font-size: 18px;
+  }
+
+  .howtoflint--grid .howtoflint--headline {
+    font-size: 28px;
+  }
+
+  .howtoflint--grid .howtoflint--description {
+    font-size: 14px;
+  }
+
+  .howtoflint--grid .howtoflint--snapshot {
+    grid-area: img;
+    max-height: 100%;
+    position: relative;
+  }
+
+  .howtoflint--grid .howtoflint--snapshot__expanded {
+    z-index: 2;
+  }
+
+  .howtoflint--grid .howtoflint--snapshot img {
+    max-height: 100%;
+  }
+
+  .howtoflint--grid .e1,
+  .howtoflint--grid .e3 {
+    justify-self: left;
+    margin-right: 20px;
+  }
+
+  .howtoflint--grid .e1 {
+    align-self: flex-start;
+    grid-area: eOne;
+  }
+
+  .howtoflint--grid .e3 {
+    align-self: flex-end;
+    grid-area: eTwo;
+  }
+
+  .howtoflint--grid .e2,
+  .howtoflint--grid .e4 {
+    justify-self: right;
+    margin-left: 20px;
+  }
+
+  .howtoflint--grid .e2 {
+    align-self: flex-start;
+    grid-area: eThree;
+  }
+
+  .howtoflint--grid .e4 {
+    align-self: flex-end;
+    grid-area: eFour;
+  }
+
+  .howtoflint--grid .howtoflint--explanation {
+    border-radius: 32px;
+    box-sizing: border-box;
+    margin-top: 0;
+    max-width: 377px;
+    padding: 27px 30px;
+    position: relative;
+    text-align: left;
+  }
+
+  .howtoflint--grid .howtoflint--headline {
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+
+  .howtoflint--grid .howtoflint--explanation p {
+    max-height: 0;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .howtoflint--grid .howtoflint--explanation__expanded::before {
+    content: "";
+    position: absolute;
+    top: 35px;
+    left: -18px;
+    color: #33e4d8;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 33px;
+    width: 33px;
+    background-image: url("~assets/images/landingpage/flint_quote.svg");
+  }
+
+  .howtoflint--grid .howtoflint--explanation__expanded::after {
+    border-bottom: 1px dashed #fff;
+    content: " ";
+    left: 100%;
+    position: absolute;
+    top: 50%;
+    right: -200px;
+    width: 200px;
+  }
+
+  .howtoflint--grid .e2.howtoflint--explanation__expanded::after,
+  .howtoflint--grid .e4.howtoflint--explanation__expanded::after {
+    left: -200px;
+  }
+
+  .howtoflint--grid .howtoflint--explanation__expanded p {
+    max-height: 600px;
+    transition: 0.5s ease;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .howtoflint--grid .howtoflint--roofline {
+    font-size: 20px;
+  }
+
+  .howtoflint--grid .howtoflint--headline {
+    font-size: 34px;
+  }
+
+  .howtoflint--grid .howtoflint--description {
+    font-size: 16px;
+  }
+}
+
+/* SECTION: about us */
+.aboutus {
+  display: flex;
+  flex-direction: column;
+  padding: 200px 31px 0 31px;
+  z-index: 1;
+  background-color: #33e4d8;
+  clip-path: polygon(0 200px, 100% 100px, 100% 100%, 0 102%);
+  align-items: center;
+}
+
+#wrapper {
+  opacity: 0.7;
+}
+
+.aboutus--text {
+  font-weight: 300;
+  line-height: 1.19;
+  letter-spacing: 0.15px;
+  padding-bottom: 10px;
+  color: #141f2a;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 20px;
+  font-family: Exo-Bold;
+  flex-grow: 1;
+  width: 33%;
+}
+
+.aboutus--text h1 {
+  font-family: "Exo-Black", Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  line-height: 1.33;
+  letter-spacing: 0.18px;
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 24px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.aboutus--text p {
+  margin-bottom: 0;
+}
+
+.aboutus--container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  margin-bottom: -12px;
+}
+.aboutus--container.names {
+  margin: 50px 50px 0px 50px;
+  align-items: flex-start;
+}
+
+.aboutus--container.jobs {
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.aboutus--container p {
+  color: #141f2a;
+  font-size: 16px;
+}
+
+.aboutus--container img {
+  width: auto;
+  max-height: calc(100vw / 4);
+  margin: auto;
+}
+
+@media screen and (min-width: 800px) {
+  .aboutus {
+    display: flex;
+    flex-direction: column;
+    padding: 200px 31px 0 31px;
+  }
+
+  .aboutus--text {
+    font-size: 28px;
+  }
+
+  .aboutus--text h1 {
+    font-size: 48px;
+  }
+
+  .aboutus--text p {
+    font-size: 20px;
+    text-transform: none;
+  }
+
+  .aboutus--container p {
+    font-size: 24px;
+  }
+}
+
+/* SECTION: footer */
+footer {
+  background-color: #172a3a;
+  padding: 20px 18px 0px 18px;
+  position: relative;
+}
+.footer--supporter-list {
+  background-color: #fff;
+  padding: 20px 18px 0px 18px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0px 0px 0px;
+  > a {
+    padding: 0 15px;
+    min-width: 10rem;
+    text-align: center;
+    > img {
+      object-fit: contain;
+      height: 10rem;
+    }
+    > .exist {
+      height: 6rem;
+    }
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .footer--supporter-list {
+    > a {
+      min-width: 5rem;
+      > img {
+        height: 5rem;
+      }
+      > .exist {
+        height: 3rem;
+      }
+    }
+  }
+}
+
+.footer--link-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+
+.footer--link-list li {
+  padding: 0 15px;
+}
+
+.footer--link-list a {
+  font-family: "Exo-Black", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.31;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer--link-list a:hover {
+  color: #33e4d8;
+}
+
+.footer--social-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+
+.footer--social-list li {
+  padding: 0 10px;
+}
+
+.footer--social-list img {
+  object-fit: contain;
+  width: 25px;
+}
+
+.footer--adress {
+  font-family: "Exo-Bold", Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.3;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 0px; /* this was 10px for some reason, but therefore white */
+  padding-bottom: 10px; /* this replicates the space to the bottom, but has the correct background */
+}
+
+.footer--adress span:not(:first-child)::before {
+  content: " | ";
+}
+
+@media screen and (min-width: 800px) {
+  footer {
+    padding: 22px 18px 0px 18px;
+  }
+
+  .footer--adress {
+    font-size: 19px;
+  }
+
+  .footer--adress span {
+    display: block;
+  }
+
+  .footer--adress span:not(:first-child)::before {
+    content: "";
+  }
+}

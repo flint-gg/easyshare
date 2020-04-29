@@ -1,0 +1,215 @@
+.profile-edit {
+  &__flex {
+    display: flex;
+  }
+
+  &__avatar__container {
+    text-align: center;
+  }
+
+  &__avatar {
+    border: 3px solid white;
+    border-radius: 50%;
+    height: 134px;
+    width: 134px;
+  }
+
+  &__avatar__edit-button {
+    align-self: flex-end;
+    margin-right: 10px;
+  }
+
+  &__heading {
+    flex: 1 0 auto;
+    font-family: Exo-Black;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 1.25px;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  &__divider {
+    border: 1px solid rgba(white, 0.05);
+    margin: 15px 0;
+  }
+
+  &__gamecard__container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__gamecard {
+    margin: 0 4px;
+    border-radius: 8px;
+    display: flex;
+    flex: 0 0 50%;
+    padding-top: 40%;
+    position: relative;
+    max-width: calc(33% - 8px);
+  }
+
+  &__gamecard > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%!important;
+    height: 100%!important;
+    padding: 20px;
+    max-width: 130px;
+    margin: auto;
+  }
+
+  &__gamecard--add {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    justify-content: center;
+
+    &:hover {
+      background: $flint-turquoise;
+    }
+
+    &__icon {
+      color: white;
+      height: 84px;
+      width: 84px;
+    }
+  }
+
+  &__gamecard--hearthstone {
+    background: #253e80;
+    border: 4px solid #c99751;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      background: $flint-turquoise;
+    }
+
+  }
+
+  &__gamecard--fortnite {
+    background: linear-gradient(151deg, #42aff4, #49b4ea 16%, #59c4f0);
+    border: 4px solid white;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      background: $flint-turquoise;
+    }
+
+    &__icon {
+      color: white;
+      height: 84px;
+      width: 84px;
+      margin: auto;
+    }
+  }
+
+  &__gamecard--leagueoflegends {
+    align-items: center;
+    border: solid 4px #bfa540;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      background: $flint-turquoise;
+    }
+
+    &__icon {
+      color: white;
+      margin: auto;
+      object-fit: cover;
+      background-color: rgba(15, 38, 50, 0.8);
+      padding-top: 20px;
+    }
+  }
+
+  &__gamecard__header {
+    display: flex;
+    height: 32px;
+  }
+
+  &__service__container, &__language__container, &__gender__container {
+    display: flex;
+    cursor: pointer;
+    flex-wrap: wrap;
+  }
+
+  &__service, &__language, &__gender {
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    width: 50px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+
+  &__service--add, &__language--add, &__gender {
+    background: $blue-grey-light;
+
+    &:hover {
+      background: $flint-turquoise;
+    }
+
+    &__icon {
+      color: white;
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  &__gender--selected {
+    background: $flint-turquoise-lighter;
+  }
+
+  &__input {
+    background-color: $blue-grey-darker;
+    border: 2px solid $blue-grey-darker;
+    border-radius: 4px;
+    font-family: Exo;
+    line-height: 2;
+    padding: 9px 15px;
+    text-align: left;
+
+    &[type=date] {
+      background: '~/assets/images/icons/ic-date-range.svg' no-repeat;
+      background-position: calc(100% - 10px) center;
+      padding-right: 44px; /* 10 (margin) + 24 (svg) + 10 (margin) */
+    }
+  }
+
+  &__save {
+    flex: 1 0 auto;
+    margin: 40px 25px 0;
+  }
+
+  &__container {
+    width: 100%;
+
+    &--desktop {
+      width: 30%;
+      min-width: 400px;
+      border: solid 8px;
+      border-radius: 8px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 8px;
+    }
+  }
+}
+
+.disabled {
+  cursor: default;
+}
+
+.red {
+  background-color: rgba(255, 0, 0, 0.5);
+}

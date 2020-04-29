@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="29px" viewBox="0 0 28 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>icons/bubble</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M27.749569,13.23474 C27.749569,6.49194556 21.5491068,1.02582931 13.900431,1.02582931 C6.25175528,1.02582931 0.0512931034,6.49194556 0.0512931034,13.23474 C0.0512931034,19.9775344 6.25177374,25.4436322 13.900431,25.4436322 C14.71655,25.4428086 15.5313689,25.3785107 16.3375162,25.25132 C19.8383659,27.9730603 24.5437828,28.6136198 25.5667079,28.7232773 C25.6118703,28.7284805 25.6566385,28.7107268 25.68596,28.6759854 C25.7152816,28.6412441 25.725262,28.5941296 25.7125454,28.5504832 C25.4592047,27.6517787 24.4442414,23.781194 24.813841,20.7463862 C26.6851554,18.6901446 27.7306828,16.0149541 27.749569,13.23474 Z" id="path-1"></path>
+        <rect id="path-3" x="0" y="0" width="74" height="74"></rect>
+    </defs>
+    <g id="Feedback" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="NB1_mobile_Menu_Expand" transform="translate(-23.000000, -418.000000)">
+            <g id="navigation-list" transform="translate(16.000000, 85.000000)">
+                <g id="icons/bubble" transform="translate(0.000000, 327.000000)">
+                    <g id="Colors/Red" transform="translate(7.000000, 5.793142)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="Mask" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                        <g id="Colors/White" mask="url(#mask-2)">
+                            <g transform="translate(-22.312500, -22.312500)">
+                                <mask id="mask-4" fill="white">
+                                    <use xlink:href="#path-3"></use>
+                                </mask>
+                                <use id="White" stroke="none" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

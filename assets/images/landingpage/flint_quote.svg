@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32.947" height="33" viewBox="0 0 32.947 33">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="32.948" height="33" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="logo" transform="translate(-6 -13)">
+    <g id="icons_flinti" data-name="icons/flinti" transform="translate(6 13)" clip-path="url(#clip-path)">
+      <path id="flinti" d="M19.768,33,24.913,0h8.035V33ZM0,33,5.145,0h8.035V33Z" fill="#33e4d8"/>
+    </g>
+  </g>
+</svg>

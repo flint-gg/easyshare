@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>icons/cards</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M11.173913,8.8817842e-15 C11.7261978,9.76138593e-15 12.173913,0.44771525 12.173913,1 L12.173,2.608 L12.9130435,2.60869565 C13.4653282,2.60869565 13.9130435,3.0564109 13.9130435,3.60869565 L13.9130435,19 C13.9130435,19.5522847 13.4653282,20 12.9130435,20 L2.73913043,20 C2.18684568,20 1.73913043,19.5522847 1.73913043,19 L1.739,17.391 L1,17.3913043 C0.44771525,17.3913043 2.6712988e-14,16.9435891 2.66453526e-14,16.3913043 L2.66453526e-14,1 C2.64666949e-14,0.44771525 0.44771525,8.98323726e-15 1,8.8817842e-15 L11.173913,8.8817842e-15 Z M12.1733941,3.48662296 L12.173913,16.3913043 C12.173913,16.9435891 11.7261978,17.3913043 11.173913,17.3913043 L2.608,17.391 L2.60869565,18.1304348 C2.60869565,18.6432706 2.99473584,19.0659419 3.49207453,19.1237071 L3.60869565,19.1304348 L12.0434783,19.1304348 C12.5563141,19.1304348 12.9789854,18.7443946 13.0367505,18.2470559 L13.0434783,18.1304348 L13.0434783,4.47826087 C13.0434783,3.97000392 12.6643009,3.5503086 12.1733941,3.48662296 Z M10.1111111,2.11111111 L2.11111111,2.11111111 L2.11111111,6.11111111 L10.1111111,6.11111111 L10.1111111,2.11111111 Z" id="path-1"></path>
+        <rect id="path-3" x="0" y="0" width="56" height="56"></rect>
+    </defs>
+    <g id="icons/cards" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cards" transform="translate(5.000000, 2.000000)">
+            <g id="Combined-Shape">
+                <g id="Colors/White">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" style="mix-blend-mode: hard-light;" xlink:href="#path-1"></use>
+                    <g mask="url(#mask-2)">
+                        <g transform="translate(-21.111111, -17.777778)">
+                            <mask id="mask-4" fill="white">
+                                <use xlink:href="#path-3"></use>
+                            </mask>
+                            <use id="White" stroke="none" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

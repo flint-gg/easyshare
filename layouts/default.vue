@@ -73,10 +73,10 @@ export default class Default extends Vue {}
 </script>
 
 <style lang="scss" >
-@import '~/assets/style/flint.webflow.css';
-@import '~/assets/style/webflow.css';
+@import '~/assets/style/webflow-rest.css';
 @import '~/assets/style/app.scss';
 </style>
+
 <style lang="scss" scoped>
 .w-col {
   width: 100%;
@@ -139,6 +139,7 @@ export default class Default extends Vue {}
   background-size: cover;
   padding-top: 0;
   color: #ecfeff;
+  background-color: #141f2a; /* or 1f222a  ? */
 }
 
 .logocolumn {

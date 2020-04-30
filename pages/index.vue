@@ -1,7 +1,8 @@
 <template>
   <section>
     <h3 class="center-text">
-      {{ userToken ? '' : 'Welcome to' }} Nintendo Switch Easyshare&trade; by
+      {{ userToken ? '' : 'Welcome to' }}
+      Nintendo Switch Easyshare&trade; by
       <img
         ix-path="branding/textlogo"
         ix-params='{
@@ -11,7 +12,6 @@
         sizes="100px"
       />
     </h3>
-
     <section v-if="userToken">
       <section v-if="!userName" class="accounts">
         <loading
@@ -103,6 +103,45 @@
         <Button :onClick="removePhotos" color="red">Disconnect</Button>
       </section>
     </section>
+    <section v-if="!userName" class="accounts">
+      <section class="tutorial-section">
+        <div>
+          <nswitch class="tutorial-icon tutorial-icon--switch" />
+          <linkic
+            class="tutorial-icon tutorial-icon--cascading tutorial-icon--smol"
+          />
+          <twicon class="tutorial-icon tutorial-icon--twitter" />
+        </div>
+        <h4>Upload directly from your Switch</h4>
+        Post your images and videos from the switch library to twitter, using
+        the hashtag you set up on our system.<br />We support anything the
+        Switch offers: Single images, multiple images, and videos.
+      </section>
+      <section class="tutorial-section">
+        <div>
+          <twicon
+            class="tutorial-icon tutorial-icon--twitter tutorial-icon--smol"
+          />
+          <share class="tutorial-icon tutorial-icon--cascading" />
+          <pinwheel
+            class="tutorial-icon tutorial-icon--cascading tutorial-icon--smol"
+          />
+        </div>
+        <h4>Let us do the hard work</h4>
+        The moment you post, we grab the content and delete the original tweet,
+        keeping your Twitter timeline clean.<br />
+        We track #NintendoSwitch per default, as it is automatically added by
+        your Switch the moment you post, but you can choose other hashtags as
+        well!
+      </section>
+      <section class="tutorial-section">
+        <network class="tutorial-icon" />
+        <h4>Your media to where you want it</h4>
+        Once our system receives your media, it directly forwards it to an album
+        in your Google Photos account. No tracking, no detours, no delay. Just
+        what you need, where you need it.
+      </section>
+    </section>
     <section class="accounts">
       <section class="account-section tutorial">
         <h3 style="margin-top:0px;">
@@ -115,19 +154,6 @@
           Easyshare by flint.gg takes care of all the difficulties and makes it
           <strong>easy for you</strong>.
         </p>
-        <div class="item">
-          <h4>Upload media directly from your Switch</h4>
-          Pick from a set of hashtags to track, such as #NintendoSwitch, and
-          simply post to Twitter directly from your Switch. We will grab the
-          content and delete the original tweet, keeping your Twitter timeline
-          clean for everyone.
-        </div>
-        <div class="item">
-          <h4>Get your media to where you want it</h4>
-          Once our system receives your media, it directly forwards it to an
-          album in your Google Photos account. No tracking, no detours, no
-          delay. Just what you need, where you need it.
-        </div>
         <h3 style="margin-top:0px;">
           I got a question!
         </h3>
@@ -168,7 +194,29 @@ import {
   switchEvent,
 } from '~/server/switch-share/enums';
 
-@Component({ components: { loading, Button } })
+/* eslint-disable import/no-unresolved */
+import share from '~/assets/images/switch-share/tutorial-icons/noun_Share_1774266.svg?inline';
+import network from '~/assets/images/switch-share/tutorial-icons/noun_social network_2328434.svg?inline';
+import nswitch from '~/assets/images/switch-share/tutorial-icons/switch.svg?inline';
+import upload from '~/assets/images/switch-share/tutorial-icons/upload.svg?inline';
+import twicon from '~/assets/images/switch-share/Twitter_Logo_Blue.svg?inline';
+import linkic from '~/assets/images/switch-share/tutorial-icons/link.svg?inline';
+import pinwheel from '~/assets/images/switch-share/tutorial-icons/pinwheel.svg?inline';
+/* eslint-enable import/no-unresolved */
+
+@Component({
+  components: {
+    loading,
+    Button,
+    share,
+    network,
+    nswitch,
+    upload,
+    twicon,
+    linkic,
+    pinwheel,
+  },
+})
 export default class serviceCallback extends Vue {
   get userToken() {
     return !this.loggingOut && localStorage.getItem('switchshare/token');
@@ -404,7 +452,7 @@ export default class serviceCallback extends Vue {
   margin-top: auto;
 }
 .tutorial {
-  max-width: 600px;
+  max-width: 900px;
   width: auto;
 
   h4 {
@@ -466,5 +514,61 @@ export default class serviceCallback extends Vue {
   width: 38px;
   height: 38px;
   margin-right: 5px;
+}
+
+.tutorial-icon {
+  margin-left: auto;
+  margin-right: auto;
+  height: 64px;
+  width: 64px;
+  fill: #ecfeff;
+
+  &--cascading {
+    * {
+      fill: #ecfeff;
+    }
+  }
+  &--twitter {
+    > path {
+      fill: #ecfeff;
+    }
+  }
+  &--smol {
+    width: 32px;
+  }
+  &--switch {
+    margin-right: 15px;
+  }
+}
+
+.tutorial-section {
+  width: 300px;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #172a3a;
+  strong {
+    color: #35e4d8;
+  }
+  display: flex;
+  flex-direction: column;
+  > div {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h4 {
+    color: #35e4d8;
+  }
+}
+
+.tutorial-next {
+  height: 64px;
+  width: 64px;
+  margin-right: -20px;
+  margin-left: -28px;
+  margin-top: auto;
+  margin-bottom: auto;
+  fill: #ecfeff;
 }
 </style>

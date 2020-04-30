@@ -188,7 +188,7 @@ export default class Default extends Vue {
   background-size: cover;
   padding-top: 0;
   color: #ecfeff;
-  background-color: #141f2a; /* or 1f222a  ? */
+  background-color: #141f2a;
 }
 
 .logocolumn {

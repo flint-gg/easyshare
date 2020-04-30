@@ -43,7 +43,7 @@ export default class Button extends Vue {
 
 <style scoped lang="scss">
 .wrapper {
-  height: 3rem;
+  min-height: 3rem;
   width: calc(100% - 10px);
   border-radius: 4px;
   margin: 5px;
@@ -55,6 +55,7 @@ export default class Button extends Vue {
   line-height: 1.29;
   letter-spacing: 1.25px;
   text-align: center;
+  min-height: inherit;
   height: 100%;
   width: 100%;
 }

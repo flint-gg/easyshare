@@ -48,9 +48,11 @@ type photoAlbum = {
 
 async function getOrCreatePhotosAlbum(user: gphotosTokens) {
   const photos = new Photos(user.access_token);
-  const albums = (await photos.albums.list()).albums as Array<photoAlbum>;
+  const albumlist = await photos.albums.list();
+  console.log('albumlist', albumlist);
+  const albums = albumlist.albums as Array<photoAlbum>;
   let album: string;
-  if (albums.length === 0) {
+  if (!albums || albums.length === 0) {
     const response: photoAlbum = await photos.albums.create(
       'Nintendo Switch Share by flint.gg',
     );

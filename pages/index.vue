@@ -328,7 +328,9 @@ export default class serviceCallback extends Vue {
     const { error } = await PostService.delete<string>('photos', {
       headers: { Authorization: `Bearer ${this.userToken}` },
     });
-    if (!error) {
+    if (error) {
+      throw error;
+    } else {
       localStorage.removeItem('switchshare/photos');
       this.loggingOut = true;
       this.loggingOut = false;
@@ -345,6 +347,13 @@ export default class serviceCallback extends Vue {
 
   async saveTags() {
     if (this.changedTags) {
+      if (!this.followedHashtags || this.followedHashtags.length === 0) {
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          title: 'Failed to save your changes',
+          detail: 'You need to choose a least one hashtag to follow!',
+        };
+      }
       const { error } = await PostService.patch(
         'account',
         {
@@ -355,7 +364,7 @@ export default class serviceCallback extends Vue {
         },
       );
       if (error) {
-        this.$toast.error('Failed to save your changes.');
+        throw error;
       } else {
         this.$toast.success('Saved your changes.');
         this.changedTags = false;

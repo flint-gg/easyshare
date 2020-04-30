@@ -48,9 +48,7 @@ type photoAlbum = {
 
 async function getOrCreatePhotosAlbum(user: gphotosTokens) {
   const photos = new Photos(user.access_token);
-  const albumlist = await photos.albums.list();
-  console.log('albumlist', albumlist);
-  const albums = albumlist.albums as Array<photoAlbum>;
+  const { albums }: { albums?: Array<photoAlbum> } = await photos.albums.list();
   let album: string;
   if (!albums || albums.length === 0) {
     const response: photoAlbum = await photos.albums.create(

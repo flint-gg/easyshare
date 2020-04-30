@@ -1,14 +1,14 @@
 import Twitter from 'twitter-lite';
 import Axios from 'axios';
 import {
-  userTokensFromAuth,
-  requestTokenResponse,
   requestToken,
+  userTokensFromAuth,
   twitterMediaType,
   twitterMedia,
   twitterImageSize,
   twitterStatus,
 } from '../../types/twitter';
+
 import { queryToObject } from '../../scripts/helper/helperFunctions';
 import flintURL from '../../scripts/flintURL';
 import { uploadMedia } from './gphotos';
@@ -155,7 +155,7 @@ async function listenToStream() {
           tweet.id_str,
           new Twitter({
             consumer_key: 'mWXh7Ckerb965P11kXd8xgcgq',
-            consumer_secret: process.env.TW_CONSUMER_SECRET,
+            consumer_secret: process.env.TW_CONSUMER_SECRET!,
             access_token_key: user.token,
             access_token_secret: user.token_secret,
           }),
@@ -170,10 +170,6 @@ async function listenToStream() {
 }
 
 export async function run() {
-  /*  const media = await getUsersMedia(myUserName);
-  const mediaURLs = media.map((stat) => getImageUrl(stat, twitterImageSize.large));
-  console.log(JSON.stringify(mediaURLs, null, 2));
-  */
   await fillCache();
   listenToStream();
 }
@@ -188,9 +184,10 @@ export async function getAuthFlowToken() {
   throw new Error('Failed to get RequestToken');
 }
 
-export async function getTokensetFromCompletedAuthFlow(
-  tokens: requestTokenResponse,
-) {
+export async function getTokensetFromCompletedAuthFlow(tokens: {
+  oauth_token: string;
+  oauth_verifier: string;
+}) {
   const twitterAccessResponse = await Axios.post(
     `${twitterAPI.oauth}/access_token`,
     {},
@@ -199,13 +196,18 @@ export async function getTokensetFromCompletedAuthFlow(
   const response: userTokensFromAuth = queryToObject(
     twitterAccessResponse.data,
   );
+
   /* Once my patch is out, we can use this:
   const response: userTokensFromAuth = await twitterAPI.getAccessToken(tokens);
   console.log('auth response:', response);
- */
+  */
   let user = await getUser(response.user_id);
   if (!user) {
-    user = await createUser(response.user_id, response, switchAccountType.twitter);
+    user = await createUser(
+      response.user_id,
+      response,
+      switchAccountType.twitter,
+    );
   }
   await addEvent(response.user_id, switchEvent.login);
   return user;

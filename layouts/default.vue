@@ -2,7 +2,7 @@
   <v-app>
     <div class="landingbody">
       <script type="text/javascript" src="/scripts/ads.js"></script>
-      <div class="topbarcolumns w-row">
+      <div v-if="!isMobile" class="topbarcolumns w-row desktop">
         <div class="logocolumn w-col w-col-9" style="padding-left: 0px;">
           <a class="logocolumn" href="https://flint.gg">
             <img
@@ -104,6 +104,8 @@ export default class Default extends Vue {
   errorMsg = null;
 
   errorTitle = null;
+
+  isMobile = isMobile();
 
   // Catches errors thrown by child components
   errorCaptured(err) {

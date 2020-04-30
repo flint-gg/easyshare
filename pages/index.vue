@@ -136,7 +136,7 @@
       </section>
       <section class="tutorial-section">
         <network class="tutorial-icon" />
-        <h4>Your media to where you want it</h4>
+        <h4>Your media, where you want it</h4>
         Once our system receives your media, it directly forwards it to an album
         in your Google Photos account. No tracking, no detours, no delay. Just
         what you need, where you need it.

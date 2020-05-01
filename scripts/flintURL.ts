@@ -1,4 +1,4 @@
-let url:string;
+let url: string;
 const host = process.env.HOST || 'www.flint.gg';
 const port = process.env.PORT || 8081;
 

@@ -19,7 +19,13 @@ import {
   fillCache,
   addEvent,
 } from './db-queries';
-import { switchHashtag, switchEvent, switchAccountType } from './enums';
+import {
+  switchHashtag,
+  switchEvent,
+  switchAccountType,
+  streamEnd,
+  streamEndReason,
+} from './enums';
 
 if (
   !(
@@ -30,10 +36,11 @@ if (
 ) {
   throw new Error('Missing Twitter secret!');
 }
-
+const consumer_key = 'mWXh7Ckerb965P11kXd8xgcgq';
+const consumer_secret = process.env.TW_CONSUMER_SECRET;
 const twitterAPI = new Twitter({
-  consumer_key: 'mWXh7Ckerb965P11kXd8xgcgq',
-  consumer_secret: process.env.TW_CONSUMER_SECRET,
+  consumer_key,
+  consumer_secret,
   access_token_key: process.env.TW_ACCESS_KEY, // from your User (oauth_token)
   access_token_secret: process.env.TW_ACCESS_SECRET, // from your User (oauth_token_secret)
 });
@@ -127,7 +134,7 @@ async function listenToStream() {
   };
   const stream = twitterAPI.stream('statuses/filter', parameters);
   stream
-    .on('start', (/* response */) => console.log('start'))
+    .on('start', (/* response */) => console.log('started stream'))
     .on('data', async (tweet: twitterStatus) => {
       if (!isSharedMediaBySwitch(tweet)) {
         /* console.log('[INCOMING] non switch tweet'); */
@@ -154,8 +161,8 @@ async function listenToStream() {
         await destroyTweet(
           tweet.id_str,
           new Twitter({
-            consumer_key: 'mWXh7Ckerb965P11kXd8xgcgq',
-            consumer_secret: process.env.TW_CONSUMER_SECRET!,
+            consumer_key,
+            consumer_secret,
             access_token_key: user.token,
             access_token_secret: user.token_secret,
           }),
@@ -166,7 +173,13 @@ async function listenToStream() {
     })
     .on('ping', () => console.log('ping'))
     .on('error', (error) => console.log('error:', error))
-    .on('end', (/* response */) => console.log('end'));
+    .on('end', (response: streamEnd) => {
+      console.log('ended stream:', response);
+      if (response.disconnect.code !== streamEndReason.DuplicateStream) {
+        // restart stream
+        listenToStream();
+      }
+    });
 }
 
 export async function run() {

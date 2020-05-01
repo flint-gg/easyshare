@@ -77,3 +77,23 @@ export type userForClient = {
   hashtagsToFollow: Array<string>;
   stats: Array<switchStat>;
 };
+
+export enum streamEndReason {
+  'Shutdown' = 1, // The feed was shutdown (possibly a machine restart)
+  'DuplicateStream' = 2, // The same endpoint was connected too many times.
+  'Stall' = 4, // The client was reading too slowly and was disconnected by the server.
+  'Normal' = 5, // The client appeared to have initiated a disconnect.
+  'AdminLogout' = 7, // The same credentials were used to connect a new stream and the oldest was disconnected.
+  'MaxMessageLimit' = 9, // The stream connected with a negative count parameter and was disconnected after all backfill was delivered.
+  'StreamException' = 10, // An internal issue disconnected the stream.
+  'BrokerStall' = 11, // An internal issue disconnected the stream.
+  'ShedLoad' = 12 // The host the stream was connected to became overloaded and streams were disconnected to balance load. Reconnect as usual.
+}
+
+export type streamEnd = {
+  disconnect: {
+    code: streamEndReason;
+    stream_name: string;
+    reason: string;
+  };
+};

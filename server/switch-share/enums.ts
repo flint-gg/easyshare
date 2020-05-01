@@ -90,10 +90,23 @@ export enum streamEndReason {
   'ShedLoad' = 12 // The host the stream was connected to became overloaded and streams were disconnected to balance load. Reconnect as usual.
 }
 
+// for now it seems to not include these infos at all,
+// even though the docs mention them https://developer.twitter.com/en/docs/tweets/filter-realtime/overview/statuses-filter
 export type streamEnd = {
   disconnect: {
     code: streamEndReason;
     stream_name: string;
     reason: string;
   };
+};
+
+export type streamEndResponse = {
+  size: number;
+  timeout: number;
+  url: string;
+  status: number;
+  statusText: string;
+  headers: any;
+  counter: number;
+  body: any;
 };

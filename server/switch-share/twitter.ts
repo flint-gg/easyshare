@@ -9,7 +9,7 @@ import {
   twitterStatus,
 } from '../../types/twitter';
 
-import { queryToObject } from '../../scripts/helper/helperFunctions';
+import { queryToObject, asyncWait } from '../../scripts/helper/helperFunctions';
 import flintURL from '../../scripts/flintURL';
 import { uploadMedia } from './gphotos';
 import {
@@ -25,6 +25,7 @@ import {
   switchAccountType,
   streamEnd,
   streamEndReason,
+  streamEndResponse,
 } from './enums';
 
 if (
@@ -127,7 +128,8 @@ function checkHashtags(
   );
 }
 
-async function listenToStream() {
+async function listenToStream(timeouted = 0) {
+  let timeout = timeouted;
   const parameters = {
     track: `#${hashtagsToFollow.join(',#')}`,
     filter_level: 'none', // none, low, or medium ; this is a rating twitter adds, and does not go hand in hand with our query
@@ -172,19 +174,30 @@ async function listenToStream() {
       }
     })
     .on('ping', () => console.log('ping'))
-    .on('error', (error) => console.log('error:', error))
-    .on('end', (response: streamEnd) => {
-      console.log('ended stream:', response);
-      if (response.disconnect.code !== streamEndReason.DuplicateStream) {
-        // restart stream
-        listenToStream();
+    .on('error', (error) => console.log('stream error:', error))
+    .on('end', async (response: streamEndResponse) => {
+      console.log(
+        'ended stream; status:',
+        response.status,
+        '; text:',
+        response.statusText,
+      );
+      if (Number(response.status) === 420) {
+        timeout = (timeout || 1) * 2;
+      } else {
+        timeout = 0;
       }
+      // restart stream
+      console.log('restarting stream with timeout', timeout);
+      await asyncWait(timeout * 1000);
+
+      listenToStream(timeout);
     });
 }
 
 export async function run() {
   await fillCache();
-  listenToStream();
+  await listenToStream();
 }
 
 export async function getAuthFlowToken() {

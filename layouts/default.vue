@@ -213,7 +213,6 @@ export default class Default extends Vue {
     align-items: flex-start;
   }
 }
-
 .error-close-button {
   margin-left: auto;
   margin-right: auto;

@@ -22,7 +22,7 @@
       </section>
       <section v-else class="accounts">
         <section class="account-section">
-          <h3 style="margin-top:0px;">
+          <h3>
             Welcome back, <strong>{{ userName }}</strong
             >.
           </h3>
@@ -59,12 +59,9 @@
               </li>
             </ul>
           </section>
-          <Button :onClick="logout" color="grey" class="stick-to-bottom"
-            >Log out</Button
-          >
         </section>
         <section v-if="linkedPhotos" class="account-section">
-          <h4>Toggle hashtags to track:</h4>
+          <h3>Hashtag settings:</h3>
           <Button
             v-for="v in displayHashtags"
             :key="v.value"
@@ -83,6 +80,22 @@
             >Save changes</Button
           >
         </section>
+        <section class="account-section">
+          <h3>Account settings:</h3>
+          <section class="center-vertical">
+            <h4>
+              You're currently logged in as <strong>{{ userName }}</strong
+              >.
+            </h4>
+            <Button :onClick="logout" color="grey">Log out</Button>
+          </section>
+          <section v-if="linkedPhotos" class="center-vertical">
+            <h4>
+              Your Google Photos Account is connected.
+            </h4>
+            <Button :onClick="openPopup" color="red">Disconnect</Button>
+          </section>
+        </section>
       </section>
     </section>
     <section class="accounts">
@@ -94,13 +107,6 @@
           />
           Sign in with twitter
         </Button>
-      </section>
-      <section
-        v-if="userToken && userName && linkedPhotos"
-        class="account-section"
-      >
-        <h4>Your Google Photos Account is connected.</h4>
-        <Button :onClick="removePhotos" color="red">Disconnect</Button>
       </section>
     </section>
     <section v-if="!userName" class="accounts">
@@ -144,7 +150,7 @@
     </section>
     <section class="accounts">
       <section class="account-section tutorial">
-        <h3 style="margin-top:0px;">
+        <h3>
           What's this all about?
         </h3>
         <p>
@@ -154,7 +160,7 @@
           Easyshare by flint.gg takes care of all the difficulties and makes it
           <strong>easy for you</strong>.
         </p>
-        <h3 style="margin-top:0px;">
+        <h3>
           I got a question!
         </h3>
         <div class="item">
@@ -178,6 +184,24 @@
         </div>
       </section>
     </section>
+    <PopUp
+      style="z-index:1000;"
+      :display="showPopup"
+      color="#f04747"
+      title="Hold up"
+      :onClose="closePopup"
+    >
+      <div>
+        Do you really want to disconnect Google Photos?<br />
+        You can reactivate it at any time, but until you do so we won't be able
+        to upload your media anymore!
+      </div>
+      <Button class="error-close-button" color="grey" :onClick="closePopup">
+        nevermind</Button
+      ><Button class="error-close-button" color="red" :onClick="removePhotos">
+        yes, disconnect</Button
+      >
+    </PopUp>
   </section>
 </template>
 
@@ -187,6 +211,7 @@ import { Component } from 'nuxt-property-decorator';
 import { PostService } from '~/scripts/postService';
 import loading from '~/components/loading/loading.vue';
 import Button from '~/components/Button.vue';
+import PopUp from '~/components/Popup.vue';
 import {
   switchHashtag,
   userForClient,
@@ -215,6 +240,7 @@ import pinwheel from '~/assets/images/switch-share/tutorial-icons/pinwheel.svg?i
     twicon,
     linkic,
     pinwheel,
+    PopUp,
   },
 })
 export default class serviceCallback extends Vue {
@@ -290,6 +316,16 @@ export default class serviceCallback extends Vue {
         })
         .slice(1)
     );
+  }
+
+  showPopup = false;
+
+  openPopup() {
+    this.showPopup = true;
+  }
+
+  closePopup() {
+    this.showPopup = false;
   }
 
   async mounted() {
@@ -390,6 +426,7 @@ export default class serviceCallback extends Vue {
       if (data) {
         this.gphotosUrl = data;
       }
+      this.closePopup();
     }
   }
 
@@ -423,6 +460,17 @@ export default class serviceCallback extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.error-close-button {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+}
+@media (min-width: 769px) {
+  .error-close-button {
+    max-width: 13rem;
+  }
+}
+
 .center-text {
   text-align: center;
 }
@@ -446,6 +494,9 @@ export default class serviceCallback extends Vue {
   flex-direction: column;
   .white {
     color: #172a3a;
+  }
+  > h3 {
+    margin-top: 0px;
   }
 }
 .stick-to-bottom {
@@ -570,5 +621,10 @@ export default class serviceCallback extends Vue {
   margin-top: auto;
   margin-bottom: auto;
   fill: #ecfeff;
+}
+
+.center-vertical {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 </style>

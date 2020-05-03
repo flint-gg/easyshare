@@ -119,7 +119,7 @@
           <twicon class="tutorial-icon tutorial-icon--twitter" />
         </div>
         <h4>Upload directly from your Switch</h4>
-        Post your images and videos from the switch library to twitter, using
+        Post your images and videos from the switch library to twitter using
         the hashtag you set up on our system.<br />We support anything the
         Switch offers: Single images, multiple images, and videos.
       </section>
@@ -137,8 +137,8 @@
         The moment you post, we grab the content and delete the original tweet,
         keeping your Twitter timeline clean.<br />
         We track #NintendoSwitch per default, as it is automatically added by
-        your Switch the moment you post, but you can choose other hashtags as
-        well!
+        your Switch, but you can choose other hashtags as
+        well.
       </section>
       <section class="tutorial-section">
         <network class="tutorial-icon" />
@@ -154,31 +154,31 @@
           What's this all about?
         </h3>
         <p>
-          Getting screenshots such as images and videos from your Nintendo
+          Getting media, such as screenshots and videos, from your Nintendo
           Switch to your
-          <strong>computer, smartphone and social media </strong> is difficult.
+          <strong>computer, smartphone and social media</strong> is difficult.
           Easyshare by flint.gg takes care of all the difficulties and makes it
           <strong>easy for you</strong>.
         </p>
         <h3>
-          I got a question!
+          I've got a question!
         </h3>
         <div class="item">
           <h4>Why Twitter and Google Photos?</h4>
-          Nintendo supports sharing to Twitter, and we take advantage of
+          Nintendo supports sharing to Twitter &ndash; we take full advantage of
           that.<br />
           Google Photos allows you to access your media online or on apps on
           both Android and iOS. It's super easy to share onto other platforms
-          from there as well!
+          from there as well.
         </div>
         <div class="item">
           <h4>I have an idea for a new feature!</h4>
-          This tool is currently in its very beginning, and depending on user
-          feedback we will think about adding new ways to get, share and display
-          your media! If you got some ideas, just hit us up!
+          This tool is currently at its very beginning. Depending on user
+          feedback we'll think about adding new ways to get, share and display
+          your media. If you've got some ideas, just hit us up!
         </div>
         <div class="item">
-          <h4>How can i contact you?</h4>
+          <h4>How can I contact you?</h4>
           You can always hang out or give feedback on
           <a href="https://discord.gg/vC2R7xx">our Discord server</a>!
         </div>

@@ -1,8 +1,5 @@
 {
-  "name": "flint.gg-switch-share",
   "version": "1.0.0",
-  "description": "flint.gg - the home of every gamers identity",
-  "author": "Sebastian Di Luzio",
   "engines": {
     "node": ">=12.x"
   },

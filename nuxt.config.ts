@@ -1,7 +1,5 @@
 import { Configuration } from '@nuxt/types';
 
-const pkg = require('./package');
-
 const config: Configuration = {
   buildModules: [
     '@nuxt/typescript-build',
@@ -27,7 +25,7 @@ const config: Configuration = {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: 'Easyshare for Nintendo Switch - by flint.gg',
     meta: [
       {
         charset: 'utf-8',

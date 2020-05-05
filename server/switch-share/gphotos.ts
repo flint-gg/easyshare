@@ -179,6 +179,6 @@ export async function uploadMedia(
     console.error(e.stack || e);
   }
   downloadedFiles.forEach((f) => {
-    fs.unlinkSync(f.file);
+    fs.unlink(f.file, () => {});
   });
 }

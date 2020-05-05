@@ -53,6 +53,11 @@ const config: Configuration = {
         name: 'title',
         content: 'Easyshare for Nintendo Switch - by flint.gg',
       },
+      {
+        hid: 'image',
+        name: 'image',
+        content: 'https://switch.flint.gg/preview-image.png',
+      },
     ],
     link: [
       {

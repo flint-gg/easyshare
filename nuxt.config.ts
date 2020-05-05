@@ -48,13 +48,12 @@ const config: Configuration = {
         hid: 'description',
         name: 'description',
         content:
-          'Represent your gaming identity across all your favorite games and platforms. All of the statistics and everything you&#x27;ve achieved in your favourite games in one place.',
+          'Easily, quickly and securely share media from your Nintendo Switch to other platforms.',
       },
       {
         hid: 'title',
         name: 'title',
-        content:
-          'flint.gg - Your gaming identity across all your favorite games and platforms.',
+        content: 'Easyshare for Nintendo Switch - by flint.gg',
       },
     ],
     link: [

@@ -2,7 +2,8 @@
   <section>
     <h3 class="center-text">
       {{ userToken ? '' : 'Welcome to' }}
-      Nintendo Switch Easyshare&trade; by
+      Nintendo Switch Easyshare<!-- &trade; -->
+      by
       <img
         ix-path="branding/textlogo"
         ix-params='{

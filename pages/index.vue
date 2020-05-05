@@ -13,6 +13,32 @@
       />
     </h3>
     <section v-if="userToken">
+      <v-alert
+        v-if="userName && !linkedPhotos"
+        class="alert"
+        type="info"
+        color="orange"
+        :dismissible="true"
+      >
+        An approval by Google is currently pending, and you will get a warning
+        when trying to link Google Photos.<br />
+        Don't worry, this is normal. When you get the warning, click "advanced"
+        on the bottom left and then click "go to flint.gg".
+      </v-alert>
+      <v-alert
+        v-if="userName && linkedPhotos && statsToDisplay[3] === 0"
+        class="alert"
+        type="info"
+        color="blue"
+        :dismissible="true"
+      >
+        Thanks for signing up! But what now?<br />
+        Simply upload media from you switch to the twitter account you linked.
+        Make sure to include one of the hashtags you set up below, by default
+        you will not need to add any yourself.<br />Your media should become
+        available on your Google Photos account a few moments after the upload
+        completes.
+      </v-alert>
       <section v-if="!userName" class="accounts">
         <loading
           message="loading profile..."
@@ -119,9 +145,9 @@
           <twicon class="tutorial-icon tutorial-icon--twitter" />
         </div>
         <h4>Upload directly from your Switch</h4>
-        Post your images and videos from the switch library to twitter using
-        the hashtag you set up on our system.<br />We support anything the
-        Switch offers: Single images, multiple images, and videos.
+        Post your images and videos from the switch library to twitter using the
+        hashtag you set up on our system.<br />We support anything the Switch
+        offers: Single images, multiple images, and videos.
       </section>
       <section class="tutorial-section">
         <div>
@@ -137,8 +163,7 @@
         The moment you post, we grab the content and delete the original tweet,
         keeping your Twitter timeline clean.<br />
         We track #NintendoSwitch per default, as it is automatically added by
-        your Switch, but you can choose other hashtags as
-        well.
+        your Switch, but you can choose other hashtags as well.
       </section>
       <section class="tutorial-section">
         <network class="tutorial-icon" />
@@ -499,6 +524,13 @@ export default class serviceCallback extends Vue {
     margin-top: 0px;
   }
 }
+@media (max-width: 400px) {
+  .account-section {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .stick-to-bottom {
   margin-top: auto;
 }
@@ -626,5 +658,10 @@ export default class serviceCallback extends Vue {
 .center-vertical {
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.alert {
+  margin: auto;
+  max-width: 900px;
 }
 </style>

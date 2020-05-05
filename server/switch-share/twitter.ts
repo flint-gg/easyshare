@@ -9,7 +9,7 @@ import {
   twitterStatus,
 } from '../../types/twitter';
 
-import { queryToObject, asyncWait } from '../../scripts/helper/helperFunctions';
+import { queryToObject } from '../../scripts/helper/helperFunctions';
 import flintURL from '../../scripts/flintURL';
 import { uploadMedia } from './gphotos';
 import {
@@ -23,8 +23,6 @@ import {
   switchHashtag,
   switchEvent,
   switchAccountType,
-  streamEnd,
-  streamEndReason,
   streamEndResponse,
 } from './enums';
 
@@ -182,6 +180,7 @@ async function listenToStream(timeouted = 0) {
         '; text:',
         response.statusText,
       );
+      console.log('entire response:', response);
       if (Number(response.status) === 420) {
         timeout = (timeout || 1) * 2;
       } else {
@@ -189,9 +188,7 @@ async function listenToStream(timeouted = 0) {
       }
       // restart stream
       console.log('restarting stream with timeout', timeout);
-      await asyncWait(timeout * 1000);
-
-      listenToStream(timeout);
+      setTimeout(() => listenToStream(timeout), timeout * 1000);
     });
 }
 

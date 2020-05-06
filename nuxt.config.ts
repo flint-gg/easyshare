@@ -74,7 +74,7 @@ const config: Configuration = {
         name: 'og:image',
         content: 'https://switch.flint.gg/preview-image.png',
       },
-      { name: 'og:url', content: 'https://switch.flint.gg' },
+      { hid: 'og:url', name: 'og:url', content: 'https://switch.flint.gg' },
       {
         hid: 'twitter:title',
         name: 'twitter:title',

@@ -9,9 +9,6 @@ rename `removeThisPartBeforeTheDot.env` to `.env`
 run development env
 ```npm run dev```
 
-(optionally) create ugly, but automatic documentation
-```npm run doc```
-
 # Export (which is what the hosted server should do)
 
 build the project

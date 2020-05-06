@@ -25,7 +25,7 @@ const config: Configuration = {
    ** Headers of the page
    */
   head: {
-    title: 'Easyshare for Nintendo Switch - by flint.gg',
+    title: 'Easyshare by flint.gg',
     meta: [
       {
         charset: 'utf-8',
@@ -43,20 +43,58 @@ const config: Configuration = {
         content: 'flint-gg.imgix.net',
       }, // this is for our imgix library
       {
+        hid: 'title',
+        name: 'title',
+        content: 'Easyshare by flint.gg',
+      },
+      {
         hid: 'description',
         name: 'description',
         content:
           'Easily, quickly and securely share media from your Nintendo Switch to other platforms.',
       },
       {
-        hid: 'title',
-        name: 'title',
-        content: 'Easyshare for Nintendo Switch - by flint.gg',
-      },
-      {
         hid: 'image',
         name: 'image',
         content: 'https://switch.flint.gg/preview-image.png',
+      },
+      {
+        hid: 'og:title',
+        name: 'og:title',
+        content: 'Easyshare by flint.gg',
+      },
+      {
+        hid: 'og:description',
+        name: 'og:description',
+        content:
+          'Easily, quickly and securely share media from your Nintendo Switch to other platforms.',
+      },
+      {
+        hid: 'og:image',
+        name: 'og:image',
+        content: 'https://switch.flint.gg/preview-image.png',
+      },
+      { name: 'og:url', content: 'https://switch.flint.gg' },
+      {
+        hid: 'twitter:title',
+        name: 'twitter:title',
+        content: 'Easyshare by flint.gg',
+      },
+      {
+        hid: 'twitter:description',
+        name: 'twitter:description',
+        content:
+          'Easily, quickly and securely share media from your Nintendo Switch to other platforms.',
+      },
+      {
+        hid: 'twitter:image',
+        name: 'twitter:image',
+        content: 'https://switch.flint.gg/preview-image.png',
+      },
+      {
+        hid: 'twitter:card',
+        name: 'twitter:card',
+        content: 'summary_large_image',
       },
     ],
     link: [

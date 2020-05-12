@@ -15,18 +15,6 @@
     </h3>
     <section v-if="userToken">
       <v-alert
-        v-if="userName && !linkedPhotos"
-        class="alert"
-        type="info"
-        color="orange"
-        :dismissible="true"
-      >
-        An approval by Google is currently pending, and you will get a warning
-        when trying to link Google Photos.<br />
-        Don't worry, this is normal. When you get the warning, click "advanced"
-        on the bottom left and then click "go to flint.gg".
-      </v-alert>
-      <v-alert
         v-if="userName && linkedPhotos && statsToDisplay[3] === 0"
         class="alert"
         type="info"

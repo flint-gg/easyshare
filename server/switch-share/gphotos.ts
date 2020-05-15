@@ -98,7 +98,7 @@ async function getAPI(user: switch_share_user_type_with_ph) {
     if (!album) {
       album = await getOrCreatePhotosAlbum(newTokenSet);
     }
-    u = await connectPhotos(user.id, newTokenSet, album);
+    u = await connectPhotos(user.id, newTokenSet, album, true);
   }
 
   return new Photos(u.ph_token);

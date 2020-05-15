@@ -128,7 +128,7 @@ export default class serviceCallback extends Vue {
     return st || 0;
   }
 
-  get loginStat() {
+  /* get loginStat() {
     const st = this.stats
       && this.stats
         .filter((s) => s.type === switchEvent.login)
@@ -167,7 +167,7 @@ export default class serviceCallback extends Vue {
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
-
+*/
   get statsToDisplay() {
     const ret: Array<{ title: string; amount: number }> = [];
     ret.push({
@@ -187,10 +187,10 @@ export default class serviceCallback extends Vue {
       amount: ret.reduce((p, n) => p + n.amount, 0),
     });
     ret.push({
-      title: 'signups',
+      title: 'users',
       amount: this.signupStat,
     });
-    ret.push({
+    /* ret.push({
       title: 'logins',
       amount: this.loginStat,
     });
@@ -209,7 +209,7 @@ export default class serviceCallback extends Vue {
     ret.push({
       title: 'settings changed',
       amount: this.changeSettingsStat,
-    });
+    }); */
 
     return ret;
   }

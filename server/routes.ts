@@ -4,6 +4,7 @@ import twitterCallback from './routes/twitter';
 import photosCallback from './routes/photos';
 import { getSwitchAuthMiddleware } from './tokenGen';
 import switchAccount from './routes/account';
+import statsEndpoint from './routes/stats';
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -16,6 +17,7 @@ export default (app: Express) => {
   app.use('/api/', apiLimiter); // add general api ratelimit
 
   app.use('/api/twitter', twitterCallback);
+  app.use('/api/stats', statsEndpoint);
   app.use('/api/photos', getSwitchAuthMiddleware(), photosCallback);
   app.use('/api/account', getSwitchAuthMiddleware(), switchAccount);
 

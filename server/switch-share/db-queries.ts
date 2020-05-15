@@ -53,6 +53,23 @@ export async function getUserStats(author: flintId) {
   });
 }
 
+export async function getGeneralStats() {
+  return sequelize.transaction(async (t) => {
+    const stats: Array<switchStat & {
+      author: 'flintId';
+    }> = (await switch_share_events.findAll({
+      group: ['type'],
+      attributes: [
+        [Sequelize.fn('count', Sequelize.col('date')), 'amount'],
+        'type',
+        /* 'author', */
+      ],
+      transaction: t,
+    })) as any;
+    return stats;
+  });
+}
+
 export async function createUser(
   id: flintId,
   tw: trackedUser,

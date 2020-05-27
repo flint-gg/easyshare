@@ -24,9 +24,15 @@ export async function addEvent(
   author: flintId,
   type: switchEvent,
   transaction?: Transaction,
+  amount = 1,
 ) {
   return switch_share_events.upsert(
-    { author, date: new Date(), type },
+    {
+      author,
+      date: new Date(),
+      type,
+      amount,
+    },
     { transaction },
   );
 }
@@ -44,7 +50,7 @@ export async function getUserStats(author: flintId) {
       where: { author },
       group: ['type', 'author'],
       attributes: [
-        [Sequelize.fn('count', Sequelize.col('date')), 'amount'],
+        [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
         'type',
       ],
       transaction: t,
@@ -56,17 +62,35 @@ export async function getUserStats(author: flintId) {
 export async function getGeneralStats() {
   return sequelize.transaction(async (t) => {
     const stats: Array<switchStat & {
-      author: 'flintId';
+      author: flintId;
     }> = (await switch_share_events.findAll({
-      group: ['type'],
+      group: ['type', 'author'],
       attributes: [
-        [Sequelize.fn('count', Sequelize.col('date')), 'amount'],
+        [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
         'type',
-        /* 'author', */
+        'author',
       ],
       transaction: t,
     })) as any;
-    return stats;
+    // anonymize author IDs
+    const authorMap = new Map<flintId, number>();
+    let i = 0;
+    return stats.map((s) => {
+      let anonymousName = 'easyshare user ';
+      const auth = authorMap.get(s.author);
+      if (auth) {
+        anonymousName += auth;
+      } else {
+        anonymousName += i;
+        authorMap.set(s.author, i);
+        i++;
+      }
+      return {
+        amount: s.amount,
+        type: s.type,
+        author: anonymousName,
+      };
+    });
   });
 }
 
@@ -99,6 +123,7 @@ export async function createUser(
   return user;
 }
 
+// remember: this skews stats because removed accounts are not counted to the stats anymore!
 export async function removeUser(id: flintId) {
   return sequelize.transaction(async (t) => {
     await switch_share_events.destroy({

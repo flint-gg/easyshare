@@ -3,7 +3,7 @@ import Photos from 'googlephotos';
 import fs from 'fs';
 import Path from 'path';
 import Axios from 'axios';
-import { asyncForEach } from '../../scripts/helper/helperFunctions';
+import { asyncForEach, asyncWait } from '../../scripts/helper/helperFunctions';
 import flintURL from '../../scripts/flintURL';
 import {
   gphotosTokens,
@@ -133,6 +133,24 @@ async function downloadImage(uri: string, filename: string): Promise<string> {
   });
 }
 
+async function downloadImageWithRetry(
+  uri: string,
+  filename: string,
+  tryIndex = 0,
+) {
+  try {
+    await asyncWait(tryIndex * 1000);
+    const resp = await downloadImage(uri, filename);
+    return resp;
+  } catch (e) {
+    console.error('Failed getting ', uri, ' with timeout ', tryIndex);
+    if (tryIndex <= 64) {
+      return downloadImageWithRetry(uri, filename, tryIndex ? 2 * tryIndex : 1);
+    }
+    return downloadImage(uri, filename);
+  }
+}
+
 // The token from above can be used to initialize the photos library.
 export async function uploadMedia(
   user: switch_share_user_type_with_ph,
@@ -143,16 +161,16 @@ export async function uploadMedia(
     if (u.includes('.jpg')) {
       const shorterURL = u.slice(28); // remove base url https://pbs.twimg.com/media/
       const name = `${shorterURL.split('.jpg')[0]}.jpg`; // remove query params and file ending EWIx0XlUwAEc5Lf.jpg?format=jpg&name=large
-      const file = await downloadImage(u, name);
+      const file = await downloadImageWithRetry(u, name);
       return { name, file };
     }
     const splitBySlash = u.split('.mp4')[0].split('/'); // remove query params and file ending 1247505060222758913/pu/vid/1280x720/-NLI766iWVe1obMc.mp4?tag=10
     const name = `${splitBySlash[splitBySlash.length - 1]}.mp4`;
-    const file = await downloadImage(u, name);
+    const file = await downloadImageWithRetry(u, name);
     return { name, file };
   });
   try {
-    if (fileURLs.length > 1) {
+    if (downloadedFiles.length > 1) {
       const files = downloadedFiles.map((u) => ({ name: u.name, description }));
       await photos.mediaItems.uploadMultiple(
         user.ph_album,
@@ -160,8 +178,13 @@ export async function uploadMedia(
         imageBaseDirectory,
         10000,
       );
-      await addEvent(user.id, switchEvent.multiImage);
-    } else if (fileURLs.length === 1) {
+      await addEvent(
+        user.id,
+        switchEvent.multiImage,
+        undefined,
+        downloadedFiles.length,
+      );
+    } else if (downloadedFiles.length === 1) {
       await photos.mediaItems.upload(
         user.ph_album,
         downloadedFiles[0].name,

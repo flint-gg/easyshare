@@ -102,6 +102,8 @@ export class switch_share_events extends Sequelize.Model {
 
   public type!: switchEvent;
 
+  public amount?: number;
+
   public static initWithSequelize(sequelize: Sequelize.Sequelize) {
     switch_share_events.init(
       {
@@ -122,6 +124,13 @@ export class switch_share_events extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull: false,
           comment: 'Type of the event. Based on our ENUM',
+        },
+        amount: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          defaultValue: 1,
+          comment:
+            'Occurence amount of the event. Currently only relevant for multi image uploads',
         },
       },
       { sequelize },

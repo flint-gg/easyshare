@@ -7,6 +7,12 @@ import { switch_share_events, switch_share_user } from '../switch-share/models';
 // The types will then be defined by schemats in types/db.ts
 
 const sequelizeOptions = {
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
   dialect: 'postgres' as 'postgres', // To make sequelizes type check shut up, as string is not a compatible type to the string literals we can choose from
   logging: false && Boolean(process.env.NODE_ENV === 'development'),
   define: {
@@ -18,7 +24,7 @@ const sequelizeOptions = {
 };
 export const sequelize = !AWSConfig.host
   ? new Sequelize.Sequelize(
-    `${process.env.DATABASE_URL!}?ssl=true`,
+    `${process.env.DATABASE_URL!}`,
     sequelizeOptions,
   )
   : new Sequelize.Sequelize(

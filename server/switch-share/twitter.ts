@@ -1,7 +1,5 @@
 import Twitter from 'twitter-lite';
-import Axios from 'axios';
 import {
-  requestToken,
   userTokensFromAuth,
   twitterMediaType,
   twitterMedia,
@@ -9,7 +7,6 @@ import {
   twitterStatus,
 } from '../../types/twitter';
 
-import { queryToObject } from '../../scripts/helper/helperFunctions';
 import flintURL from '../../scripts/flintURL';
 import { uploadMedia } from './gphotos';
 import {
@@ -122,7 +119,8 @@ function checkHashtags(
   const hashtags: Array<string> = [];
   userHashtags.forEach((i) => hashtags.push(hashtagsToFollow[i - 1]));
   return (
-    hashtagsInTweet.filter((h) => hashtags.find((hs) => hs === h.text)).length > 0
+    hashtagsInTweet.filter((h) => hashtags.find((hs) => hs === h.text)).length
+    > 0
   );
 }
 
@@ -198,10 +196,10 @@ export async function run() {
 }
 
 export async function getAuthFlowToken() {
-  const tokenresp: requestToken = await twitterAPI.getRequestToken(
+  const tokenresp = await twitterAPI.getRequestToken(
     `${flintURL.getURL()}callback/twitter`,
   );
-  if (tokenresp.oauth_callback_confirmed) {
+  if (tokenresp.oauth_callback_confirmed === 'true') {
     return tokenresp.oauth_token;
   }
   throw new Error('Failed to get RequestToken');
@@ -211,19 +209,7 @@ export async function getTokensetFromCompletedAuthFlow(tokens: {
   oauth_token: string;
   oauth_verifier: string;
 }) {
-  const twitterAccessResponse = await Axios.post(
-    `${twitterAPI.oauth}/access_token`,
-    {},
-    { params: tokens },
-  );
-  const response: userTokensFromAuth = queryToObject(
-    twitterAccessResponse.data,
-  );
-
-  /* Once my patch is out, we can use this:
   const response: userTokensFromAuth = await twitterAPI.getAccessToken(tokens);
-  console.log('auth response:', response);
-  */
   let user = await getUser(response.user_id);
   if (!user) {
     user = await createUser(

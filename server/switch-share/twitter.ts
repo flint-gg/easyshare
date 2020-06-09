@@ -192,7 +192,9 @@ async function listenToStream(timeouted = 0) {
 
 export async function run() {
   await fillCache();
-  await listenToStream();
+  if (process.env.NODE_ENV !== 'development') {
+    await listenToStream();
+  }
 }
 
 export async function getAuthFlowToken() {

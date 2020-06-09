@@ -140,7 +140,6 @@ const config: Configuration = {
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
     '@nuxtjs/toast',
-    'nuxt-clipboard2',
     'cookie-universal-nuxt',
     '@nuxtjs/svg',
     'vue-scrollto/nuxt',

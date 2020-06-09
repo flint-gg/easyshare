@@ -95,5 +95,4 @@ flintgg.zip
 dist/
 .build/
 build/
-schemats.json
 *.pem

@@ -4,7 +4,6 @@ import { AWSConfig, pool } from './db';
 import { switch_share_events, switch_share_user } from '../switch-share/models';
 
 // We will now start defining DB stuff via sequelize.
-// The types will then be defined by schemats in types/db.ts
 
 const sequelizeOptions = {
   dialectOptions: {

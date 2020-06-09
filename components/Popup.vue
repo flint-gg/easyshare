@@ -126,7 +126,7 @@ export default class PopUp extends Vue {
 
 .header h1 {
   text-transform: uppercase;
-  font-family: Exo;
+  font-family: Exo2;
   font-size: 24px;
   font-weight: 900;
   line-height: 1.46;

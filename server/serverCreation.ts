@@ -3,7 +3,7 @@ import { Express } from 'express';
 import flintURL from '../scripts/flintURL';
 
 // this will be our instance
-const options = flintURL.getWebsocketOptions();
+const options = flintURL.getServerOptions();
 options.origins = [
   'http://localhost:3000',
   'https://flint.gg:*',

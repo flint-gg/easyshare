@@ -124,12 +124,6 @@ const config: Configuration = {
   plugins: [
     '~/plugins/vuetify',
     '~/plugins/imgixPlugin',
-    {
-      src: '~/plugins/vueModal',
-      mode: 'client',
-    },
-    '~/plugins/resizeTextPlugin',
-    '~/plugins/vueTooltip',
     '~/plugins/mountedHook',
   ],
 

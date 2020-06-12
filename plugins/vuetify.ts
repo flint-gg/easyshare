@@ -1,5 +1,7 @@
 import Vue from 'vue';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import Vuetify from 'vuetify/lib';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import colors from 'vuetify/es5/util/colors';
 
 Vue.use(Vuetify, {

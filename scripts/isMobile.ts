@@ -1,6 +1,3 @@
-// tests if we are on a mobile device
-// TODO update mobile specifications
-
 const mobileHeight = 812; // iphone X, very long phone
 const mobileWidth = 768; // Tablet size, by Chrome
 

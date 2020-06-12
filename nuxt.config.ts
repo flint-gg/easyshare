@@ -136,7 +136,6 @@ const config: Configuration = {
     '@nuxtjs/toast',
     'cookie-universal-nuxt',
     '@nuxtjs/svg',
-    'vue-scrollto/nuxt',
   ],
   // override purgecss settings: not done here
 

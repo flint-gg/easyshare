@@ -213,14 +213,5 @@ export default class Default extends Vue {
     align-items: flex-start;
   }
 }
-.error-close-button {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 25px;
-}
-@media (min-width: 769px) {
-  .error-close-button {
-    max-width: 13rem;
-  }
-}
+
 </style>

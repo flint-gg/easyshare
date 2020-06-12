@@ -1,12 +1,12 @@
 // Import Vuetify styling
-@import 'fonts.scss';
-@import 'button.scss';
-@import 'chat.scss';
-@import 'home.scss';
+@import "fonts.scss";
+@import "button.scss";
+@import "default.scss";
 
 body,
-html { /* setting default font */
-  font-family: 'Exo2';
+html {
+  /* setting default font */
+  font-family: "Exo2";
   width: 100%;
   height: 100%;
   overflow-y: auto;
@@ -61,4 +61,3 @@ html { /* setting default font */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-

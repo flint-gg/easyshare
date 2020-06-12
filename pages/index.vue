@@ -472,6 +472,7 @@ export default class serviceCallback extends Vue {
 </script>
 
 <style lang="scss" scoped>
+/* we need this here to bind stronger */
 .error-close-button {
   margin-left: auto;
   margin-right: auto;
@@ -483,101 +484,8 @@ export default class serviceCallback extends Vue {
   }
 }
 
-.center-text {
-  text-align: center;
-}
-
-.accounts {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.account-section {
-  width: 300px;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 5px;
-  background-color: #172a3a;
-  strong {
-    color: #35e4d8;
-  }
-  display: flex;
-  flex-direction: column;
-  .white {
-    color: #172a3a;
-  }
-  > h3 {
-    margin-top: 0px;
-  }
-}
-@media (max-width: 400px) {
-  .account-section {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
 .stick-to-bottom {
   margin-top: auto;
-}
-.tutorial {
-  max-width: 900px;
-  width: auto;
-
-  h4 {
-    color: #35e4d8;
-    margin-top: 0px;
-  }
-  a {
-    color: #35e4d8;
-  }
-
-  div {
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-}
-.stats {
-  ul {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-  }
-
-  li {
-    display: flex;
-    padding: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-    order: 1;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-
-  .user-name {
-    margin-left: 0;
-    margin-right: 10px;
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-
-  .user-score {
-    margin-right: 10px;
-    min-width: 38px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    background-color: #2b353f;
-    font-family: Exo-Bold;
-    padding: 10px;
-  }
-  .user-score.user-score-leading {
-    color: #35e4d8;
-  }
 }
 
 .icon-in-button {
@@ -630,16 +538,6 @@ export default class serviceCallback extends Vue {
   h4 {
     color: #35e4d8;
   }
-}
-
-.tutorial-next {
-  height: 64px;
-  width: 64px;
-  margin-right: -20px;
-  margin-left: -28px;
-  margin-top: auto;
-  margin-bottom: auto;
-  fill: #ecfeff;
 }
 
 .center-vertical {

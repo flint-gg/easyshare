@@ -1,12 +1,8 @@
 <template>
-  <div class="coming-soon ">
+  <div class="coming-soon">
     <slot></slot>
-    <img
-      class="icon-top-right"
-      src="~/assets/images/icons/comingSoon.svg"
-    ></img>
+    <img class="icon-top-right" src="~/assets/images/icons/comingSoon.svg" />
   </div>
-
 </template>
 
 <script lang="ts">

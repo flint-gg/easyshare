@@ -14,17 +14,16 @@
       usage statistic
     </h3>
     <Button
-      style="max-width:160px; margin:auto;"
+      style="max-width: 160px; margin: auto;"
       :onClick="
         () =>
           $router.push({
-            path: '/'
+            path: '/',
           })
       "
       color="grey"
       >Back to the tool</Button
     >
-
     <section class="accounts">
       <section class="account-section">
         <section v-if="stats" class="stats">
@@ -34,7 +33,7 @@
               <div
                 class="user-score"
                 :class="{
-                  'user-score-leading': i === 3
+                  'user-score-leading': i === 3,
                 }"
               >
                 {{ s.amount }}
@@ -45,7 +44,6 @@
         </section>
       </section>
     </section>
-
     <section class="accounts">
       <section class="account-section tutorial">
         <h3>
@@ -222,185 +220,3 @@ export default class serviceCallback extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.error-close-button {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 25px;
-}
-@media (min-width: 769px) {
-  .error-close-button {
-    max-width: 13rem;
-  }
-}
-
-.center-text {
-  text-align: center;
-}
-
-.accounts {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.account-section {
-  width: 300px;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 5px;
-  background-color: #172a3a;
-  strong {
-    color: #35e4d8;
-  }
-  display: flex;
-  flex-direction: column;
-  .white {
-    color: #172a3a;
-  }
-  > h3 {
-    margin-top: 0px;
-  }
-}
-@media (max-width: 400px) {
-  .account-section {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-.stick-to-bottom {
-  margin-top: auto;
-}
-.tutorial {
-  max-width: 900px;
-  width: auto;
-
-  h4 {
-    color: #35e4d8;
-    margin-top: 0px;
-  }
-  a {
-    color: #35e4d8;
-  }
-
-  div {
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-}
-.stats {
-  ul {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-  }
-
-  li {
-    display: flex;
-    padding: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-    order: 1;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-
-  .user-name {
-    margin-left: 0;
-    margin-right: 10px;
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-
-  .user-score {
-    margin-right: 10px;
-    min-width: 38px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    background-color: #2b353f;
-    font-family: Exo-Bold;
-    padding: 10px;
-  }
-  .user-score.user-score-leading {
-    color: #35e4d8;
-  }
-}
-
-.icon-in-button {
-  width: 38px;
-  height: 38px;
-  margin-right: 5px;
-}
-
-.tutorial-icon {
-  margin-left: auto;
-  margin-right: auto;
-  height: 64px;
-  width: 64px;
-  fill: #ecfeff;
-
-  &--cascading {
-    * {
-      fill: #ecfeff;
-    }
-  }
-  &--twitter {
-    > path {
-      fill: #ecfeff;
-    }
-  }
-  &--smol {
-    width: 32px;
-  }
-  &--switch {
-    margin-right: 15px;
-  }
-}
-
-.tutorial-section {
-  width: 300px;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 5px;
-  background-color: #172a3a;
-  strong {
-    color: #35e4d8;
-  }
-  display: flex;
-  flex-direction: column;
-  > div {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  h4 {
-    color: #35e4d8;
-  }
-}
-
-.tutorial-next {
-  height: 64px;
-  width: 64px;
-  margin-right: -20px;
-  margin-left: -28px;
-  margin-top: auto;
-  margin-bottom: auto;
-  fill: #ecfeff;
-}
-
-.center-vertical {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-.alert {
-  margin: auto;
-  max-width: 900px;
-}
-</style>

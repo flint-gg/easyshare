@@ -1,6 +1,6 @@
 <template>
-  <div class="container" style="text-align: center;min-height:80vh;">
-    <h1 style="font-size: 100px;margin-top:50px;">{{ error.statusCode }}</h1>
+  <div class="container" style="text-align: center; min-height: 80vh;">
+    <h1 style="font-size: 100px; margin-top: 50px;">{{ error.statusCode }}</h1>
     <div v-if="error.statusCode === 404">
       <h1>Bloop bleep bleep bloop.</h1>
       <h3>
@@ -39,7 +39,7 @@ import { Component } from 'nuxt-property-decorator';
 import Vue from 'vue';
 
 @Component({
-  props: ['error'], // TODO double check if this is correct to set this up as error page
+  props: ['error'],
   layout: 'landing',
 })
 export default class errorLayout extends Vue {

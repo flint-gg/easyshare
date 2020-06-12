@@ -17,7 +17,7 @@ import { Nuxt, Builder } from 'nuxt';
 import Umzug from 'umzug';
 import { Sequelize } from 'sequelize';
 import routeSetup from './routes';
-import { chatSocketSetup } from './chatSockets';
+import { chatSocketSetup } from './serverCreation';
 import config from '../nuxt.config';
 import { sequelize } from './IDP_code/init_db';
 import { run } from './switch-share/twitter';

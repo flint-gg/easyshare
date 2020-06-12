@@ -9,7 +9,6 @@ const MountedHookPlugin: PluginObject<null> = {
       // DISCLAIMER: this is called on every mount of every component
       mounted() {
         const instance = this as Vue;
-        // Add hashed userID for Google Analytics
         if (firstRun) {
           // add authed axios instance
           PostService.addAuthedAxios(instance.$axios);

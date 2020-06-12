@@ -216,11 +216,10 @@ const config: Configuration = {
     /*
      ** You can extend webpack config here
      */
-    extend(conf /* , ctx */) {
-      /* conf.module!.rules.push({
-
-      }); */
-    },
+    /* extend(conf , ctx ) {
+       conf.module!.rules.push({
+      });
+    }, */
   },
 };
 // module.exports = config;

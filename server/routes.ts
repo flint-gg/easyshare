@@ -22,5 +22,5 @@ export default (app: Express) => {
   app.use('/api/account', getSwitchAuthMiddleware(), switchAccount);
 
   // fail for any other /api requests
-  app.use('/api', (req, res) => res.status(404).json('API not found.'));
+  app.use('/api', (req, res) => res.status(404).json('Route does not exist.'));
 };

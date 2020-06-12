@@ -201,11 +201,6 @@ const config: Configuration = {
         ],
       ],
     },
-    loaders: {
-      stylus: {
-        import: ['~assets/style/variables.scss'],
-      },
-    },
     extractCSS: true,
     /*
      ** You can extend webpack config here

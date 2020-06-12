@@ -1,6 +1,4 @@
-// Import Vuetify styling
 @import "fonts.scss";
-@import "button.scss";
 @import "default.scss";
 
 body,
@@ -13,32 +11,6 @@ html {
   overflow-x: hidden;
   z-index: 0;
   position: relative;
-}
-
-.u-mlm {
-  margin-left: 10px;
-}
-
-.u-mll {
-  margin-left: 15px;
-}
-
-.u-mrm {
-  margin-right: 10px;
-}
-
-.u-mtl {
-  margin-top: 15px;
-}
-
-.u-center {
-  text-align: center;
-}
-
-.well {
-  background-color: $grey;
-  border-radius: 5px;
-  padding: 5px;
 }
 
 /* scrollbar customization */

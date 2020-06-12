@@ -9,7 +9,7 @@
       ['dark-blue']: color === 'dark-blue',
       red: color === 'red',
       violet: color === 'violet',
-      green: color === 'green'
+      green: color === 'green',
     }"
     @click="onClick"
   >
@@ -47,21 +47,19 @@ export default class Button extends Vue {
   width: calc(100% - 10px);
   border-radius: 4px;
   margin: 5px;
-}
-
-.wrapper > button {
-  font-family: Exo-Bold;
-  font-weight: 900;
-  line-height: 1.29;
-  letter-spacing: 1.25px;
-  text-align: center;
-  min-height: inherit;
-  height: 100%;
-  width: 100%;
-}
-
-.wrapper > button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  > button {
+    font-family: Exo-Bold;
+    font-weight: 900;
+    line-height: 1.29;
+    letter-spacing: 1.25px;
+    text-align: center;
+    min-height: inherit;
+    height: 100%;
+    width: 100%;
+  }
+  > button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 }
 .disable-svg-focus svg:focus {
   outline: none;

@@ -11,7 +11,7 @@
         class="display-icon"
         :class="{
           battle: icon == 'battle',
-          'background-transparent': icon === ''
+          'background-transparent': icon === '',
         }"
       />
       <h1>{{ title }}</h1>
@@ -33,7 +33,7 @@
           class="display-icon"
           :class="{
             battle: icon == 'battle',
-            'background-transparent': icon === ''
+            'background-transparent': icon === '',
           }"
         />
         <h1>{{ title }}</h1>
@@ -122,15 +122,14 @@ export default class PopUp extends Vue {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.header h1 {
-  text-transform: uppercase;
-  font-family: Exo2;
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 1.46;
-  margin: auto;
+  > h1 {
+    text-transform: uppercase;
+    font-family: Exo2;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.46;
+    margin: auto;
+  }
 }
 
 .content {

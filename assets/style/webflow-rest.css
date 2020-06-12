@@ -59,13 +59,3 @@ p {
   margin-top: 0;
   margin-bottom: 10px;
 }
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.leavespacemobile {
-  width: calc(100vw - 2rem);
-}

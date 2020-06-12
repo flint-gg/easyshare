@@ -2,7 +2,7 @@
   <v-app>
     <v-content> <nuxt /> </v-content
     ><PopUp
-      style="z-index:1000;"
+      style="z-index: 1000;"
       :display="errorTitle"
       color="#f04747"
       :title="/*'Error: ' + */ errorTitle"
@@ -62,7 +62,6 @@ export default class empty extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
 .error-close-button {
   margin-top: 25px;
 }

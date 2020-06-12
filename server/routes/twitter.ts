@@ -6,6 +6,7 @@ import {
 
 import '../switch-share/gphotos';
 import { getSwitchToken } from '../tokenGen';
+import { twitterTokensPolicy } from './switchPolicies';
 
 const app = express.Router();
 
@@ -19,8 +20,7 @@ app.get('/', async (req, res) => {
   }
 });
 
-// TODO policy
-app.post('/', async (req, res) => {
+app.post('/', twitterTokensPolicy, async (req, res) => {
   try {
     const { tokens } = req.body;
     const user = await getTokensetFromCompletedAuthFlow(tokens);

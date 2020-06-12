@@ -41,12 +41,12 @@ const twitterAPI = new Twitter({
   access_token_secret: process.env.TW_ACCESS_SECRET, // from your User (oauth_token_secret)
 });
 
-// hashtags directly map to enum switchHashtag -1
+// hashtags directly map to enum switchHashtag; id 0 is the always followed hashtag
 export const hashtagsToFollow = [
+  'flintgg', // tracked because it is the dont delete flag
   'NintendoSwitch',
   'switchshare',
   'flintggshare',
-  'flintgg',
   'easyshare',
 ];
 
@@ -71,15 +71,6 @@ function isSharedMediaBySwitch(status: twitterStatus) {
       || status.source.includes('Nintendo Switch Share'))
   );
 }
-
-/** Remove any statuses that have not been posted by Nintendo Switch Share.
- It would be great if we could include this in the API query,
- but for now it seems this is all we can do.
- */
-/* function cleanStatuses(statuses: Array<twitterStatus>) {
-  return statuses.filter((s) => isSharedMediaBySwitch(s));
-}
- */
 
 async function destroyTweet(tweetId: flintId, client: Twitter) {
   await client.post('statuses/destroy' /* /${tweetId}` */, {
@@ -117,7 +108,7 @@ function checkHashtags(
   hashtagsInTweet: Array<{ text: string; indices: Array<number> }>,
 ) {
   const hashtags: Array<string> = [];
-  userHashtags.forEach((i) => hashtags.push(hashtagsToFollow[i - 1]));
+  userHashtags.forEach((i) => hashtags.push(hashtagsToFollow[i]));
   return (
     hashtagsInTweet.filter((h) => hashtags.find((hs) => hs === h.text)).length
     > 0
@@ -155,16 +146,21 @@ async function listenToStream(timeouted = 0) {
         } catch (e) {
           console.error(e);
         }
-        // we are finished with the media, so we can delete the tweet
-        await destroyTweet(
-          tweet.id_str,
-          new Twitter({
-            consumer_key,
-            consumer_secret,
-            access_token_key: user.token,
-            access_token_secret: user.token_secret,
-          }),
-        );
+        // check if "do not delete" flag is set: flintgg
+        if (
+          tweet.entities.hashtags.findIndex((ht) => ht === 'flintgg') === -1
+        ) {
+          // we are finished with the media, so we can delete the tweet
+          await destroyTweet(
+            tweet.id_str,
+            new Twitter({
+              consumer_key,
+              consumer_secret,
+              access_token_key: user.token,
+              access_token_secret: user.token_secret,
+            }),
+          );
+        }
       } else {
         /* console.log('[INCOMING] non tracked user'); */
       }

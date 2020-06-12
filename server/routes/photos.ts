@@ -2,14 +2,13 @@ import express from 'express';
 
 import { url, onCallback } from '../switch-share/gphotos';
 import { disconnectPhotos } from '../switch-share/db-queries';
+import { photosCodePolicy } from './switchPolicies';
 
 const app = express.Router();
 
 app.get('/', async (req, res) => res.status(200).send(url));
 
-
-// TODO policy
-app.post('/', async (req, res) => {
+app.post('/', photosCodePolicy, async (req, res) => {
   try {
     const { code } = req.body;
     const { id } = req.user as any;

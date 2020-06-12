@@ -114,7 +114,7 @@ export async function onCallback(code: string, twitterId: flintId) {
 // TODO dynamic, add game info?
 const description = 'Uploaded via the flint.gg Nintendo Switch Share';
 
-const imageBaseDirectory = Path.resolve(__dirname, 'cached-files'); // 'https://pbs.twimg.com/media/';
+const imageBaseDirectory = Path.resolve(__dirname, 'cached-files');
 
 async function downloadImage(uri: string, filename: string): Promise<string> {
   if (!fs.existsSync(imageBaseDirectory)) {

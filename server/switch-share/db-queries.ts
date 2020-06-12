@@ -11,7 +11,7 @@ import {
   switchAccountType,
 } from './enums';
 import { switch_share_user, switch_share_events } from './models';
-import { sequelize } from '../IDP_code/init_db';
+import { sequelize } from '../db';
 
 export const cachedUsers = new Map<flintId, switch_share_user_type>();
 
@@ -61,9 +61,11 @@ export async function getUserStats(author: flintId) {
 
 export async function getGeneralStats() {
   return sequelize.transaction(async (t) => {
-    const stats: Array<switchStat & {
-      author: flintId;
-    }> = (await switch_share_events.findAll({
+    const stats: Array<
+      switchStat & {
+        author: flintId;
+      }
+    > = (await switch_share_events.findAll({
       group: ['type', 'author'],
       attributes: [
         [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],

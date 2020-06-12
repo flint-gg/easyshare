@@ -17,9 +17,9 @@ import { Nuxt, Builder } from 'nuxt';
 import Umzug from 'umzug';
 import { Sequelize } from 'sequelize';
 import routeSetup from './routes';
-import { chatSocketSetup } from './serverCreation';
+import { serverSetup } from './serverCreation';
 import config from '../nuxt.config';
-import { sequelize } from './IDP_code/init_db';
+import { sequelize } from './db';
 import { run } from './switch-share/twitter';
 
 const umzug = new Umzug({
@@ -37,18 +37,10 @@ const umzug = new Umzug({
   },
 });
 
-function loopWithStart(fun: Function, delay: number, runFirst = false) {
-  if (runFirst) {
-    fun();
-  }
-  setTimeout(loopWithStart.bind(null, fun, delay, true), delay);
-}
-
 const app = express();
 
 // activate features
 app.use(cors());
-// test, use should do this already but who knows
 // allow OPTIONS on all resources
 app.options('*', cors());
 app.use(logger('dev'));
@@ -64,7 +56,7 @@ app.use(cookieParser());
 routeSetup(app);
 
 // setting up websockets for chat and other notification systems
-chatSocketSetup(app);
+serverSetup(app);
 
 // Import and Set Nuxt.js options
 config.dev = !(process.env.NODE_ENV === 'production');
@@ -88,6 +80,9 @@ async function start() {
     console.error(e);
     process.exit();
   }
+
+  // start switch share code
+  run();
 
   const syncSequelizeModels = true;
   if (syncSequelizeModels && process.env.NODE_ENV === 'development') {
@@ -130,9 +125,6 @@ async function start() {
     message: `Server listening on http://${host}:${port}`,
     badge: true,
   });
-
-  // start switch share code
-  run();
 }
 
 start();

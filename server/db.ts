@@ -1,9 +1,14 @@
 /* eslint-disable max-classes-per-file */
 import Sequelize from 'sequelize';
-import { AWSConfig, pool } from './db';
-import { switch_share_events, switch_share_user } from '../switch-share/models';
+import { switch_share_events, switch_share_user } from './switch-share/models';
 
-// We will now start defining DB stuff via sequelize.
+const AWSConfig = {
+  host: process.env.RDS_HOSTNAME,
+  user: process.env.RDS_USERNAME,
+  password: process.env.RDS_PASSWORD,
+  port: process.env.RDS_PORT,
+  database: process.env.RDS_DB_NAME,
+};
 
 const sequelizeOptions = {
   dialectOptions: {
@@ -22,10 +27,7 @@ const sequelizeOptions = {
   schema: 'public',
 };
 export const sequelize = !AWSConfig.host
-  ? new Sequelize.Sequelize(
-    `${process.env.DATABASE_URL!}`,
-    sequelizeOptions,
-  )
+  ? new Sequelize.Sequelize(`${process.env.DATABASE_URL!}`, sequelizeOptions)
   : new Sequelize.Sequelize(
       AWSConfig.database!,
       AWSConfig.user!,
@@ -37,11 +39,7 @@ export const sequelize = !AWSConfig.host
       },
   );
 
-// switch share tool
+// Initilaize tables
+
 switch_share_user.initWithSequelize(sequelize);
 switch_share_events.initWithSequelize(sequelize);
-
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err); // your callback here
-  // process.exit(-1);
-});

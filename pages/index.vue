@@ -45,7 +45,7 @@
             <Button
               :onClick="redirectToPhotos"
               color="white"
-              style="margin-bottom:2rem;"
+              style="margin-bottom: 2rem;"
               ><img
                 src="~/assets/images/switch-share/photos_64dp.png"
                 class="icon-in-button"
@@ -65,7 +65,7 @@
                 <div
                   class="user-score"
                   :class="{
-                    'user-score-leading': i === statsToDisplay.length - 1
+                    'user-score-leading': i === statsToDisplay.length - 1,
                   }"
                 >
                   {{ s.amount }}
@@ -199,7 +199,7 @@
       </section>
     </section>
     <PopUp
-      style="z-index:1000;"
+      style="z-index: 1000;"
       :display="showPopup"
       color="#f04747"
       title="Hold up"
@@ -328,7 +328,7 @@ export default class serviceCallback extends Vue {
           const following = this.followedHashtags!.findIndex((val) => val === index) > -1;
           return { tag: h, following, value: index as switchHashtag };
         })
-        .slice(1)
+        .slice(1) // get rid of always followed hashtag for display
     );
   }
 
@@ -351,9 +351,7 @@ export default class serviceCallback extends Vue {
       });
       if (dat) {
         this.userName = dat.name;
-        this.allHashtags = ['dummyToCorrectIndexForEnum'].concat(
-          dat.hashtagsToFollow,
-        );
+        this.allHashtags = dat.hashtagsToFollow;
         this.followedHashtags = dat.hashtags;
         this.stats = dat.stats;
         if (dat.linkedPhotos) {

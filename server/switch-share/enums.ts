@@ -7,7 +7,6 @@ export enum switchHashtag {
   'NintendoSwitch' = 1,
   'switchshare',
   'flintggshare',
-  'flintgg',
   'easyshare'
 }
 export enum switchEvent {

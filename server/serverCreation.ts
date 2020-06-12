@@ -12,7 +12,7 @@ options.origins = [
   'http://staging.flint.gg:*', // also allow unsafe here
 ];
 
-export function chatSocketSetup(app: Express) {
+export function serverSetup(app: Express) {
   const server = http.createServer(app);
 
   server.listen(options.port, () => {

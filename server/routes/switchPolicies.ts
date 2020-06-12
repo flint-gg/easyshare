@@ -38,3 +38,38 @@ export function hashtagChangePolicy(req, res, next) {
   }
   return next();
 }
+
+const twitterTokensSchema = {
+  oauth_token: joi.string(),
+  oauth_verifier: joi.string(),
+};
+
+export function twitterTokensPolicy(req, res, next) {
+  const { error } = joi.validate(req.body.tokens, twitterTokensSchema);
+  if (error && error.details[0].context) {
+    return res.status(400).send({
+      error: {
+        title: 'Invalid token format.',
+        detail: 'The tokens provided are in invalid format.',
+      } as flintError,
+    });
+  }
+  return next();
+}
+
+const photosCodeSchema = {
+  code: joi.string(),
+};
+
+export function photosCodePolicy(req, res, next) {
+  const { error } = joi.validate(req.body, photosCodeSchema);
+  if (error && error.details[0].context) {
+    return res.status(400).send({
+      error: {
+        title: 'Invalid token format.',
+        detail: 'The token provided is in invalid format.',
+      } as flintError,
+    });
+  }
+  return next();
+}

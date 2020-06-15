@@ -1,9 +1,5 @@
 {
   "ignore": {
-    "async": {
-      "versions": "3.2.0",
-      "reason": ""
-    },
     "v-tooltip": {
       "versions": "2.0.3",
       "reason": "TS crashes"

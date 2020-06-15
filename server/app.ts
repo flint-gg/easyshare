@@ -55,7 +55,7 @@ app.use(cookieParser());
 // Set up the routes
 routeSetup(app);
 
-// setting up websockets for chat and other notification systems
+// setting up server
 serverSetup(app);
 
 // Import and Set Nuxt.js options

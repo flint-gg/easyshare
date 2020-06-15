@@ -89,10 +89,6 @@ assets/style/images/.DS_Store
 Flint.gg.iml
 .idea/
 
-
-server/IDP_code/used_working_requests\.pgsql
-flintgg.zip
 dist/
 .build/
 build/
-*.pem

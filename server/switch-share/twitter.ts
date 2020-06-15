@@ -1,6 +1,5 @@
 import Twitter from 'twitter-lite';
 import {
-  userTokensFromAuth,
   twitterMediaType,
   twitterMedia,
   twitterImageSize,
@@ -207,7 +206,7 @@ export async function getTokensetFromCompletedAuthFlow(tokens: {
   oauth_token: string;
   oauth_verifier: string;
 }) {
-  const response: userTokensFromAuth = await twitterAPI.getAccessToken(tokens);
+  const response = await twitterAPI.getAccessToken(tokens);
   let user = await getUser(response.user_id);
   if (!user) {
     user = await createUser(

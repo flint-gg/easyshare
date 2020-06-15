@@ -1,13 +1,13 @@
 export enum twitterMediaType {
   photo = 'photo',
-  video = 'video'
+  video = 'video',
 }
 
 export enum twitterImageSize {
   medium = 'medium',
   thumb = 'thumb',
   small = 'small',
-  large = 'large'
+  large = 'large',
 }
 
 type twitterImageSizeDetail = {
@@ -150,14 +150,6 @@ export type twitterStatus = {
   lang: string; // 'und'
 };
 
-export type requestToken =
-  | {
-      oauth_token: string;
-      oauth_token_secret: string;
-      oauth_callback_confirmed: true;
-    }
-  | { oauth_callback_confirmed: false };
-
 export type requestTokenResponse =
   | {
       oauth_token: string;
@@ -167,10 +159,3 @@ export type requestTokenResponse =
       oauth_token: undefined;
       oauth_verifier: undefined;
     };
-
-export type userTokensFromAuth = {
-  oauth_token: string;
-  oauth_token_secret: string;
-  user_id: flintId;
-  screen_name: string;
-};

@@ -7,12 +7,6 @@ export function generateSecret(length = 64) {
   return crypto.randomBytes(length).toString('base64');
 }
 
-if (process.env.TOKEN_SECRET) {
-  console.warn(
-    'Theres still a secret in the .env. Were not using that anymore, so you can get rid of it.',
-  );
-}
-
 const JWTlifetime = 30 * 60; // 30mins
 
 const switchSecret = generateSecret();

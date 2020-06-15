@@ -151,7 +151,6 @@ async function downloadImageWithRetry(
   }
 }
 
-// The token from above can be used to initialize the photos library.
 export async function uploadMedia(
   user: switch_share_user_type_with_ph,
   fileURLs: Array<string>,

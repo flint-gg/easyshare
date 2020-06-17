@@ -122,7 +122,7 @@ export type twitterStatus = {
   text: string; // '#AnimalCrossing #ACNH #NintendoSwitch https://t.co/II7XIWGrG7',
   truncated: boolean;
   entities: {
-    hashtags: Array<any>;
+    hashtags: Array<{ text: string; indices: Array<number> }>;
     symbols: Array<any>;
     user_mentions: Array<any>;
     urls: Array<any>;

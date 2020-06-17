@@ -87,26 +87,32 @@
         </section>
         <section v-if="linkedPhotos" class="account-section">
           <h3>Tracked hashtags:</h3>
-          <v-switch
-            v-for="v in displayHashtags"
-            :key="v.value"
-            v-model="followedHashtags"
-            :label="'#' + v.tag"
-            :value="v.value"
-            :dark="true"
-            @change="() => (changedTags = true)"
-          />
-          <br />
-          <v-switch
-            v-model="deletePerDefault"
-            label="Delete tracked tweets"
-            :dark="true"
-            @change="() => (changedTags = true)"
-          />
-          <p v-if="deletePerDefault">
-            Pro tip: You can mark tweets with #flintgg to keep them from being
-            deleted!
-          </p>
+          <section class="toggle">
+            <v-switch
+              v-for="v in displayHashtags"
+              :key="v.value"
+              v-model="followedHashtags"
+              :label="'#' + v.tag"
+              :value="v.value"
+              :dark="true"
+              @change="() => (changedTags = true)"
+            />
+          </section>
+          <section class="toggle">
+            <v-switch
+              v-model="deletePerDefault"
+              label="Delete tracked tweets"
+              :dark="true"
+              @change="() => (changedTags = true)"
+            />
+            <p v-if="deletePerDefault">
+              Pro tip: You can mark tweets with #flintgg to keep them!
+            </p>
+            <p v-else>
+              We recommend keeping this turned on, to keep everyones timelines
+              clean.
+            </p>
+          </section>
 
           <Button
             :onClick="saveTags"
@@ -600,5 +606,13 @@ export default class serviceCallback extends Vue {
 .alert {
   margin: auto;
   max-width: 900px;
+}
+
+.toggle {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 </style>

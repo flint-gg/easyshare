@@ -147,9 +147,9 @@ async function listenToStream(timeouted = 0) {
         }
         // check if "do not delete" flag is set: flintgg
         if (
-          tweet.entities.hashtags.findIndex((ht) => ht === 'flintgg') === -1
+          tweet.entities.hashtags.findIndex((ht) => ht.text === 'flintgg')
+          === -1
         ) {
-          // we are finished with the media, so we can delete the tweet
           await destroyTweet(
             tweet.id_str,
             new Twitter({

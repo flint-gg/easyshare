@@ -80,7 +80,6 @@ async function refreshToken(user: switch_share_user_type) {
       },
     },
   );
-  console.log('refresh token response:', response.data);
   return {
     ...response.data,
     refresh_token: user.ph_refresh_token,

@@ -106,3 +106,12 @@
     color: #35e4d8;
   }
 }
+
+.rotate-on-hover {
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+}
+.rotate-on-hover:hover {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}

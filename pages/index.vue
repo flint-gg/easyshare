@@ -74,42 +74,46 @@
               </li>
             </ul>
           </section>
+          <div
+            class="stick-to-bottom"
+            style="margin-left: auto; cursor: pointer;"
+            @click="openPopup"
+          >
+            <settings
+              class="tutorial-icon tutorial-icon--smol rotate-on-hover"
+              style="height: 32px;"
+            />
+          </div>
         </section>
         <section v-if="linkedPhotos" class="account-section">
-          <h3>Hashtag settings:</h3>
-          <Button
+          <h3>Tracked hashtags:</h3>
+          <v-switch
             v-for="v in displayHashtags"
             :key="v.value"
-            :onClick="() => toggleTracking(v.value, v.following)"
-            :style="
-              v.value === displayHashtags.length ? 'margin-bottom: 20px;' : ''
-            "
-            :color="v.following ? 'white' : 'grey'"
-            :lowercase="true"
-            >#{{ v.tag }}</Button
-          >
+            v-model="followedHashtags"
+            :label="'#' + v.tag"
+            :value="v.value"
+            :dark="true"
+            @change="() => (changedTags = true)"
+          />
+          <br />
+          <v-switch
+            v-model="deletePerDefault"
+            label="Delete tracked tweets"
+            :dark="true"
+            @change="() => (changedTags = true)"
+          />
+          <p v-if="deletePerDefault">
+            Pro tip: You can mark tweets with #flintgg to keep them from being
+            deleted!
+          </p>
+
           <Button
             :onClick="saveTags"
             :color="changedTags ? 'green' : 'grey'"
             class="stick-to-bottom"
             >Save changes</Button
           >
-        </section>
-        <section class="account-section">
-          <h3>Account settings:</h3>
-          <section class="center-vertical">
-            <h4>
-              You're currently logged in as <strong>{{ userName }}</strong
-              >.
-            </h4>
-            <Button :onClick="logout" color="grey">Log out</Button>
-          </section>
-          <section v-if="linkedPhotos" class="center-vertical">
-            <h4>
-              Your Google Photos Account is connected.
-            </h4>
-            <Button :onClick="openPopup" color="red">Disconnect</Button>
-          </section>
         </section>
       </section>
     </section>
@@ -200,21 +204,45 @@
     </section>
     <PopUp
       style="z-index: 1000;"
-      :display="showPopup"
+      :display="showConfirmationPopup"
       color="#f04747"
       title="Hold up"
-      :onClose="closePopup"
+      :onClose="closeConfirmationPopup"
     >
       <div>
         Do you really want to disconnect Google Photos?<br />
         You can reactivate it at any time, but until you do so we won't be able
         to upload your media anymore!
       </div>
-      <Button class="error-close-button" color="grey" :onClick="closePopup">
+      <Button
+        class="error-close-button"
+        color="grey"
+        :onClick="closeConfirmationPopup"
+      >
         nevermind</Button
       ><Button class="error-close-button" color="red" :onClick="removePhotos">
         yes, disconnect</Button
       >
+    </PopUp>
+    <PopUp
+      style="z-index: 1000;"
+      :display="showPopup"
+      title="Account Settings"
+      :onClose="closePopup"
+    >
+      <section class="center-vertical">
+        <h4>
+          You're currently logged in as <strong>{{ userName }}</strong
+          >.
+        </h4>
+        <Button :onClick="logout" color="grey">Log out</Button>
+      </section>
+      <section v-if="linkedPhotos" class="center-vertical">
+        <h4>
+          Your Google Photos Account is connected.
+        </h4>
+        <Button :onClick="openConfirmationPopup" color="red">Disconnect</Button>
+      </section>
     </PopUp>
   </section>
 </template>
@@ -241,6 +269,8 @@ import upload from '~/assets/images/switch-share/tutorial-icons/upload.svg?inlin
 import twicon from '~/assets/images/switch-share/Twitter_Logo_Blue.svg?inline';
 import linkic from '~/assets/images/switch-share/tutorial-icons/link.svg?inline';
 import pinwheel from '~/assets/images/switch-share/tutorial-icons/pinwheel.svg?inline';
+import settings from '~/assets/images/icons/settings.svg?inline';
+
 /* eslint-enable import/no-unresolved */
 
 @Component({
@@ -255,6 +285,7 @@ import pinwheel from '~/assets/images/switch-share/tutorial-icons/pinwheel.svg?i
     linkic,
     pinwheel,
     PopUp,
+    settings,
   },
 })
 export default class serviceCallback extends Vue {
@@ -283,6 +314,8 @@ export default class serviceCallback extends Vue {
   allHashtags: Array<string> | null = null;
 
   stats: Array<switchStat> | null = null;
+
+  deletePerDefault: boolean | null = null;
 
   get singleImageStat() {
     const st = this.stats && this.stats.find((s) => s.type === switchEvent.singleImage);
@@ -332,7 +365,18 @@ export default class serviceCallback extends Vue {
     );
   }
 
+  showConfirmationPopup = false;
+
   showPopup = false;
+
+  openConfirmationPopup() {
+    this.showPopup = false;
+    this.showConfirmationPopup = true;
+  }
+
+  closeConfirmationPopup() {
+    this.showConfirmationPopup = false;
+  }
 
   openPopup() {
     this.showPopup = true;
@@ -354,6 +398,7 @@ export default class serviceCallback extends Vue {
         this.allHashtags = dat.hashtagsToFollow;
         this.followedHashtags = dat.hashtags;
         this.stats = dat.stats;
+        // TODO fill deletePerDefault
         if (dat.linkedPhotos) {
           localStorage.setItem('switchshare/photos', 'true');
         } else {
@@ -393,7 +438,7 @@ export default class serviceCallback extends Vue {
     }
   }
 
-  toggleTracking(value: switchHashtag, currently: boolean) {
+  /*   toggleTracking(value: switchHashtag, currently: boolean) {
     if (this.followedHashtags) {
       if (!currently) {
         this.followedHashtags = [...this.followedHashtags, value];
@@ -408,7 +453,7 @@ export default class serviceCallback extends Vue {
       this.loggingOut = false;
       this.changedTags = true;
     }
-  }
+  } */
 
   async logout() {
     localStorage.removeItem('switchshare/token');
@@ -438,7 +483,7 @@ export default class serviceCallback extends Vue {
       if (data) {
         this.gphotosUrl = data;
       }
-      this.closePopup();
+      this.closeConfirmationPopup();
     }
   }
 

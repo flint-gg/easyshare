@@ -86,8 +86,9 @@
           </div>
         </section>
         <section v-if="linkedPhotos" class="account-section">
-          <h3>Tracked hashtags:</h3>
+          <h3>Configuration</h3>
           <section class="toggle">
+            <h4>Tracked hashtags:</h4>
             <v-switch
               v-for="v in displayHashtags"
               :key="v.value"
@@ -95,6 +96,7 @@
               :label="'#' + v.tag"
               :value="v.value"
               :dark="true"
+              color="#35e4d8"
               @change="() => (changedTags = true)"
             />
           </section>
@@ -103,6 +105,7 @@
               v-model="deletePerDefault"
               label="Delete tracked tweets"
               :dark="true"
+              color="#35e4d8"
               @change="() => (changedTags = true)"
             />
             <p v-if="deletePerDefault">

@@ -13,6 +13,8 @@ export class switch_share_user extends Sequelize.Model {
 
   public hashtags!: Array<switchHashtag>;
 
+  public autoDelete!: boolean;
+
   public token!: string;
 
   public token_secret!: string;
@@ -45,6 +47,12 @@ export class switch_share_user extends Sequelize.Model {
           allowNull: false,
           comment:
             'Settings: The hashtags to follow for this user. Values are based on our ENUM',
+        },
+        autoDelete: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: true,
+          comment: 'Should we delete tweets/posts automatically',
         },
         // twitter or facebook
         id: {

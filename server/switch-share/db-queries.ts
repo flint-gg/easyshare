@@ -109,6 +109,7 @@ export async function createUser(
     created: now,
     updated: now,
     hashtags,
+    autoDelete: true,
     token: tw.oauth_token,
     token_secret: tw.oauth_token_secret,
     name: tw.screen_name,
@@ -184,9 +185,10 @@ export async function disconnectPhotos(id: flintId) {
   });
 }
 
-export async function updateHashtags(
+export async function updateConfiguration(
   id: flintId,
   hashtags: Array<switchHashtag>,
+  autoDelete: boolean,
 ) {
   const now = new Date();
   return sequelize.transaction(async (t) => {
@@ -194,6 +196,7 @@ export async function updateHashtags(
       {
         updated: now,
         hashtags,
+        autoDelete,
       },
       { where: { id }, returning: true, transaction: t },
     );

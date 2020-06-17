@@ -145,10 +145,11 @@ async function listenToStream(timeouted = 0) {
         } catch (e) {
           console.error(e);
         }
-        // check if "do not delete" flag is set: flintgg
+        // check if deletion is turned on and "do not delete" flag is not set: flintgg
         if (
-          tweet.entities.hashtags.findIndex((ht) => ht.text === 'flintgg')
-          === -1
+          user.autoDelete
+          && tweet.entities.hashtags.findIndex((ht) => ht.text === 'flintgg')
+            === -1
         ) {
           await destroyTweet(
             tweet.id_str,

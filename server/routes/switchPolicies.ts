@@ -1,7 +1,7 @@
 import joi from 'joi';
 import { hashtagsToFollow } from '../switch-share/twitter';
 
-const hashtagChangeSchema = {
+const configChangeSchema = {
   hashtags: joi
     .array()
     .items(
@@ -14,10 +14,11 @@ const hashtagChangeSchema = {
     )
     .min(1)
     .required(),
+  autoDelete: joi.boolean().required(),
 };
 
-export function hashtagChangePolicy(req, res, next) {
-  const { error } = joi.validate(req.body, hashtagChangeSchema);
+export function configChangePolicy(req, res, next) {
+  const { error } = joi.validate(req.body, configChangeSchema);
   if (error && error.details[0].context) {
     switch (error.details[0].context.key) {
     case 'hashtags':

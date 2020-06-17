@@ -1,13 +1,13 @@
 export enum switchAccountType {
   'twitter' = 1,
-  'facebook'
+  'facebook',
 }
 
 export enum switchHashtag {
   'NintendoSwitch' = 1,
   'switchshare',
   'flintggshare',
-  'easyshare'
+  'easyshare',
 }
 export enum switchEvent {
   'signup' = 1,
@@ -18,7 +18,7 @@ export enum switchEvent {
   'singleImage',
   'multiImage',
   'singleVideo',
-  'changeSettings'
+  'changeSettings',
 }
 export type trackedUser = {
   oauth_token: string;
@@ -41,6 +41,7 @@ type base_share_user_type = {
   updated: Date;
   id: flintId;
   hashtags: Array<switchHashtag>;
+  autoDelete: boolean;
   token: string;
   token_secret: string;
   name: string;
@@ -75,6 +76,7 @@ export type userForClient = {
   hashtags: Array<switchHashtag>;
   hashtagsToFollow: Array<string>;
   stats: Array<switchStat>;
+  autoDelete: boolean;
 };
 
 export enum streamEndReason {
@@ -86,7 +88,7 @@ export enum streamEndReason {
   'MaxMessageLimit' = 9, // The stream connected with a negative count parameter and was disconnected after all backfill was delivered.
   'StreamException' = 10, // An internal issue disconnected the stream.
   'BrokerStall' = 11, // An internal issue disconnected the stream.
-  'ShedLoad' = 12 // The host the stream was connected to became overloaded and streams were disconnected to balance load. Reconnect as usual.
+  'ShedLoad' = 12, // The host the stream was connected to became overloaded and streams were disconnected to balance load. Reconnect as usual.
 }
 
 // for now it seems to not include these infos at all,

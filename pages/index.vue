@@ -414,7 +414,7 @@ export default class serviceCallback extends Vue {
         this.allHashtags = dat.hashtagsToFollow;
         this.followedHashtags = dat.hashtags;
         this.stats = dat.stats;
-        // TODO fill deletePerDefault
+        this.deletePerDefault = dat.autoDelete;
         if (dat.linkedPhotos) {
           localStorage.setItem('switchshare/photos', 'true');
         } else {
@@ -516,6 +516,7 @@ export default class serviceCallback extends Vue {
         'account',
         {
           hashtags: this.followedHashtags,
+          autoDelete: this.deletePerDefault,
         },
         {
           headers: { Authorization: `Bearer ${this.userToken}` },

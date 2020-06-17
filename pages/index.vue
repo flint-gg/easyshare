@@ -230,18 +230,25 @@
       title="Account Settings"
       :onClose="closePopup"
     >
-      <section class="center-vertical">
-        <h4>
-          You're currently logged in as <strong>{{ userName }}</strong
-          >.
-        </h4>
-        <Button :onClick="logout" color="grey">Log out</Button>
-      </section>
-      <section v-if="linkedPhotos" class="center-vertical">
-        <h4>
-          Your Google Photos Account is connected.
-        </h4>
-        <Button :onClick="openConfirmationPopup" color="red">Disconnect</Button>
+      <section
+        class="account-section"
+        style="margin-left: auto; margin-right: auto;"
+      >
+        <section>
+          <h4>
+            You're currently logged in as <strong>{{ userName }}</strong
+            >.
+          </h4>
+          <Button :onClick="logout" color="grey">Log out</Button>
+        </section>
+        <section v-if="linkedPhotos">
+          <h4>
+            Your Google Photos Account is connected.
+          </h4>
+          <Button :onClick="openConfirmationPopup" color="red"
+            >Disconnect</Button
+          >
+        </section>
       </section>
     </PopUp>
   </section>

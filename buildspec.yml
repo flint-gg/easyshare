@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+
+    commands:
+      - npm install -g npm
+
+  build:
+    commands:
+      - npm i && npm run build 
+
+  post_build:
+    commands:
+      - npm cache clean --force
+
+artifacts:
+  files:
+    - '**/*'

@@ -1,9 +1,9 @@
 # What's easyshare?
 
 A tool to easily and safely get the media from your Nintendo Switch to where you actually want it.
-We do this by leveraging the ability to direclty post to Twitter from the Switch. Our system tracks specific hashtags on Twitter, and if you set up an Account we can get the media from it, optionally delete the tweet, and then upload your media to Google Photos.
+We do this by leveraging the ability to directly post to Twitter from the Switch. Our system tracks specific hashtags on Twitter, and if you set up an Account we can get the media from it, optionally delete the tweet, and then upload your media to Google Photos.
 
-We are already looking for new additions which you can find on [our roadmap](https://github.com/flint-gg/microservice-switch-share/projects/1).
+We are already looking for new additions which you can find on [our roadmap](https://github.com/flint-gg/easyshare/projects/1).
 
 # How you can help
 

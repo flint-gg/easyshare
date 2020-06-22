@@ -186,11 +186,11 @@ async function listenToStream(timeouted = 0) {
     });
 }
 
-const runOverrideForDev = false;
+const listenToStreamInDev = true;
 
 export async function run() {
   await fillCache();
-  if (runOverrideForDev || process.env.NODE_ENV !== 'development') {
+  if (listenToStreamInDev || process.env.NODE_ENV !== 'development') {
     await listenToStream();
   }
 }

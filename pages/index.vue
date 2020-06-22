@@ -126,15 +126,35 @@
         </section>
       </section>
     </section>
-    <section class="accounts">
-      <section v-if="!userToken" class="account-section">
-        <Button :onClick="redirectToTwitter" color="white">
+    <section v-if="!userToken && twitterToken" class="accounts">
+      <section class="account-section">
+        <Button
+          :onClick="redirectToTwitter"
+          color="white"
+          class="center-vertical"
+        >
           <img
             src="~/assets/images/switch-share/Twitter_Logo_Blue.svg"
             class="icon-in-button"
           />
           Sign in with twitter
         </Button>
+      </section>
+      <section v-if="landingStats" class="account-section stats">
+        <ul>
+          <li>
+            <div class="user-score">
+              {{ landingStats.imagesShared }}
+            </div>
+            <p class="user-name">Images shared</p>
+          </li>
+          <li style="margin-bottom: 0px;">
+            <div class="user-score">
+              {{ landingStats.videosShared }}
+            </div>
+            <p class="user-name">Videos shared</p>
+          </li>
+        </ul>
       </section>
     </section>
     <section v-if="!userName" class="accounts">
@@ -315,7 +335,7 @@ export default class serviceCallback extends Vue {
     );
   }
 
-  twitterToken: string | undefined;
+  twitterToken: string | null = null;
 
   gphotosUrl: string | undefined;
 
@@ -402,9 +422,24 @@ export default class serviceCallback extends Vue {
     this.showPopup = false;
   }
 
+  landingStats: {
+    imagesShared: number;
+    videosShared: number;
+  } | null = null;
+
+  async updateLanding() {
+    this.landingStats = (
+      await PostService.get<{
+          imagesShared: number;
+          videosShared: number;
+        }>('stats/landing')
+    ).data || null;
+    this.twitterToken = (await PostService.get<string>('twitter')).data || null;
+  }
+
   async mounted() {
     if (!this.userToken) {
-      this.twitterToken = (await PostService.get<string>('twitter')).data;
+      await this.updateLanding();
     } else {
       const { data: dat } = await PostService.get<userForClient>('account', {
         headers: { Authorization: `Bearer ${this.userToken}` },
@@ -434,7 +469,7 @@ export default class serviceCallback extends Vue {
         localStorage.removeItem('switchshare/photos');
         localStorage.removeItem('switchshare/token');
 
-        this.twitterToken = (await PostService.get<string>('twitter')).data;
+        await this.updateLanding();
       }
       // reload computed properties
       this.loggingOut = true;
@@ -454,23 +489,6 @@ export default class serviceCallback extends Vue {
     }
   }
 
-  /*   toggleTracking(value: switchHashtag, currently: boolean) {
-    if (this.followedHashtags) {
-      if (!currently) {
-        this.followedHashtags = [...this.followedHashtags, value];
-      } else {
-        const index = this.followedHashtags.findIndex((v) => v === value);
-        this.followedHashtags = [
-          ...this.followedHashtags.slice(0, index),
-          ...this.followedHashtags.slice(index + 1),
-        ];
-      }
-      this.loggingOut = true;
-      this.loggingOut = false;
-      this.changedTags = true;
-    }
-  } */
-
   async logout() {
     localStorage.removeItem('switchshare/token');
     localStorage.removeItem('switchshare/photos');
@@ -479,7 +497,7 @@ export default class serviceCallback extends Vue {
     this.followedHashtags = null;
     this.loggingOut = true;
     this.showPopup = false;
-    this.twitterToken = (await PostService.get<string>('twitter')).data;
+    await this.updateLanding();
   }
 
   async removePhotos() {

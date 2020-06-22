@@ -1,4 +1,5 @@
-import { Transaction, Sequelize } from 'sequelize';
+import { Transaction, Sequelize, Op } from 'sequelize';
+import { sequelize } from '../db';
 import {
   switchHashtag,
   trackedUser,
@@ -11,7 +12,6 @@ import {
   switchAccountType,
 } from './enums';
 import { switch_share_user, switch_share_events } from './models';
-import { sequelize } from '../db';
 
 export const cachedUsers = new Map<flintId, switch_share_user_type>();
 
@@ -93,6 +93,41 @@ export async function getGeneralStats() {
         author: anonymousName,
       };
     });
+  });
+}
+
+export async function getLandingStats() {
+  return sequelize.transaction(async (t) => {
+    const stats: Array<{
+      amount: number;
+      type: switchEvent;
+    }> = (await switch_share_events.findAll({
+      group: ['type'],
+      where: {
+        [Op.or]: [
+          { type: switchEvent.singleImage },
+          { type: switchEvent.multiImage },
+          { type: switchEvent.singleVideo },
+        ],
+      },
+      attributes: [
+        [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
+        'type',
+      ],
+      transaction: t,
+    })) as any;
+
+    return {
+      imagesShared: stats
+        .filter(
+          (s) => s.type === switchEvent.singleImage
+            || s.type === switchEvent.multiImage,
+        )
+        .reduce((a, b) => a + Number(b.amount), 0),
+      videosShared: stats
+        .filter((s) => s.type === switchEvent.singleVideo)
+        .reduce((a, b) => a + Number(b.amount), 0),
+    };
   });
 }
 

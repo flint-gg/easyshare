@@ -427,15 +427,19 @@ export default class serviceCallback extends Vue {
     videosShared: number;
   } | null = null;
 
+  async updateLanding() {
+    this.landingStats = (
+      await PostService.get<{
+          imagesShared: number;
+          videosShared: number;
+        }>('stats/landing')
+    ).data || null;
+    this.twitterToken = (await PostService.get<string>('twitter')).data || null;
+  }
+
   async mounted() {
     if (!this.userToken) {
-      this.landingStats = (
-        await PostService.get<{
-            imagesShared: number;
-            videosShared: number;
-          }>('stats/landing')
-      ).data || null;
-      this.twitterToken = (await PostService.get<string>('twitter')).data || null;
+      await this.updateLanding();
     } else {
       const { data: dat } = await PostService.get<userForClient>('account', {
         headers: { Authorization: `Bearer ${this.userToken}` },
@@ -465,7 +469,7 @@ export default class serviceCallback extends Vue {
         localStorage.removeItem('switchshare/photos');
         localStorage.removeItem('switchshare/token');
 
-        this.twitterToken = (await PostService.get<string>('twitter')).data || null;
+        await this.updateLanding();
       }
       // reload computed properties
       this.loggingOut = true;
@@ -493,7 +497,7 @@ export default class serviceCallback extends Vue {
     this.followedHashtags = null;
     this.loggingOut = true;
     this.showPopup = false;
-    this.twitterToken = (await PostService.get<string>('twitter')).data || null;
+    await this.updateLanding();
   }
 
   async removePhotos() {

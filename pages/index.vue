@@ -195,12 +195,10 @@
         what you need, where you need it.
       </section>
     </section>
-    <section v-if="!userName" class="accounts">
+    <section class="accounts">
       <section class="account-section tutorial open-source">
-        <!-- <fork class="tutorial-icon" /> -->
-        <img
-          src="~/assets/images/switch-share/tutorial-icons/GitHub.png"
-          class="icon-in-button center-vertical"
+        <fork
+          class="tutorial-icon center-vertical"
           style="cursor: pointer;"
           @click.stop="redirectToGithub"
         />
@@ -665,9 +663,7 @@ export default class serviceCallback extends Vue {
 .open-source {
   display: flex;
   flex-direction: row;
-  > img {
-    height: 64px;
-    width: 64px;
+  > svg {
     margin-right: 15px;
   }
 }

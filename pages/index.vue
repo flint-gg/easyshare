@@ -199,16 +199,19 @@
       <section class="account-section tutorial open-source">
         <!-- <fork class="tutorial-icon" /> -->
         <img
-          src="~/assets/images/switch-share/tutorial-icons/GitHub-Mark/PNG/GitHub-Mark-Light-120px-plus.png"
+          src="~/assets/images/switch-share/tutorial-icons/GitHub.png"
           class="icon-in-button center-vertical"
           style="cursor: pointer;"
           @click.stop="redirectToGithub"
         />
         <section>
-          <h4>Open-Source</h4>
+          <h4>Open Source</h4>
           You can trust us. Not because we say so, but because the code is
-          completely open-source. <br />Of course, you can also contribute by
-          adding new features or enhancing existing ones!<br />Check it out on
+          completely open-source. Want to check the current
+          <a href="https://github.com/flint-gg/easyshare/projects/1"
+            >feature roadmap</a
+          >? If you're a developer, you can even contribute by adding new
+          features or enhancing existing ones yourself.<br />Check it out on
           <a href="https://github.com/flint-gg/easyshare">GitHub</a>!
         </section>
       </section>
@@ -315,8 +318,8 @@ import {
 } from '~/server/switch-share/enums';
 
 /* eslint-disable import/no-unresolved */
-import share from '~/assets/images/switch-share/tutorial-icons/noun_Share_1774266.svg?inline';
-import network from '~/assets/images/switch-share/tutorial-icons/noun_social network_2328434.svg?inline';
+import share from '~/assets/images/switch-share/tutorial-icons/share.svg?inline';
+import network from '~/assets/images/switch-share/tutorial-icons/network.svg?inline';
 import nswitch from '~/assets/images/switch-share/tutorial-icons/switch.svg?inline';
 import upload from '~/assets/images/switch-share/tutorial-icons/upload.svg?inline';
 import twicon from '~/assets/images/switch-share/Twitter_Logo_Blue.svg?inline';
@@ -663,8 +666,9 @@ export default class serviceCallback extends Vue {
   display: flex;
   flex-direction: row;
   > img {
-    height: 60px;
-    width: 60px;
+    height: 64px;
+    width: 64px;
+    margin-right: 15px;
   }
 }
 </style>

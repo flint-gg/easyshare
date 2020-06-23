@@ -44,42 +44,6 @@
         </section>
       </section>
     </section>
-    <section class="accounts">
-      <section class="account-section tutorial">
-        <h3>
-          What's this all about?
-        </h3>
-        <p>
-          Getting media, such as screenshots and videos, from your Nintendo
-          Switch to your
-          <strong>computer, smartphone and social media</strong> is difficult.
-          Easyshare by flint.gg takes care of all the difficulties and makes it
-          <strong>easy for you</strong>.
-        </p>
-        <h3>
-          I've got a question!
-        </h3>
-        <div class="item">
-          <h4>Why Twitter and Google Photos?</h4>
-          Nintendo supports sharing to Twitter &ndash; we take full advantage of
-          that.<br />
-          Google Photos allows you to access your media online or on apps on
-          both Android and iOS. It's super easy to share onto other platforms
-          from there as well.
-        </div>
-        <div class="item">
-          <h4>I have an idea for a new feature!</h4>
-          This tool is currently at its very beginning. Depending on user
-          feedback we'll think about adding new ways to get, share and display
-          your media. If you've got some ideas, just hit us up!
-        </div>
-        <div class="item">
-          <h4>How can I contact you?</h4>
-          You can always hang out or give feedback on
-          <a href="https://discord.gg/vC2R7xx">our Discord server</a>!
-        </div>
-      </section>
-    </section>
   </section>
 </template>
 

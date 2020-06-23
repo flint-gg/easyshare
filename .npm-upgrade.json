@@ -3,10 +3,6 @@
     "v-tooltip": {
       "versions": "2.0.3",
       "reason": "TS crashes"
-    },
-    "@types/node": {
-      "versions": "13.x",
-      "reason": "we use v12"
     }
   }
 }

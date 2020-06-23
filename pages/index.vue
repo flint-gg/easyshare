@@ -195,6 +195,24 @@
         what you need, where you need it.
       </section>
     </section>
+    <section v-if="!userName" class="accounts">
+      <section class="account-section tutorial open-source">
+        <!-- <fork class="tutorial-icon" /> -->
+        <img
+          src="~/assets/images/switch-share/tutorial-icons/GitHub-Mark/PNG/GitHub-Mark-Light-120px-plus.png"
+          class="icon-in-button center-vertical"
+          style="cursor: pointer;"
+          @click.stop="redirectToGithub"
+        />
+        <section>
+          <h4>Open-Source</h4>
+          You can trust us. Not because we say so, but because the code is
+          completely open-source. <br />Of course, you can also contribute by
+          adding new features or enhancing existing ones!<br />Check it out on
+          <a href="https://github.com/flint-gg/easyshare">GitHub</a>!
+        </section>
+      </section>
+    </section>
     <section class="accounts">
       <section class="account-section tutorial">
         <h3>
@@ -202,33 +220,32 @@
         </h3>
         <p>
           Getting media, such as screenshots and videos, from your Nintendo
-          Switch to your
-          <strong>computer, smartphone and social media</strong> is difficult.
+          Switch to your computer, smartphone and social media is difficult.
           Easyshare by flint.gg takes care of all the difficulties and makes it
-          <strong>easy for you</strong>.
+          easy for you.
         </p>
-        <h3>
-          I've got a question!
-        </h3>
-        <div class="item">
-          <h4>Why Twitter and Google Photos?</h4>
+        <h4>Why Twitter and Google Photos?</h4>
+        <p>
           Nintendo supports sharing to Twitter &ndash; we take full advantage of
           that.<br />
           Google Photos allows you to access your media online or on apps on
           both Android and iOS. It's super easy to share onto other platforms
           from there as well.
-        </div>
-        <div class="item">
-          <h4>I have an idea for a new feature!</h4>
+        </p>
+        <h4>I have an idea for a new feature!</h4>
+        <p>
           This tool is currently at its very beginning. Depending on user
           feedback we'll think about adding new ways to get, share and display
-          your media. If you've got some ideas, just hit us up!
-        </div>
-        <div class="item">
-          <h4>How can I contact you?</h4>
+          your media. If you've got some ideas, just hit us up over at
+          <a href="https://github.com/flint-gg/easyshare">GitHub</a> or as
+          described below.<br />
+          If you're a developer, you can even contribute directly!
+        </p>
+        <h4>How can I contact you?</h4>
+        <p>
           You can always hang out or give feedback on
           <a href="https://discord.gg/vC2R7xx">our Discord server</a>!
-        </div>
+        </p>
       </section>
     </section>
     <PopUp
@@ -306,6 +323,7 @@ import twicon from '~/assets/images/switch-share/Twitter_Logo_Blue.svg?inline';
 import linkic from '~/assets/images/switch-share/tutorial-icons/link.svg?inline';
 import pinwheel from '~/assets/images/switch-share/tutorial-icons/pinwheel.svg?inline';
 import settings from '~/assets/images/icons/settings.svg?inline';
+import fork from '~/assets/images/switch-share/tutorial-icons/fork.svg?inline';
 
 /* eslint-enable import/no-unresolved */
 
@@ -322,6 +340,7 @@ import settings from '~/assets/images/icons/settings.svg?inline';
     pinwheel,
     PopUp,
     settings,
+    fork,
   },
 })
 export default class serviceCallback extends Vue {
@@ -489,6 +508,10 @@ export default class serviceCallback extends Vue {
     }
   }
 
+  redirectToGithub() {
+    window.location.href = 'https://github.com/flint-gg/easyshare';
+  }
+
   async logout() {
     localStorage.removeItem('switchshare/token');
     localStorage.removeItem('switchshare/photos');
@@ -606,9 +629,6 @@ export default class serviceCallback extends Vue {
   padding: 1rem;
   border-radius: 5px;
   background-color: #172a3a;
-  strong {
-    color: #35e4d8;
-  }
   display: flex;
   flex-direction: column;
   > div {
@@ -637,5 +657,14 @@ export default class serviceCallback extends Vue {
   margin-bottom: 10px;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.open-source {
+  display: flex;
+  flex-direction: row;
+  > img {
+    height: 60px;
+    width: 60px;
+  }
 }
 </style>

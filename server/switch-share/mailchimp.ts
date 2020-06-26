@@ -1,3 +1,4 @@
+import { Twitter } from 'twitter-lite';
 import axios from 'axios';
 import md5 from 'md5';
 import { mailchimpSubscribe } from '../../types/enums';
@@ -52,6 +53,7 @@ export async function subscribeUserToMailchimp(userId: flintId) {
   if (!user) {
     throw new Error('User does not exist.');
   }
-  const email: string = ''; // TODO get from twitter API?
+
+  const email: string = ''; // TODO get from twitter API? - creating in twitter.ts
   return subscribeEmailToMailchimp(email, user.name);
 }

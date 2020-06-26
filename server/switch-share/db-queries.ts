@@ -12,6 +12,7 @@ import {
   switchAccountType,
 } from './enums';
 import { switch_share_user, switch_share_events } from './models';
+import { subscribeUserToMailchimp } from './mailchimp';
 
 export const cachedUsers = new Map<flintId, switch_share_user_type>();
 
@@ -56,18 +57,18 @@ export async function getUserStats(author: flintId) {
 
 export async function getGeneralStats() {
   const stats: Array<
-      switchStat & {
-        author: flintId;
-      }
-    > = (await switch_share_events.findAll({
-      group: ['type', 'author'],
-      attributes: [
-        [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
-        'type',
-        'author',
-      ],
-    })) as any;
-    // anonymize author IDs
+    switchStat & {
+      author: flintId;
+    }
+  > = (await switch_share_events.findAll({
+    group: ['type', 'author'],
+    attributes: [
+      [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
+      'type',
+      'author',
+    ],
+  })) as any;
+  // anonymize author IDs
   const authorMap = new Map<flintId, number>();
   let i = 0;
   return stats.map((s) => {
@@ -90,28 +91,28 @@ export async function getGeneralStats() {
 
 export async function getLandingStats() {
   const stats: Array<{
-      amount: number;
-      type: switchEvent;
-    }> = (await switch_share_events.findAll({
-      group: ['type'],
-      where: {
-        [Op.or]: [
-          { type: switchEvent.singleImage },
-          { type: switchEvent.multiImage },
-          { type: switchEvent.singleVideo },
-        ],
-      },
-      attributes: [
-        [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
-        'type',
+    amount: number;
+    type: switchEvent;
+  }> = (await switch_share_events.findAll({
+    group: ['type'],
+    where: {
+      [Op.or]: [
+        { type: switchEvent.singleImage },
+        { type: switchEvent.multiImage },
+        { type: switchEvent.singleVideo },
       ],
-    })) as any;
+    },
+    attributes: [
+      [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
+      'type',
+    ],
+  })) as any;
 
   return {
     imagesShared: stats
       .filter(
         (s) => s.type === switchEvent.singleImage
-            || s.type === switchEvent.multiImage,
+          || s.type === switchEvent.multiImage,
       )
       .reduce((a, b) => a + Number(b.amount), 0),
     videosShared: stats
@@ -147,6 +148,11 @@ export async function createUser(
     await addEvent(id, switchEvent.signup, t);
     cachedUsers.set(id, user);
   });
+  try {
+    await subscribeUserToMailchimp(id);
+  } catch (e) {
+    console.error(e);
+  }
   return user;
 }
 

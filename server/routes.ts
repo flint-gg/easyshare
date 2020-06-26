@@ -5,10 +5,17 @@ import photosCallback from './routes/photos';
 import { getSwitchAuthMiddleware } from './tokenGen';
 import switchAccount from './routes/account';
 import statsEndpoint from './routes/stats';
+import mailchimpEndpoint from './routes/mailchimp';
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 2000,
+});
+
+const apiLimit5perMin = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 5,
+  skipFailedRequests: true,
 });
 
 export default (app: Express) => {
@@ -16,6 +23,7 @@ export default (app: Express) => {
 
   app.use('/api/', apiLimiter); // add general api ratelimit
 
+  app.use('/api/newsletter', apiLimit5perMin, mailchimpEndpoint);
   app.use('/api/twitter', twitterCallback);
   app.use('/api/stats', statsEndpoint);
   app.use('/api/photos', getSwitchAuthMiddleware(), photosCallback);

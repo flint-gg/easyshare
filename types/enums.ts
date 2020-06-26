@@ -4,3 +4,8 @@ export const enum HTTPStatusCodes {
   forbidden = 403,
   defaultServerError = 500,
 }
+export const enum mailchimpSubscribe {
+  failure = 0,
+  success,
+  already
+}

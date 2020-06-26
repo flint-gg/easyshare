@@ -38,30 +38,24 @@ export async function addEvent(
 }
 
 export async function getUser(id: flintId) {
-  return sequelize.transaction(async (t) => {
-    const user = await switch_share_user.findByPk(id, { transaction: t });
-    return user as switch_share_user_type | null;
-  });
+  const user = await switch_share_user.findByPk(id);
+  return user as switch_share_user_type | null;
 }
 
 export async function getUserStats(author: flintId) {
-  return sequelize.transaction(async (t) => {
-    const stats: Array<switchStat> = (await switch_share_events.findAll({
-      where: { author },
-      group: ['type', 'author'],
-      attributes: [
-        [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
-        'type',
-      ],
-      transaction: t,
-    })) as any;
-    return stats;
-  });
+  const stats: Array<switchStat> = (await switch_share_events.findAll({
+    where: { author },
+    group: ['type', 'author'],
+    attributes: [
+      [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
+      'type',
+    ],
+  })) as any;
+  return stats;
 }
 
 export async function getGeneralStats() {
-  return sequelize.transaction(async (t) => {
-    const stats: Array<
+  const stats: Array<
       switchStat & {
         author: flintId;
       }
@@ -72,33 +66,30 @@ export async function getGeneralStats() {
         'type',
         'author',
       ],
-      transaction: t,
     })) as any;
     // anonymize author IDs
-    const authorMap = new Map<flintId, number>();
-    let i = 0;
-    return stats.map((s) => {
-      let anonymousName = 'easyshare user ';
-      const auth = authorMap.get(s.author);
-      if (auth) {
-        anonymousName += auth;
-      } else {
-        anonymousName += i;
-        authorMap.set(s.author, i);
-        i++;
-      }
-      return {
-        amount: s.amount,
-        type: s.type,
-        author: anonymousName,
-      };
-    });
+  const authorMap = new Map<flintId, number>();
+  let i = 0;
+  return stats.map((s) => {
+    let anonymousName = 'easyshare user ';
+    const auth = authorMap.get(s.author);
+    if (auth) {
+      anonymousName += auth;
+    } else {
+      anonymousName += i;
+      authorMap.set(s.author, i);
+      i++;
+    }
+    return {
+      amount: s.amount,
+      type: s.type,
+      author: anonymousName,
+    };
   });
 }
 
 export async function getLandingStats() {
-  return sequelize.transaction(async (t) => {
-    const stats: Array<{
+  const stats: Array<{
       amount: number;
       type: switchEvent;
     }> = (await switch_share_events.findAll({
@@ -114,21 +105,19 @@ export async function getLandingStats() {
         [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
         'type',
       ],
-      transaction: t,
     })) as any;
 
-    return {
-      imagesShared: stats
-        .filter(
-          (s) => s.type === switchEvent.singleImage
+  return {
+    imagesShared: stats
+      .filter(
+        (s) => s.type === switchEvent.singleImage
             || s.type === switchEvent.multiImage,
-        )
-        .reduce((a, b) => a + Number(b.amount), 0),
-      videosShared: stats
-        .filter((s) => s.type === switchEvent.singleVideo)
-        .reduce((a, b) => a + Number(b.amount), 0),
-    };
-  });
+      )
+      .reduce((a, b) => a + Number(b.amount), 0),
+    videosShared: stats
+      .filter((s) => s.type === switchEvent.singleVideo)
+      .reduce((a, b) => a + Number(b.amount), 0),
+  };
 }
 
 export async function createUser(

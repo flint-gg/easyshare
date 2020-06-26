@@ -74,3 +74,20 @@ export function photosCodePolicy(req, res, next) {
   }
   return next();
 }
+
+const mailchimpSubscribeSchema = {
+  email: joi.string().email(),
+};
+
+export function mailchimpSubscribePolicy(req, res, next) {
+  const { error } = joi.validate(req.body, mailchimpSubscribeSchema);
+  if (error && error.details[0].context) {
+    return res.status(400).send({
+      error: {
+        title: 'Invalid email format.',
+        detail: 'The email provided is in invalid format.',
+      } as flintError,
+    });
+  }
+  return next();
+}

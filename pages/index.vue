@@ -13,6 +13,30 @@
         sizes="100px"
       />
     </h3>
+    <v-alert
+      class="alert"
+      type="info"
+      color="blue"
+      :dismissible="true"
+      style="max-width: 640px;"
+    >
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          label="E-mail"
+          required
+        ></v-text-field>
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="subscribeToNewsletter"
+        >
+          Sign me up!
+        </v-btn>
+      </v-form>
+    </v-alert>
     <section v-if="userToken">
       <v-alert
         v-if="userName && linkedPhotos && statsToDisplay[3] === 0"
@@ -325,6 +349,7 @@ import linkic from '~/assets/images/switch-share/tutorial-icons/link.svg?inline'
 import pinwheel from '~/assets/images/switch-share/tutorial-icons/pinwheel.svg?inline';
 import settings from '~/assets/images/icons/settings.svg?inline';
 import fork from '~/assets/images/switch-share/tutorial-icons/fork.svg?inline';
+import { mailchimpSubscribe } from '../types/enums';
 
 /* eslint-enable import/no-unresolved */
 
@@ -572,6 +597,25 @@ export default class serviceCallback extends Vue {
         this.changedTags = false;
       }
     }
+  }
+
+  valid = true;
+
+  email = '';
+
+  emailRules = [
+    (v) => !!v || 'E-mail is required',
+    (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+  ];
+
+  async subscribeToNewsletter() {
+    const { data } = await PostService.post<{ success: mailchimpSubscribe }>(
+      'newsletter',
+      {
+        email: this.email,
+      },
+    );
+    return data ? data.success : mailchimpSubscribe.failure;
   }
 }
 </script>

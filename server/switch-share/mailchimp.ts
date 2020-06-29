@@ -1,4 +1,3 @@
-import { Twitter } from 'twitter-lite';
 import axios from 'axios';
 import md5 from 'md5';
 import { mailchimpSubscribe } from '../../types/enums';

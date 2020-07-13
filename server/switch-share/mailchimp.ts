@@ -53,13 +53,3 @@ export async function subscribeEmailToMailchimp(
     throw new Error('Failed connecting to the mailchimp server.');
   }
 }
-
-export async function subscribeUserToMailchimp(userId: flintId) {
-  const user = await getUser(userId);
-  if (!user) {
-    throw new Error('User does not exist.');
-  }
-
-  const email: string = ''; // TODO get from twitter API? - creating in twitter.ts
-  return subscribeEmailToMailchimp(email, user.name);
-}

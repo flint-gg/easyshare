@@ -13,31 +13,7 @@
         sizes="100px"
       />
     </h3>
-    <v-alert
-      class="alert"
-      type="info"
-      color="blue"
-      :dismissible="true"
-      style="max-width: 640px;"
-    >
-      <v-form ref="form" v-model="valid" lazy-validation>
-        Want us to keep you up to date with everything flint.gg?
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="E-mail"
-          required
-        ></v-text-field>
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          @click="subscribeToNewsletter"
-        >
-          Sign me up!
-        </v-btn>
-      </v-form>
-    </v-alert>
+
     <section v-if="userToken">
       <v-alert
         v-if="userName && linkedPhotos && statsToDisplay[3] === 0"
@@ -182,6 +158,13 @@
         </ul>
       </section>
     </section>
+    <section v-else-if="!userToken" class="accounts">
+        <loading
+          message="counting shared media"
+          class="account-section"
+          :inline="true"
+        />
+      </section>
     <section v-if="!userName" class="accounts">
       <section class="tutorial-section">
         <div>
@@ -220,6 +203,31 @@
         what you need, where you need it.
       </section>
     </section>
+    <v-alert
+      class="alert"
+      type="info"
+      color="blue"
+      :dismissible="true"
+      style="max-width: 640px;"
+    >
+      <v-form ref="form" v-model="valid" lazy-validation>
+        Want us to keep you up to date with everything flint.gg?
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          label="E-mail"
+          required
+        ></v-text-field>
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="subscribeToNewsletter"
+        >
+          Sign me up!
+        </v-btn>
+      </v-form>
+    </v-alert>
     <section class="accounts">
       <section class="account-section tutorial open-source">
         <fork

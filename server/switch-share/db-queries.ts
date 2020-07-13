@@ -12,7 +12,6 @@ import {
   switchAccountType,
 } from './enums';
 import { switch_share_user, switch_share_events } from './models';
-import { subscribeUserToMailchimp } from './mailchimp';
 
 export const cachedUsers = new Map<flintId, switch_share_user_type>();
 
@@ -148,11 +147,6 @@ export async function createUser(
     await addEvent(id, switchEvent.signup, t);
     cachedUsers.set(id, user);
   });
-  try {
-    await subscribeUserToMailchimp(id);
-  } catch (e) {
-    console.error(e);
-  }
   return user;
 }
 

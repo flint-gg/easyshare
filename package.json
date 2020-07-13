@@ -32,7 +32,7 @@
     "file-loader": "^6.0.0",
     "flake-idgen": "^1.4.0",
     "googleapis": "^52.1.0",
-    "googlephotos": "^0.3.0",
+    "googlephotos": "^0.2.5",
     "imgix-core-js": "^2.3.1",
     "imgix.js": "^3.4.2",
     "joi": "^14.3.1",

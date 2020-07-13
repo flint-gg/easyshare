@@ -15,14 +15,14 @@ app.patch('/', configChangePolicy, async (req, res) => {
   const { id } = req.user as any;
   const { hashtags, autoDelete } = req.body;
   await updateConfiguration(id, hashtags, autoDelete);
-  return res.status(200).send();
+  return res.status(200).end();
 });
 
 app.get('/', async (req, res) => {
   const { id } = req.user as any;
   const user = await getUser(id);
   if (!user) {
-    return res.status(404).send();
+    return res.status(404).end();
   }
   const stats = await getUserStats(id);
   const response: userForClient = {
@@ -33,7 +33,7 @@ app.get('/', async (req, res) => {
     stats,
     autoDelete: user.autoDelete,
   };
-  return res.status(200).send(response);
+  return res.status(200).json(response);
 });
 
 // TODO delete account

@@ -4,6 +4,6 @@ import { mailchimpSubscribePolicy } from './switchPolicies';
 
 const app = express.Router();
 
-app.post('/', mailchimpSubscribePolicy, async (req, res) => res.status(200).send({ success: await subscribeEmailToMailchimp(req.body.email) }));
+app.post('/', mailchimpSubscribePolicy, async (req, res) => res.status(200).json({ success: await subscribeEmailToMailchimp(req.body.email) }));
 
 export default app;

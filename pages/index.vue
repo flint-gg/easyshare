@@ -21,6 +21,7 @@
       style="max-width: 640px;"
     >
       <v-form ref="form" v-model="valid" lazy-validation>
+        Want us to keep you up to date with everything flint.gg?
         <v-text-field
           v-model="email"
           :rules="emailRules"
@@ -608,12 +609,18 @@ export default class serviceCallback extends Vue {
     (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
   ];
 
+  // specieal endpoint when a token exists
   async subscribeToNewsletter() {
     const { data } = await PostService.post<{ success: mailchimpSubscribe }>(
-      'newsletter',
+      this.userToken ? 'newsletter/authed' : 'newsletter',
       {
         email: this.email,
       },
+      this.userToken
+        ? {
+          headers: { Authorization: `Bearer ${this.userToken}` },
+        }
+        : undefined,
     );
     return data ? data.success : mailchimpSubscribe.failure;
   }

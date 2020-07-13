@@ -13,13 +13,17 @@ const listID = 'c0b6128347';
 
 export async function subscribeEmailToMailchimp(
   email: string,
-  username?: string,
+  userID?: flintId,
 ) {
   // for some reason mailchimp wants an MD5 hash of the email
   const emailAdressHashed: string = md5(email);
-  const merge_fields = username
+  const user = userID ? await getUser(userID) : null;
+  if (userID && !user) {
+    throw new Error(`User with ID ${userID} does not exist.`);
+  }
+  const merge_fields = user
     ? {
-      USERNAME: username,
+      USERNAME: user.name,
     }
     : {};
   try {
@@ -28,12 +32,15 @@ export async function subscribeEmailToMailchimp(
       {
         email_address: email,
         merge_fields,
-        status: 'subscribed',
-        status_if_new: 'subscribed',
+        /*         status: 'subscribed', */
+        status_if_new: 'pending', // send double opt in email from mailchimp
         tags: ['easyshare'],
       },
       { auth: { username: 'flint.gg', password: mailchimpAPIK } },
     );
+    if (user) {
+      // TODO mark user as already subscribed in DB
+    }
     return mailchimpSubscribe.success;
   } catch (e) {
     if (e.response && e.response.data) {

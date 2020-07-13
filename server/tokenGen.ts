@@ -29,5 +29,6 @@ export function getSwitchToken(twitterId: flintId, name: string) {
 export function getSwitchAuthMiddleware() {
   return jwt({
     secret: switchSecret,
+    algorithms: ['HS256'],
   });
 }

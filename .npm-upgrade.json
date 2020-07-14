@@ -3,6 +3,10 @@
     "v-tooltip": {
       "versions": "2.0.3",
       "reason": "TS crashes"
+    },
+    "googlephotos": {
+      "versions": "0.3.0",
+      "reason": "It introduces errors"
     }
   }
 }

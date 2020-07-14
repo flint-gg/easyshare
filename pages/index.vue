@@ -529,6 +529,8 @@ export default class serviceCallback extends Vue {
         this.deletePerDefault = dat.autoDelete;
         if (dat.linkedEmail) {
           localStorage.setItem('switchshare/email', 'true');
+        } else {
+          localStorage.removeItem('switchshare/email');
         }
         if (dat.linkedPhotos) {
           localStorage.setItem('switchshare/photos', 'true');

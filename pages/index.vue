@@ -13,7 +13,6 @@
         sizes="100px"
       />
     </h3>
-
     <section v-if="userToken">
       <v-alert
         v-if="userName && linkedPhotos && statsToDisplay[3] === 0"
@@ -159,12 +158,12 @@
       </section>
     </section>
     <section v-else-if="!userToken" class="accounts">
-        <loading
-          message="counting shared media"
-          class="account-section"
-          :inline="true"
-        />
-      </section>
+      <loading
+        message="counting shared media"
+        class="account-section"
+        :inline="true"
+      />
+    </section>
     <section v-if="!userName" class="accounts">
       <section class="tutorial-section">
         <div>
@@ -204,13 +203,25 @@
       </section>
     </section>
     <v-alert
+      v-if="(!userToken || !linkedEmail)"
       class="alert"
       type="info"
-      color="blue"
+      :color="
+        emailSubscribeStatus > 0
+          ? 'green'
+          : emailSubscribeStatus === 0
+          ? 'red'
+          : 'blue'
+      "
       :dismissible="true"
       style="max-width: 640px;"
     >
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form
+        v-if="!emailSubscribeStatus"
+        ref="form"
+        v-model="valid"
+        lazy-validation
+      >
         Want us to keep you up to date with everything flint.gg?
         <v-text-field
           v-model="email"
@@ -227,6 +238,12 @@
           Sign me up!
         </v-btn>
       </v-form>
+      <section v-else>
+        <div v-if="emailSubscribeStatus === 1">
+          Successfully subscribed to the newsletter!
+        </div>
+        <div v-else>You were already subscribed to the newsletter!</div>
+      </section>
     </v-alert>
     <section class="accounts">
       <section class="account-section tutorial open-source">
@@ -389,6 +406,12 @@ export default class serviceCallback extends Vue {
     );
   }
 
+  get linkedEmail() {
+    return (
+      !this.loggingOut && Boolean(localStorage.getItem('switchshare/email'))
+    );
+  }
+
   twitterToken: string | null = null;
 
   gphotosUrl: string | undefined;
@@ -504,6 +527,9 @@ export default class serviceCallback extends Vue {
         this.followedHashtags = dat.hashtags;
         this.stats = dat.stats;
         this.deletePerDefault = dat.autoDelete;
+        if (dat.linkedEmail) {
+          localStorage.setItem('switchshare/email', 'true');
+        }
         if (dat.linkedPhotos) {
           localStorage.setItem('switchshare/photos', 'true');
         } else {
@@ -617,10 +643,11 @@ export default class serviceCallback extends Vue {
     (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
   ];
 
-  // specieal endpoint when a token exists
+  emailSubscribeStatus: mailchimpSubscribe | null = null;
+
   async subscribeToNewsletter() {
     const { data } = await PostService.post<{ success: mailchimpSubscribe }>(
-      this.userToken ? 'newsletter/authed' : 'newsletter',
+      this.userToken ? 'newsletter/authed' : 'newsletter', // specieal endpoint when a token exists
       {
         email: this.email,
       },
@@ -630,7 +657,16 @@ export default class serviceCallback extends Vue {
         }
         : undefined,
     );
-    return data ? data.success : mailchimpSubscribe.failure;
+    if (data) {
+      if (data.success === mailchimpSubscribe.failure) {
+        localStorage.removeItem('switchshare/email');
+      } else {
+        localStorage.setItem('switchshare/email', 'true');
+      }
+    }
+    this.emailSubscribeStatus = data
+      ? data.success
+      : mailchimpSubscribe.failure;
   }
 }
 </script>

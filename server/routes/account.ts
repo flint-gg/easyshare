@@ -32,6 +32,7 @@ app.get('/', async (req, res) => {
     hashtagsToFollow,
     stats,
     autoDelete: user.autoDelete,
+    linkedEmail: Boolean(user.email),
   };
   return res.status(200).json(response);
 });

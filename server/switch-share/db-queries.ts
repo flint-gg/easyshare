@@ -230,3 +230,37 @@ export async function updateConfiguration(
     return user;
   });
 }
+
+export async function addUserEmail(id: flintId, email: string) {
+  const now = new Date();
+  return sequelize.transaction(async (t) => {
+    const response = await switch_share_user.update(
+      {
+        updated: now,
+        email,
+      },
+      { where: { id }, returning: true, transaction: t },
+    );
+    const user = response[1][0] as switch_share_user_type;
+    await addEvent(user.id, switchEvent.updateEmail, t);
+    cachedUsers.set(id, user);
+    return user;
+  });
+}
+
+export async function removeUserEmail(id: flintId) {
+  const now = new Date();
+  return sequelize.transaction(async (t) => {
+    const response = await switch_share_user.update(
+      {
+        updated: now,
+        email: null,
+      },
+      { where: { id }, returning: true, transaction: t },
+    );
+    const user = response[1][0] as switch_share_user_type;
+    await addEvent(user.id, switchEvent.updateEmail, t);
+    cachedUsers.set(id, user);
+    return user;
+  });
+}

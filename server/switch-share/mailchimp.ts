@@ -1,7 +1,7 @@
 import axios from 'axios';
 import md5 from 'md5';
 import { mailchimpSubscribe } from '../../types/enums';
-import { getUser } from './db-queries';
+import { getUser, addUserEmail } from './db-queries';
 
 if (!process.env.MAILCHIMP_API_KEY) {
   throw new Error('Mailchimp API key missing.');
@@ -39,7 +39,7 @@ export async function subscribeEmailToMailchimp(
       { auth: { username: 'flint.gg', password: mailchimpAPIK } },
     );
     if (user) {
-      // TODO mark user as already subscribed in DB
+      await addUserEmail(user.id, email);
     }
     return mailchimpSubscribe.success;
   } catch (e) {

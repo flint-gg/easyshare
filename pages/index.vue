@@ -206,6 +206,7 @@
       v-if="(!userToken || !linkedEmail)"
       class="alert"
       type="info"
+      icon="email"
       :color="
         emailSubscribeStatus > 0
           ? 'green'
@@ -225,10 +226,14 @@
         Want us to keep you up to date with everything flint.gg?
         <v-text-field
           v-model="email"
+          style="padding-right: 2rem;"
           :rules="emailRules"
-          label="E-mail"
+          label="Your E-mail"
           required
         ></v-text-field>
+        <div v-if="emailSubscribeStatus === 0">
+          Something went wrong. Please try again later.
+        </div>
         <v-btn
           :disabled="!valid"
           color="success"
@@ -240,9 +245,10 @@
       </v-form>
       <section v-else>
         <div v-if="emailSubscribeStatus === 1">
-          Successfully subscribed to the newsletter!
+          Successfully subscribed to the newsletter! Check your emails for a
+          confirmation mail.
         </div>
-        <div v-else>You were already subscribed to the newsletter!</div>
+        <div v-else>You're already subscribed to the newsletter!</div>
       </section>
     </v-alert>
     <section class="accounts">

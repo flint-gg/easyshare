@@ -15,7 +15,6 @@ export async function subscribeEmailToMailchimp(
   email: string,
   userID?: flintId,
 ) {
-  // for some reason mailchimp wants an MD5 hash of the email
   const emailAdressHashed: string = md5(email);
   const user = userID ? await getUser(userID) : null;
   if (userID && !user) {
@@ -27,27 +26,29 @@ export async function subscribeEmailToMailchimp(
     }
     : {};
   try {
-    await axios.put(
+    const response = await axios.put<mailchimpResponse>(
       `${mailchimpURL}lists/${listID}/members/${emailAdressHashed}`,
       {
         email_address: email,
         merge_fields,
-        /*         status: 'subscribed', */
         status_if_new: 'pending', // send double opt in email from mailchimp
         tags: ['easyshare'],
       },
       { auth: { username: 'flint.gg', password: mailchimpAPIK } },
     );
+    const mail = response.data.email_address;
     if (user) {
-      await addUserEmail(user.id, email);
+      await addUserEmail(user.id, mail);
     }
-    return mailchimpSubscribe.success;
+    if (response.data.status === 'subscribed') {
+      return mailchimpSubscribe.already;
+    }
+    if (response.data.status === 'pending') {
+      return mailchimpSubscribe.success;
+    }
+    return mailchimpSubscribe.failure;
   } catch (e) {
     if (e.response && e.response.data) {
-      if (e.response.data.title === 'Member Exists') {
-        // this should never occur
-        return mailchimpSubscribe.already;
-      }
       throw new Error(e.response.data.title);
     }
     throw new Error('Failed connecting to the mailchimp server.');

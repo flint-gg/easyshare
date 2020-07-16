@@ -202,7 +202,7 @@
         what you need, where you need it.
       </section>
     </section>
-    <v-alert
+    <!-- <v-alert
       v-if="(!userToken || !linkedEmail)"
       class="alert"
       type="info"
@@ -250,7 +250,7 @@
         </div>
         <div v-else>You're already subscribed to the newsletter!</div>
       </section>
-    </v-alert>
+    </v-alert> -->
     <section class="accounts">
       <section class="account-section tutorial open-source">
         <fork
@@ -354,6 +354,7 @@
         </section>
       </section>
     </PopUp>
+    <emailBubble :userToken="userToken"/>
   </section>
 </template>
 
@@ -370,6 +371,7 @@ import {
   switchStat,
   switchEvent,
 } from '~/server/switch-share/enums';
+import emailBubble from '~/components/emailBubble.vue';
 
 /* eslint-disable import/no-unresolved */
 import share from '~/assets/images/switch-share/tutorial-icons/share.svg?inline';
@@ -399,6 +401,7 @@ import { mailchimpSubscribe } from '../types/enums';
     PopUp,
     settings,
     fork,
+    emailBubble,
   },
 })
 export default class serviceCallback extends Vue {

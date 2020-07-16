@@ -59,6 +59,8 @@ import Button from '~/components/Button.vue';
 import { mailchimpSubscribe } from '../types/enums';
 import { PostService } from '../scripts/postService';
 
+const timeout = 5;
+
 @Component({ components: { Button } })
 export default class surveyBubble extends Vue {
   @Prop()
@@ -80,7 +82,7 @@ export default class surveyBubble extends Vue {
     if (!this.inFeedbackPage && alreadyReactedToSurvey !== 'emailCollected') {
       setTimeout(() => {
         this.bannerVisible = true;
-      }, 10 * 1000);
+      }, timeout * 1000);
     } else if (this.inFeedbackPage) {
       this.bannerVisible = true;
     }

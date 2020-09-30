@@ -629,6 +629,7 @@ export default class serviceCallback extends Vue {
     }
   }
   &--twitter {
+    fill: none;
     > path {
       fill: #ecfeff;
     }

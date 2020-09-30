@@ -1,7 +1,7 @@
 import joi from 'joi';
 import { hashtagsToFollow } from '../switch-share/twitter';
 
-const configChangeSchema = {
+const configChangeSchema = joi.object({
   hashtags: joi
     .array()
     .items(
@@ -15,21 +15,21 @@ const configChangeSchema = {
     .min(1)
     .required(),
   autoDelete: joi.boolean().required(),
-};
+});
 
 export function configChangePolicy(req, res, next) {
-  const { error } = joi.validate(req.body, configChangeSchema);
+  const { error } = configChangeSchema.validate(req.body);
   if (error && error.details[0].context) {
     switch (error.details[0].context.key) {
     case 'hashtags':
-      return res.status(400).send({
+      return res.status(400).json({
         error: {
           title: 'Invalid array of hashtags.',
           detail: 'The hashtags provided are invalid.',
         } as flintError,
       });
     default:
-      return res.status(400).send({
+      return res.status(400).json({
         error: {
           title: 'Unknown Error.',
           detail: 'An unknown error ocurred.',
@@ -40,15 +40,15 @@ export function configChangePolicy(req, res, next) {
   return next();
 }
 
-const twitterTokensSchema = {
+const twitterTokensSchema = joi.object({
   oauth_token: joi.string(),
   oauth_verifier: joi.string(),
-};
+});
 
 export function twitterTokensPolicy(req, res, next) {
-  const { error } = joi.validate(req.body.tokens, twitterTokensSchema);
+  const { error } = twitterTokensSchema.validate(req.body.tokens);
   if (error && error.details[0].context) {
-    return res.status(400).send({
+    return res.status(400).json({
       error: {
         title: 'Invalid token format.',
         detail: 'The tokens provided are in invalid format.',
@@ -58,17 +58,34 @@ export function twitterTokensPolicy(req, res, next) {
   return next();
 }
 
-const photosCodeSchema = {
+const photosCodeSchema = joi.object({
   code: joi.string(),
-};
+});
 
 export function photosCodePolicy(req, res, next) {
-  const { error } = joi.validate(req.body, photosCodeSchema);
+  const { error } = photosCodeSchema.validate(req.body);
   if (error && error.details[0].context) {
-    return res.status(400).send({
+    return res.status(400).json({
       error: {
         title: 'Invalid token format.',
         detail: 'The token provided is in invalid format.',
+      } as flintError,
+    });
+  }
+  return next();
+}
+
+const mailchimpSubscribeSchema = joi.object({
+  email: joi.string().email(),
+});
+
+export function mailchimpSubscribePolicy(req, res, next) {
+  const { error } = mailchimpSubscribeSchema.validate(req.body);
+  if (error && error.details[0].context) {
+    return res.status(400).json({
+      error: {
+        title: 'Invalid email format.',
+        detail: 'The email provided is in invalid format.',
       } as flintError,
     });
   }

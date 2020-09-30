@@ -29,6 +29,8 @@ export class switch_share_user extends Sequelize.Model {
 
   public ph_token_expiry?: Date;
 
+  public email?: string;
+
   public static initWithSequelize(sequelize: Sequelize.Sequelize) {
     switch_share_user.init(
       {
@@ -96,6 +98,10 @@ export class switch_share_user extends Sequelize.Model {
           type: Sequelize.DATE,
           comment: `Date on which the Photos oauth_token expires.
             It could also be revoked earlier, but this is the last point in time we could use it.`,
+        },
+        email: {
+          type: Sequelize.TEXT,
+          comment: 'The email the user manually added.',
         },
       },
       { sequelize },

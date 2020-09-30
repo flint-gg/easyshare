@@ -3,7 +3,7 @@
     <div class="landingbody">
       <script type="text/javascript" src="/scripts/ads.js"></script>
       <div v-if="!isMobile" class="topbarcolumns w-row desktop">
-        <div class="logocolumn w-col w-col-9" style="padding-left: 0px;">
+        <div class="logocolumn w-col w-col-9" style="padding-left: 0px">
           <a class="logocolumn" href="https://flint.gg">
             <img
               ix-path="branding/logo"
@@ -32,7 +32,7 @@
         <nuxt />
       </v-content>
       <PopUp
-        style="z-index:1000;"
+        style="z-index: 1000"
         :display="errorTitle"
         color="#f04747"
         :title="errorTitle"
@@ -59,33 +59,42 @@
         >
       </PopUp>
     </div>
-    <CookieLaw theme="blood-orange">
-      <div slot="message">
-        We use cookies as well as anonymous analytics to ensure you get the best
-        experience possible on our website.
-      </div>
-    </CookieLaw>
+    <client-only
+      ><cookie-law theme="blood-orange">
+        <div slot="message">
+          We use cookies as well as anonymous analytics to ensure you get the
+          best experience possible on our website.
+        </div>
+      </cookie-law></client-only
+    >
   </v-app>
 </template>
 
 <script lang="ts">
-import CookieLaw from 'vue-cookie-law';
 import { Component } from 'nuxt-property-decorator';
 
 import Vue from 'vue';
-import { isMobile } from '~/scripts/isMobile';
 import PopUp from '~/components/Popup.vue';
 import Button from '~/components/Button.vue';
 
 @Component({
   components: {
-    CookieLaw,
     PopUp,
     Button,
   },
+})
+export default class Default extends Vue {
+  errorMsg = null;
+
+  errorTitle = null;
+
+  get isMobile() {
+    return this.$vuetify.breakpoint.smAndDown;
+  }
+
   mounted() {
     // Add CSS variable to use instead of vh, fixes mobile page height issues
-    if (isMobile()) {
+    if (this.isMobile) {
       // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
       const vh = window.innerHeight * 0.01;
       // Then we set the value in the --vh custom property to the root of the document
@@ -98,14 +107,7 @@ import Button from '~/components/Button.vue';
         document.documentElement.style.setProperty('--vh', `${vhListener}px`);
       });
     }
-  },
-})
-export default class Default extends Vue {
-  errorMsg = null;
-
-  errorTitle = null;
-
-  isMobile = isMobile();
+  }
 
   // Catches errors thrown by child components
   errorCaptured(err) {
@@ -213,5 +215,4 @@ export default class Default extends Vue {
     align-items: flex-start;
   }
 }
-
 </style>

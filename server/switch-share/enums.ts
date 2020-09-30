@@ -19,6 +19,7 @@ export enum switchEvent {
   'multiImage',
   'singleVideo',
   'changeSettings',
+  'updateEmail',
 }
 export type trackedUser = {
   oauth_token: string;
@@ -46,6 +47,7 @@ type base_share_user_type = {
   token_secret: string;
   name: string;
   type: switchAccountType;
+  email?: string;
 };
 
 export type switch_share_user_type_with_ph = base_share_user_type & {
@@ -77,6 +79,7 @@ export type userForClient = {
   hashtagsToFollow: Array<string>;
   stats: Array<switchStat>;
   autoDelete: boolean;
+  linkedEmail: boolean;
 };
 
 export enum streamEndReason {

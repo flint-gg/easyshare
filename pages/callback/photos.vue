@@ -2,7 +2,7 @@
   <section>
     <loading
       v-if="this.$route.query.code"
-      style="text-align:center;"
+      style="text-align: center"
       :message="'Linking accounts...'"
     />
     <div v-else>No callback code provided.</div>
@@ -18,7 +18,7 @@ import loading from '~/components/loading/loading.vue';
 @Component({ components: { loading } })
 export default class serviceCallback extends Vue {
   get userToken() {
-    return localStorage.getItem('switchshare/token');
+    return process.client ? localStorage.getItem('switchshare/token') : null;
   }
 
   async mounted() {

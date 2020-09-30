@@ -24,7 +24,7 @@ export class FlintError extends Error {
       title = titl;
       httpCode = HTTPStatusCodes.defaultError;
     }
-    res.status(httpCode).send({
+    res.status(httpCode).json({
       // we leave the status out, since we send that in the actual request
       error: { title, detail: error.message } as flintError,
     });

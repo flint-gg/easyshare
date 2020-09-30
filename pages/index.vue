@@ -45,15 +45,13 @@
             <Button
               :onClick="redirectToPhotos"
               color="white"
-              style="margin-bottom: 2rem;"
+              style="margin-bottom: 2rem"
               ><img
                 src="~/assets/images/switch-share/photos_64dp.png"
                 class="icon-in-button"
               />Connect Google Photos</Button
             >
-            <h4>
-              Please add the account you want to send your media to.
-            </h4>
+            <h4>Please add the account you want to send your media to.</h4>
             We will create an album and upload media to it. You can disconnect
             or change your Google Photos account at any time. <br />
             <br />
@@ -76,12 +74,12 @@
           </section>
           <div
             class="stick-to-bottom"
-            style="margin-left: auto; cursor: pointer;"
+            style="margin-left: auto; cursor: pointer"
             @click="openPopup"
           >
             <settings
               class="tutorial-icon tutorial-icon--smol rotate-on-hover"
-              style="height: 32px;"
+              style="height: 32px"
             />
           </div>
         </section>
@@ -148,7 +146,7 @@
             </div>
             <p class="user-name">Images shared</p>
           </li>
-          <li style="margin-bottom: 0px;">
+          <li style="margin-bottom: 0px">
             <div class="user-score">
               {{ landingStats.videosShared }}
             </div>
@@ -156,6 +154,13 @@
           </li>
         </ul>
       </section>
+    </section>
+    <section v-else-if="!userToken" class="accounts">
+      <loading
+        message="counting shared media"
+        class="account-section"
+        :inline="true"
+      />
     </section>
     <section v-if="!userName" class="accounts">
       <section class="tutorial-section">
@@ -199,7 +204,7 @@
       <section class="account-section tutorial open-source">
         <fork
           class="tutorial-icon center-vertical"
-          style="cursor: pointer;"
+          style="cursor: pointer"
           @click.stop="redirectToGithub"
         />
         <section>
@@ -216,9 +221,7 @@
     </section>
     <section class="accounts">
       <section class="account-section tutorial">
-        <h3>
-          What's this all about?
-        </h3>
+        <h3>What's this all about?</h3>
         <p>
           Getting media, such as screenshots and videos, from your Nintendo
           Switch to your computer, smartphone and social media is difficult.
@@ -250,7 +253,7 @@
       </section>
     </section>
     <PopUp
-      style="z-index: 1000;"
+      style="z-index: 1000"
       :display="showConfirmationPopup"
       color="#f04747"
       title="Hold up"
@@ -272,14 +275,14 @@
       >
     </PopUp>
     <PopUp
-      style="z-index: 1000;"
+      style="z-index: 1000"
       :display="showPopup"
       title="Account Settings"
       :onClose="closePopup"
     >
       <section
         class="account-section"
-        style="margin-left: auto; margin-right: auto;"
+        style="margin-left: auto; margin-right: auto"
       >
         <section>
           <h4>
@@ -289,15 +292,14 @@
           <Button :onClick="logout" color="grey">Log out</Button>
         </section>
         <section v-if="linkedPhotos">
-          <h4>
-            Your Google Photos Account is connected.
-          </h4>
+          <h4>Your Google Photos Account is connected.</h4>
           <Button :onClick="openConfirmationPopup" color="red"
             >Disconnect</Button
           >
         </section>
       </section>
     </PopUp>
+    <emailBubble :userToken="userToken" />
   </section>
 </template>
 
@@ -314,6 +316,7 @@ import {
   switchStat,
   switchEvent,
 } from '~/server/switch-share/enums';
+import emailBubble from '~/components/emailBubble.vue';
 
 /* eslint-disable import/no-unresolved */
 import share from '~/assets/images/switch-share/tutorial-icons/share.svg?inline';
@@ -342,17 +345,26 @@ import fork from '~/assets/images/switch-share/tutorial-icons/fork.svg?inline';
     PopUp,
     settings,
     fork,
+    emailBubble,
   },
 })
 export default class serviceCallback extends Vue {
   get userToken() {
-    return !this.loggingOut && localStorage.getItem('switchshare/token');
+    return !this.loggingOut && process.client
+      ? localStorage.getItem('switchshare/token')
+      : null;
   }
 
   get linkedPhotos() {
-    return (
-      !this.loggingOut && Boolean(localStorage.getItem('switchshare/photos'))
-    );
+    return !this.loggingOut && process.client
+      ? Boolean(localStorage.getItem('switchshare/photos'))
+      : false;
+  }
+
+  get linkedEmail() {
+    return !this.loggingOut && process.client
+      ? Boolean(localStorage.getItem('switchshare/email'))
+      : false;
   }
 
   twitterToken: string | null = null;
@@ -470,6 +482,11 @@ export default class serviceCallback extends Vue {
         this.followedHashtags = dat.hashtags;
         this.stats = dat.stats;
         this.deletePerDefault = dat.autoDelete;
+        if (dat.linkedEmail) {
+          localStorage.setItem('switchshare/email', 'true');
+        } else {
+          localStorage.removeItem('switchshare/email');
+        }
         if (dat.linkedPhotos) {
           localStorage.setItem('switchshare/photos', 'true');
         } else {

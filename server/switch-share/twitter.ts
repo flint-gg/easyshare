@@ -204,12 +204,14 @@ async function listenToStream(timeouted = 0) {
     });
 }
 
-const listenToStreamInDev = true;
+const listenToStreamInDev = false;
 
 export async function run() {
   await fillCache();
   if (listenToStreamInDev || process.env.NODE_ENV !== 'development') {
     await listenToStream();
+  } else {
+    console.info('Detected development mode, not listening to to stream.');
   }
 }
 

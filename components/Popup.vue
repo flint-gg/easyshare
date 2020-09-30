@@ -1,4 +1,3 @@
-
 <template>
   <div
     v-if="display && isMobile"
@@ -49,7 +48,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'nuxt-property-decorator';
-import { isMobile } from '~/scripts/isMobile';
 
 @Component
 export default class PopUp extends Vue {
@@ -71,7 +69,9 @@ export default class PopUp extends Vue {
   @Prop({ default: '' })
   icon;
 
-  isMobile = isMobile();
+  get isMobile() {
+    return this.$vuetify.breakpoint.smAndDown;
+  }
 
   get cssVars() {
     return {

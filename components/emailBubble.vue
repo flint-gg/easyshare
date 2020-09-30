@@ -1,6 +1,6 @@
 <template>
   <v-alert
-    v-if="(bannerVisible && !userToken || !linkedEmail)"
+    v-if="bannerVisible && (!userToken || !linkedEmail)"
     class="survey-bubble"
     :class="{ 'fixed-to-right': !inFeedbackPage, margins: true }"
     transition="slide-x-reverse-transition"
@@ -14,7 +14,7 @@
         : 'blue'
     "
     :dismissible="true"
-    style="max-width: 640px;"
+    style="max-width: 640px"
   >
     <v-form
       v-if="!emailSubscribeStatus"
@@ -25,7 +25,7 @@
       Want us to keep you up to date with everything flint.gg?
       <v-text-field
         v-model="email"
-        style="padding-right: 2rem;"
+        style="padding-right: 2rem"
         :rules="emailRules"
         label="Your E-mail"
         required

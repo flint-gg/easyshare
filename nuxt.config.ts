@@ -1,6 +1,7 @@
-import { Configuration } from '@nuxt/types';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { NuxtConfig } from '@nuxt/types';
 
-const config: Configuration = {
+const config: NuxtConfig = {
   buildModules: [
     '@nuxt/typescript-build',
     [
@@ -12,6 +13,14 @@ const config: Configuration = {
           },
           icons: 'mdi',
         },
+        theme: {
+          dark: true,
+          themes: {
+            dark: {
+              primary: '#2bafa6',
+            },
+          },
+        },
       },
     ],
     '@nuxtjs/gtm',
@@ -20,7 +29,7 @@ const config: Configuration = {
     typeCheck: true,
     ignoreNotFoundWarnings: true,
   },
-  mode: 'spa',
+  telemetry: true,
   /*
    ** Headers of the page
    */
@@ -122,9 +131,17 @@ const config: Configuration = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/vuetify',
-    '~/plugins/imgixPlugin',
-    '~/plugins/mountedHook',
+    { src: '~plugins/vue-cookie-law', mode: 'client' },
+
+    {
+      src: '~/plugins/imgixPlugin',
+      mode: 'client',
+    },
+
+    {
+      src: '~/plugins/mountedHook',
+      mode: 'client',
+    },
   ],
 
   /*

@@ -152,7 +152,7 @@ async function listenToStream(timeouted = 0) {
         && user.ph_album
         && checkHashtags(user.hashtags, tweet.entities.hashtags)
       ) {
-        console.log('[INCOMING] tracked user', user.name);
+        console.log('[INCOMING] twitter user:', user.name);
 
         const imageURLs = tweet.extended_entities!.media.map((m) => {
           const imageURL = getImageUrl(m, twitterImageSize.large);

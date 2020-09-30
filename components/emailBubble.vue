@@ -74,7 +74,9 @@ export default class surveyBubble extends Vue {
   bannerVisible: boolean = false;
 
   get linkedEmail() {
-    return Boolean(localStorage.getItem('switchshare/email'));
+    return process.client
+      ? Boolean(localStorage.getItem('switchshare/email'))
+      : false;
   }
 
   async mounted() {

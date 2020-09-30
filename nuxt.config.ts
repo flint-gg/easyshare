@@ -132,12 +132,10 @@ const config: NuxtConfig = {
    */
   plugins: [
     { src: '~plugins/vue-cookie-law', mode: 'client' },
-
     {
       src: '~/plugins/imgixPlugin',
       mode: 'client',
     },
-
     {
       src: '~/plugins/mountedHook',
       mode: 'client',

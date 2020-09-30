@@ -59,7 +59,7 @@ import Button from '~/components/Button.vue';
 import { mailchimpSubscribe } from '../types/enums';
 import { PostService } from '../scripts/postService';
 
-const timeout = 5;
+const timeout = 8;
 
 @Component({ components: { Button } })
 export default class surveyBubble extends Vue {

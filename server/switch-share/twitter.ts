@@ -40,24 +40,6 @@ const twitterAPI = new Twitter({
   access_token_secret: process.env.TW_ACCESS_SECRET, // from your User (oauth_token_secret)
 });
 
-export async function getEmailOfUser(
-  id: flintId,
-  access_token_key: string,
-  access_token_secret: string,
-) {
-  const twitterApi = new Twitter({
-    consumer_key,
-    consumer_secret,
-    access_token_key,
-    access_token_secret,
-  });
-  // TODO check if we want to "need" emails , change on twitter app; only then can we get it
-  const user = await twitterApi.get('account/verify_credentials.json', {
-    include_email: true,
-  });
-  return user; // TODO get email part
-}
-
 // hashtags directly map to enum switchHashtag; id 0 is the always followed hashtag
 export const hashtagsToFollow = [
   'flintgg', // tracked because it is the dont delete flag

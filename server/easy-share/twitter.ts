@@ -16,9 +16,9 @@ import {
   addEvent,
 } from './db-queries';
 import {
-  switchHashtag,
-  switchEvent,
-  switchAccountType,
+  easyshareHashtag,
+  easyshareEvent,
+  easyshareAccountType,
   streamEndResponse,
 } from './enums';
 
@@ -40,7 +40,7 @@ const twitterAPI = new Twitter({
   access_token_secret: process.env.TW_ACCESS_SECRET, // from your User (oauth_token_secret)
 });
 
-export const hashtagsToFollow = Object.values(switchHashtag).filter((ht) => isNaN(ht as any));
+export const hashtagsToFollow = Object.values(easyshareHashtag).filter((ht) => isNaN(ht as any));
 
 const hashtagsToFollowInternal = hashtagsToFollow.concat(
   'flintgg', // always tracked because it is the dont delete flag
@@ -115,11 +115,11 @@ async function destroyTweet(tweetId: flintId, client: Twitter) {
 } */
 
 function checkHashtags(
-  userHashtags: Array<switchHashtag>,
+  userHashtags: Array<easyshareHashtag>,
   hashtagsInTweet: Array<{ text: string; indices: Array<number> }>,
 ) {
   const hashtags: Array<string> = [];
-  userHashtags.forEach((i) => hashtags.push(switchHashtag[i]));
+  userHashtags.forEach((i) => hashtags.push(easyshareHashtag[i]));
   return (
     hashtagsInTweet.filter((h) => hashtags.find((hs) => hs === h.text)).length
     > 0
@@ -238,9 +238,9 @@ export async function getTokensetFromCompletedAuthFlow(tokens: {
     user = await createUser(
       response.user_id,
       response,
-      switchAccountType.twitter,
+      easyshareAccountType.twitter,
     );
   }
-  await addEvent(response.user_id, switchEvent.login);
+  await addEvent(response.user_id, easyshareEvent.login);
   return user;
 }

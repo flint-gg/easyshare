@@ -1,12 +1,12 @@
 import express from 'express';
-import { userForClient } from '../switch-share/enums';
-import { hashtagsToFollow } from '../switch-share/twitter';
+import { userForClient } from '../easy-share/enums';
+import { hashtagsToFollow } from '../easy-share/twitter';
 
 import {
   updateConfiguration,
   getUser,
   getUserStats,
-} from '../switch-share/db-queries';
+} from '../easy-share/db-queries';
 import { configChangePolicy } from './switchPolicies';
 
 const app = express.Router();

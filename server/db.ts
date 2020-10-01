@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import Sequelize from 'sequelize';
-import { switch_share_events, switch_share_user } from './switch-share/models';
+import { switch_share_events, switch_share_user } from './easy-share/models';
 
 const AWSConfig = {
   host: process.env.RDS_HOSTNAME,

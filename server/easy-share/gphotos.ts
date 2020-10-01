@@ -7,7 +7,7 @@ import { asyncForEach, asyncWait } from '../../scripts/helper/helperFunctions';
 import flintURL from '../../scripts/flintURL';
 import {
   gphotosTokens,
-  switchEvent,
+  easyshareEvent,
   switch_share_user_type,
   switch_share_user_type_with_ph,
 } from './enums';
@@ -111,7 +111,7 @@ export async function onCallback(code: string, twitterId: flintId) {
 }
 
 // TODO dynamic, add game info?
-const description = 'Uploaded via the flint.gg Nintendo Switch Share';
+const description = 'Uploaded via flint.gg Nintendo Switch Easyshare';
 
 const imageBaseDirectory = Path.resolve(__dirname, 'cached-files');
 
@@ -178,7 +178,7 @@ export async function uploadMedia(
       );
       await addEvent(
         user.id,
-        switchEvent.multiImage,
+        easyshareEvent.multiImage,
         undefined,
         downloadedFiles.length,
       );
@@ -192,8 +192,8 @@ export async function uploadMedia(
       await addEvent(
         user.id,
         downloadedFiles[0].name.endsWith('mp4')
-          ? switchEvent.singleVideo
-          : switchEvent.singleImage,
+          ? easyshareEvent.singleVideo
+          : easyshareEvent.singleImage,
       );
     }
   } catch (e) {

@@ -20,8 +20,8 @@ import routeSetup from './routes';
 import { serverSetup } from './serverCreation';
 import config from '../nuxt.config';
 import { sequelize } from './db';
-import { run } from './switch-share/twitter';
-import { cleanOutdatedHashtags } from './switch-share/db-queries';
+import { run } from './easy-share/twitter';
+import { cleanOutdatedHashtags } from './easy-share/db-queries';
 
 const umzug = new Umzug({
   storage: 'sequelize',

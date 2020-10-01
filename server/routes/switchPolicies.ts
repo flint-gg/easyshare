@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { getSwitchHashtagNumbers } from '../switch-share/enums';
+import { getSwitchHashtagNumbers } from '../easy-share/enums';
 
 const configChangeSchema = joi.object({
   hashtags: joi

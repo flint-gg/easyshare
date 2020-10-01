@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { url, onCallback } from '../switch-share/gphotos';
-import { disconnectPhotos } from '../switch-share/db-queries';
+import { url, onCallback } from '../easy-share/gphotos';
+import { disconnectPhotos } from '../easy-share/db-queries';
 import { photosCodePolicy } from './switchPolicies';
 
 const app = express.Router();

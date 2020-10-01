@@ -2,15 +2,15 @@ import { Transaction, Sequelize, Op } from 'sequelize';
 import { asyncForEach } from '../../scripts/helper/helperFunctions';
 import { sequelize } from '../db';
 import {
-  switchHashtag,
+  easyshareHashtag,
   trackedUser,
   gphotosTokens,
   switch_share_user_type,
-  switchEvent,
+  easyshareEvent,
   switch_share_user_type_with_ph,
   switch_share_user_type_without_ph,
   switchStat,
-  switchAccountType,
+  easyshareAccountType,
   getSwitchHashtagNumbers,
 } from './enums';
 import { switch_share_user, switch_share_events } from './models';
@@ -24,7 +24,7 @@ export async function fillCache() {
 
 export async function addEvent(
   author: flintId,
-  type: switchEvent,
+  type: easyshareEvent,
   transaction?: Transaction,
   amount = 1,
 ) {
@@ -93,14 +93,14 @@ export async function getGeneralStats() {
 export async function getLandingStats() {
   const stats: Array<{
     amount: number;
-    type: switchEvent;
+    type: easyshareEvent;
   }> = (await switch_share_events.findAll({
     group: ['type'],
     where: {
       [Op.or]: [
-        { type: switchEvent.singleImage },
-        { type: switchEvent.multiImage },
-        { type: switchEvent.singleVideo },
+        { type: easyshareEvent.singleImage },
+        { type: easyshareEvent.multiImage },
+        { type: easyshareEvent.singleVideo },
       ],
     },
     attributes: [
@@ -112,12 +112,12 @@ export async function getLandingStats() {
   return {
     imagesShared: stats
       .filter(
-        (s) => s.type === switchEvent.singleImage
-          || s.type === switchEvent.multiImage,
+        (s) => s.type === easyshareEvent.singleImage
+          || s.type === easyshareEvent.multiImage,
       )
       .reduce((a, b) => a + Number(b.amount), 0),
     videosShared: stats
-      .filter((s) => s.type === switchEvent.singleVideo)
+      .filter((s) => s.type === easyshareEvent.singleVideo)
       .reduce((a, b) => a + Number(b.amount), 0),
   };
 }
@@ -125,10 +125,10 @@ export async function getLandingStats() {
 export async function createUser(
   id: flintId,
   tw: trackedUser,
-  type: switchAccountType,
+  type: easyshareAccountType,
 ) {
   const now = new Date();
-  const hashtags = [switchHashtag.NintendoSwitch, switchHashtag.PS4share];
+  const hashtags = [easyshareHashtag.NintendoSwitch, easyshareHashtag.PS4share];
   const user: switch_share_user_type = {
     id,
     type,
@@ -146,7 +146,7 @@ export async function createUser(
   };
   await sequelize.transaction(async (t) => {
     await switch_share_user.upsert(user, { transaction: t });
-    await addEvent(id, switchEvent.signup, t);
+    await addEvent(id, easyshareEvent.signup, t);
     cachedUsers.set(id, user);
   });
   return user;
@@ -184,7 +184,7 @@ export async function connectPhotos(
     );
     const user = response[1][0] as switch_share_user_type_with_ph;
     if (!onlyUpdatingTokens) {
-      await addEvent(id, switchEvent.linkPhotos, t);
+      await addEvent(id, easyshareEvent.linkPhotos, t);
     }
     cachedUsers.set(id, user);
     return user;
@@ -205,7 +205,7 @@ export async function disconnectPhotos(id: flintId) {
       { where: { id }, returning: true, transaction: t },
     );
     const user = response[1][0] as switch_share_user_type_without_ph;
-    await addEvent(id, switchEvent.unlinkPhotos, t);
+    await addEvent(id, easyshareEvent.unlinkPhotos, t);
     cachedUsers.set(id, user);
     return user;
   });
@@ -234,7 +234,7 @@ export async function cleanOutdatedHashtags() {
 
 export async function updateConfiguration(
   id: flintId,
-  hashtags: Array<switchHashtag>,
+  hashtags: Array<easyshareHashtag>,
   autoDelete: boolean,
 ) {
   const now = new Date();
@@ -248,7 +248,7 @@ export async function updateConfiguration(
       { where: { id }, returning: true, transaction: t },
     );
     const user = response[1][0] as switch_share_user_type;
-    await addEvent(id, switchEvent.changeSettings, t);
+    await addEvent(id, easyshareEvent.changeSettings, t);
     cachedUsers.set(id, user);
     return user;
   });
@@ -265,7 +265,7 @@ export async function addUserEmail(id: flintId, email: string) {
       { where: { id }, returning: true, transaction: t },
     );
     const user = response[1][0] as switch_share_user_type;
-    await addEvent(user.id, switchEvent.updateEmail, t);
+    await addEvent(user.id, easyshareEvent.updateEmail, t);
     cachedUsers.set(id, user);
     return user;
   });
@@ -282,7 +282,7 @@ export async function removeUserEmail(id: flintId) {
       { where: { id }, returning: true, transaction: t },
     );
     const user = response[1][0] as switch_share_user_type;
-    await addEvent(user.id, switchEvent.updateEmail, t);
+    await addEvent(user.id, easyshareEvent.updateEmail, t);
     cachedUsers.set(id, user);
     return user;
   });

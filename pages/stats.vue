@@ -14,7 +14,7 @@
       usage statistic
     </h3>
     <Button
-      style="max-width: 160px; margin: auto;"
+      style="max-width: 160px; margin: auto"
       :onClick="
         () =>
           $router.push({
@@ -51,7 +51,7 @@
 import Vue from 'vue';
 import { Component } from 'nuxt-property-decorator';
 import { PostService } from '~/scripts/postService';
-import { switchStat, switchEvent } from '~/server/switch-share/enums';
+import { switchStat, easyshareEvent } from '~/server/easy-share/enums';
 import Button from '~/components/Button.vue';
 
 @Component({ components: { Button } })
@@ -61,7 +61,7 @@ export default class serviceCallback extends Vue {
   get singleImageStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.singleImage)
+        .filter((s) => s.type === easyshareEvent.singleImage)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -69,7 +69,7 @@ export default class serviceCallback extends Vue {
   get multiImageStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.multiImage)
+        .filter((s) => s.type === easyshareEvent.multiImage)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -77,7 +77,7 @@ export default class serviceCallback extends Vue {
   get singleVideoStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.singleVideo)
+        .filter((s) => s.type === easyshareEvent.singleVideo)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -85,7 +85,7 @@ export default class serviceCallback extends Vue {
   get signupStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.signup)
+        .filter((s) => s.type === easyshareEvent.signup)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -93,7 +93,7 @@ export default class serviceCallback extends Vue {
   /* get loginStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.login)
+        .filter((s) => s.type === easyshareEvent.login)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -101,7 +101,7 @@ export default class serviceCallback extends Vue {
   get logoutStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.logout)
+        .filter((s) => s.type === easyshareEvent.logout)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -109,7 +109,7 @@ export default class serviceCallback extends Vue {
   get linkPhotosStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.linkPhotos)
+        .filter((s) => s.type === easyshareEvent.linkPhotos)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -117,7 +117,7 @@ export default class serviceCallback extends Vue {
   get unlinkPhotosStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.unlinkPhotos)
+        .filter((s) => s.type === easyshareEvent.unlinkPhotos)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -125,7 +125,7 @@ export default class serviceCallback extends Vue {
   get changeSettingsStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.changeSettings)
+        .filter((s) => s.type === easyshareEvent.changeSettings)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }

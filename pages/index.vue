@@ -311,11 +311,11 @@ import loading from '~/components/loading/loading.vue';
 import Button from '~/components/Button.vue';
 import PopUp from '~/components/Popup.vue';
 import {
-  switchHashtag,
+  easyshareHashtag,
   userForClient,
   switchStat,
-  switchEvent,
-} from '~/server/switch-share/enums';
+  easyshareEvent,
+} from '~/server/easy-share/enums';
 import emailBubble from '~/components/emailBubble.vue';
 
 /* eslint-disable import/no-unresolved */
@@ -377,7 +377,7 @@ export default class serviceCallback extends Vue {
 
   userName: string | null = null;
 
-  followedHashtags: Array<switchHashtag> | null = null;
+  followedHashtags: Array<easyshareHashtag> | null = null;
 
   allHashtags: Array<string> | null = null;
 
@@ -386,17 +386,20 @@ export default class serviceCallback extends Vue {
   deletePerDefault: boolean | null = null;
 
   get singleImageStat() {
-    const st = this.stats && this.stats.find((s) => s.type === switchEvent.singleImage);
+    const st = this.stats
+      && this.stats.find((s) => s.type === easyshareEvent.singleImage);
     return st ? Number(st.amount) : 0;
   }
 
   get multiImageStat() {
-    const st = this.stats && this.stats.find((s) => s.type === switchEvent.multiImage);
+    const st = this.stats
+      && this.stats.find((s) => s.type === easyshareEvent.multiImage);
     return st ? Number(st.amount) : 0;
   }
 
   get singleVideoStat() {
-    const st = this.stats && this.stats.find((s) => s.type === switchEvent.singleVideo);
+    const st = this.stats
+      && this.stats.find((s) => s.type === easyshareEvent.singleVideo);
     return st ? Number(st.amount) : 0;
   }
 
@@ -426,7 +429,7 @@ export default class serviceCallback extends Vue {
       this.allHashtags
       && this.allHashtags.map((h, index) => {
         const following = this.followedHashtags!.findIndex((val) => val === index) > -1;
-        return { tag: h, following, value: switchHashtag[h] };
+        return { tag: h, following, value: easyshareHashtag[h] };
       })
     );
   }

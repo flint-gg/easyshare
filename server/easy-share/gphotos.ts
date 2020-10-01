@@ -112,7 +112,7 @@ export async function onCallback(code: string, twitterId: flintId) {
 }
 
 // TODO dynamic, add game info?
-const description = 'Uploaded via flint.gg Nintendo Switch Easyshare';
+const description = 'Uploaded via Easyshare by flint.gg ';
 
 const imageBaseDirectory = Path.resolve(__dirname, 'cached-files');
 

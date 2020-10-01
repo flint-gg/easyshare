@@ -50,26 +50,28 @@ export async function getUser(id: flintId) {
 export async function getUserStats(author: flintId) {
   const stats: Array<switchStat> = (await switch_share_events.findAll({
     where: { author },
-    group: ['type', 'author'],
+    group: ['type', 'author', 'source'],
     attributes: [
       [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
       'type',
+      'source',
     ],
   })) as any;
   return stats;
 }
 
-export async function getGeneralStats() {
+export async function getGeneralStats(): Promise<Array<switchStat>> {
   const stats: Array<
     switchStat & {
       author: flintId;
     }
   > = (await switch_share_events.findAll({
-    group: ['type', 'author'],
+    group: ['type', 'author', 'source'],
     attributes: [
       [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
       'type',
       'author',
+      'source',
     ],
   })) as any;
   // anonymize author IDs
@@ -89,6 +91,7 @@ export async function getGeneralStats() {
       amount: s.amount,
       type: s.type,
       author: anonymousName,
+      source: s.source,
     };
   });
 }

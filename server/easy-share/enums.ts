@@ -83,6 +83,7 @@ export type switch_share_user_type =
 export type switchStat = {
   amount: number;
   type: easyshareEvent;
+  source: easyshareSource;
 };
 export type userForClient = {
   name: string;

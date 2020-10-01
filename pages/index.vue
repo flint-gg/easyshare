@@ -1,8 +1,8 @@
 <template>
   <section>
-    <h3 class="center-text">
+    <h3 class="center-text" style="margin-left: 0.5rem; margin-right: 0.5rem">
       {{ userToken ? '' : 'Welcome to' }}
-      Nintendo Switch Easyshare<!-- &trade; -->
+      Easyshare<!-- &trade; -->
       by
       <img
         ix-path="branding/textlogo"
@@ -171,10 +171,10 @@
           />
           <twicon class="tutorial-icon tutorial-icon--twitter" />
         </div>
-        <h4>Upload directly from your Switch</h4>
-        Post your images and videos from the switch library to twitter using the
-        hashtag you set up on our system.<br />We support anything the Switch
-        offers: Single images, multiple images, and videos.
+        <h4>Upload directly from console</h4>
+        No matter if Nintendo Switch or Playstation 4, simply post your images
+        and videos to twitter using the hashtag you set up on our system!<br />We
+        support tweets containing single images, multiple images, and videos.
       </section>
       <section class="tutorial-section">
         <div>
@@ -187,10 +187,10 @@
           />
         </div>
         <h4>Let us do the hard work</h4>
-        The moment you post, we grab the content and delete the original tweet,
-        keeping your Twitter timeline clean.<br />
-        We track #NintendoSwitch per default, as it is automatically added by
-        your Switch, but you can choose other hashtags as well.
+        The moment you post, we grab the content and (optionally) delete the
+        original tweet, keeping your Twitter timeline clean.<br />
+        We track #NintendoSwitch and #PS4share by default, but you can choose
+        other hashtags as well.
       </section>
       <section class="tutorial-section">
         <network class="tutorial-icon" />
@@ -224,14 +224,14 @@
         <h3>What's this all about?</h3>
         <p>
           Getting media, such as screenshots and videos, from your Nintendo
-          Switch to your computer, smartphone and social media is difficult.
-          Easyshare by flint.gg takes care of all the difficulties and makes it
-          easy for you.
+          Switch or Playstation 4 to your computer, smartphone and social media
+          is difficult. Easyshare by flint.gg takes care of all the difficulties
+          and makes it easy for you.
         </p>
         <h4>Why Twitter and Google Photos?</h4>
         <p>
-          Nintendo supports sharing to Twitter &ndash; we take full advantage of
-          that.<br />
+          Both Nintendo and Sony support sharing to Twitter &ndash; we take full
+          advantage of that.<br />
           Google Photos allows you to access your media online or on apps on
           both Android and iOS. It's super easy to share onto other platforms
           from there as well.
@@ -386,21 +386,33 @@ export default class serviceCallback extends Vue {
   deletePerDefault: boolean | null = null;
 
   get singleImageStat() {
-    const st = this.stats
-      && this.stats.find((s) => s.type === easyshareEvent.singleImage);
-    return st ? Number(st.amount) : 0;
+    return (
+      (this.stats
+        && this.stats
+          .filter((s) => s.type === easyshareEvent.singleImage)
+          .reduce((p, c) => p + Number(c.amount), 0))
+      || 0
+    );
   }
 
   get multiImageStat() {
-    const st = this.stats
-      && this.stats.find((s) => s.type === easyshareEvent.multiImage);
-    return st ? Number(st.amount) : 0;
+    return (
+      (this.stats
+        && this.stats
+          .filter((s) => s.type === easyshareEvent.multiImage)
+          .reduce((p, c) => p + Number(c.amount), 0))
+      || 0
+    );
   }
 
   get singleVideoStat() {
-    const st = this.stats
-      && this.stats.find((s) => s.type === easyshareEvent.singleVideo);
-    return st ? Number(st.amount) : 0;
+    return (
+      (this.stats
+        && this.stats
+          .filter((s) => s.type === easyshareEvent.singleVideo)
+          .reduce((p, c) => p + Number(c.amount), 0))
+      || 0
+    );
   }
 
   get statsToDisplay() {

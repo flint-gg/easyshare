@@ -167,12 +167,12 @@ async function listenToStream(timeouted = 0) {
     })
     .on('ping', () => console.log('ping'))
     // error does not also throw end event, so we need to restart here as well!
-    .on('error', (error:Error) => {
-      console.log('stream error:', error);
-      timeout = (timeout || 1) * 2;
+    .on('error', (error: Error) => {
+      console.log('[STREAM] error:', error);
+      /* timeout = (timeout || 1) * 2;
       // restart stream
-      console.log('restarting stream with timeout', timeout);
-      setTimeout(() => listenToStream(timeout), timeout * 1000);
+      console.log('[STREAM] restarting with timeout', timeout);
+      setTimeout(() => listenToStream(timeout), timeout * 1000); */
     })
     .on('end', async (response: streamEndResponse) => {
       console.log(

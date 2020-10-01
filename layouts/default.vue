@@ -89,7 +89,7 @@ export default class Default extends Vue {
   errorTitle = null;
 
   get isMobile() {
-    return this.$vuetify.breakpoint.smAndDown;
+    return process.client && this.$vuetify.breakpoint.smAndDown;
   }
 
   mounted() {

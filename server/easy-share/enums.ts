@@ -3,9 +3,10 @@ export enum easyshareAccountType {
   'facebook',
 }
 
-export enum easyshareConsoleType {
+export enum easyshareSource {
   'switch' = 0x0001,
   'ps4',
+  'webclient' = 0x1001,
 }
 
 export enum easyshareHashtag {

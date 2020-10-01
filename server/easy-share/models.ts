@@ -1,6 +1,11 @@
 // eslint-disable-next-line max-classes-per-file
 import Sequelize from 'sequelize';
-import { easyshareHashtag, easyshareEvent, easyshareAccountType } from './enums';
+import {
+  easyshareHashtag,
+  easyshareEvent,
+  easyshareAccountType,
+  easyshareSource,
+} from './enums';
 
 export class switch_share_user extends Sequelize.Model {
   public created!: Date;
@@ -116,6 +121,8 @@ export class switch_share_events extends Sequelize.Model {
 
   public type!: easyshareEvent;
 
+  public source!: easyshareSource;
+
   public amount?: number;
 
   public static initWithSequelize(sequelize: Sequelize.Sequelize) {
@@ -138,6 +145,13 @@ export class switch_share_events extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull: false,
           comment: 'Type of the event. Based on our ENUM',
+        },
+        source: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          comment:
+            'Source of the event, can be type of client or console from which the image came.',
+          defaultValue: easyshareSource.webclient, // to make migration easier
         },
         amount: {
           type: Sequelize.INTEGER,

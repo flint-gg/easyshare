@@ -12,6 +12,7 @@ import {
   switchStat,
   easyshareAccountType,
   getSwitchHashtagNumbers,
+  easyshareSource,
 } from './enums';
 import { switch_share_user, switch_share_events } from './models';
 
@@ -25,6 +26,7 @@ export async function fillCache() {
 export async function addEvent(
   author: flintId,
   type: easyshareEvent,
+  source: easyshareSource,
   transaction?: Transaction,
   amount = 1,
 ) {
@@ -34,6 +36,7 @@ export async function addEvent(
       date: new Date(),
       type,
       amount,
+      source,
     },
     { transaction },
   );
@@ -146,7 +149,7 @@ export async function createUser(
   };
   await sequelize.transaction(async (t) => {
     await switch_share_user.upsert(user, { transaction: t });
-    await addEvent(id, easyshareEvent.signup, t);
+    await addEvent(id, easyshareEvent.signup, easyshareSource.webclient, t);
     cachedUsers.set(id, user);
   });
   return user;
@@ -184,7 +187,12 @@ export async function connectPhotos(
     );
     const user = response[1][0] as switch_share_user_type_with_ph;
     if (!onlyUpdatingTokens) {
-      await addEvent(id, easyshareEvent.linkPhotos, t);
+      await addEvent(
+        id,
+        easyshareEvent.linkPhotos,
+        easyshareSource.webclient,
+        t,
+      );
     }
     cachedUsers.set(id, user);
     return user;
@@ -205,7 +213,12 @@ export async function disconnectPhotos(id: flintId) {
       { where: { id }, returning: true, transaction: t },
     );
     const user = response[1][0] as switch_share_user_type_without_ph;
-    await addEvent(id, easyshareEvent.unlinkPhotos, t);
+    await addEvent(
+      id,
+      easyshareEvent.unlinkPhotos,
+      easyshareSource.webclient,
+      t,
+    );
     cachedUsers.set(id, user);
     return user;
   });
@@ -248,7 +261,12 @@ export async function updateConfiguration(
       { where: { id }, returning: true, transaction: t },
     );
     const user = response[1][0] as switch_share_user_type;
-    await addEvent(id, easyshareEvent.changeSettings, t);
+    await addEvent(
+      id,
+      easyshareEvent.changeSettings,
+      easyshareSource.webclient,
+      t,
+    );
     cachedUsers.set(id, user);
     return user;
   });
@@ -265,7 +283,12 @@ export async function addUserEmail(id: flintId, email: string) {
       { where: { id }, returning: true, transaction: t },
     );
     const user = response[1][0] as switch_share_user_type;
-    await addEvent(user.id, easyshareEvent.updateEmail, t);
+    await addEvent(
+      user.id,
+      easyshareEvent.updateEmail,
+      easyshareSource.webclient,
+      t,
+    );
     cachedUsers.set(id, user);
     return user;
   });
@@ -282,7 +305,12 @@ export async function removeUserEmail(id: flintId) {
       { where: { id }, returning: true, transaction: t },
     );
     const user = response[1][0] as switch_share_user_type;
-    await addEvent(user.id, easyshareEvent.updateEmail, t);
+    await addEvent(
+      user.id,
+      easyshareEvent.updateEmail,
+      easyshareSource.webclient,
+      t,
+    );
     cachedUsers.set(id, user);
     return user;
   });

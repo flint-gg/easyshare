@@ -20,6 +20,7 @@ import {
   easyshareEvent,
   easyshareAccountType,
   streamEndResponse,
+  easyshareSource,
 } from './enums';
 
 if (
@@ -78,8 +79,14 @@ function isSharedMediaByPS4(status: twitterStatus) {
   );
 }
 
-function isSharedMediaWeTrack(status: twitterStatus) {
-  return isSharedMediaBySwitch(status) || isSharedMediaByPS4(status);
+function getConsoleType(status: twitterStatus) {
+  if (isSharedMediaBySwitch(status)) {
+    return easyshareSource.switch;
+  }
+  if (isSharedMediaByPS4(status)) {
+    return easyshareSource.ps4;
+  }
+  return null;
 }
 
 async function destroyTweet(tweetId: flintId, client: Twitter) {
@@ -136,7 +143,8 @@ async function listenToStream(timeouted = 0) {
   stream
     .on('start', (/* response */) => console.log('started stream'))
     .on('data', async (tweet: twitterStatus) => {
-      if (!isSharedMediaWeTrack(tweet)) {
+      const consoleType = getConsoleType(tweet);
+      if (!consoleType) {
         /* console.log('[INCOMING] non switch tweet'); */
         return;
       }
@@ -153,7 +161,7 @@ async function listenToStream(timeouted = 0) {
           return imageURL;
         });
         try {
-          await uploadMedia(user, imageURLs);
+          await uploadMedia(user, imageURLs, consoleType);
         } catch (e) {
           console.error(e);
         }
@@ -241,6 +249,6 @@ export async function getTokensetFromCompletedAuthFlow(tokens: {
       easyshareAccountType.twitter,
     );
   }
-  await addEvent(response.user_id, easyshareEvent.login);
+  await addEvent(response.user_id, easyshareEvent.login, easyshareSource.webclient);
   return user;
 }

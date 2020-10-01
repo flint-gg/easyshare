@@ -10,6 +10,7 @@ import {
   easyshareEvent,
   switch_share_user_type,
   switch_share_user_type_with_ph,
+  easyshareSource,
 } from './enums';
 import { addEvent, connectPhotos } from './db-queries';
 
@@ -153,6 +154,7 @@ async function downloadImageWithRetry(
 export async function uploadMedia(
   user: switch_share_user_type_with_ph,
   fileURLs: Array<string>,
+  source: easyshareSource,
 ) {
   const photos = await getAPI(user);
   const downloadedFiles = await asyncForEach(fileURLs, async (u) => {
@@ -179,6 +181,7 @@ export async function uploadMedia(
       await addEvent(
         user.id,
         easyshareEvent.multiImage,
+        source,
         undefined,
         downloadedFiles.length,
       );
@@ -194,6 +197,7 @@ export async function uploadMedia(
         downloadedFiles[0].name.endsWith('mp4')
           ? easyshareEvent.singleVideo
           : easyshareEvent.singleImage,
+        source,
       );
     }
   } catch (e) {

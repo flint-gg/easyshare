@@ -21,6 +21,7 @@ import { serverSetup } from './serverCreation';
 import config from '../nuxt.config';
 import { sequelize } from './db';
 import { run } from './switch-share/twitter';
+import { cleanOutdatedHashtags } from './switch-share/db-queries';
 
 const umzug = new Umzug({
   storage: 'sequelize',
@@ -80,6 +81,9 @@ async function start() {
     console.error(e);
     process.exit();
   }
+
+  // do some cleanup work after backend changes
+  cleanOutdatedHashtags();
 
   // start switch share code
   run();

@@ -1,4 +1,5 @@
 import { Transaction, Sequelize, Op } from 'sequelize';
+import { asyncForEach } from '../../scripts/helper/helperFunctions';
 import { sequelize } from '../db';
 import {
   switchHashtag,
@@ -10,6 +11,7 @@ import {
   switch_share_user_type_without_ph,
   switchStat,
   switchAccountType,
+  getSwitchHashtagNumbers,
 } from './enums';
 import { switch_share_user, switch_share_events } from './models';
 
@@ -126,7 +128,7 @@ export async function createUser(
   type: switchAccountType,
 ) {
   const now = new Date();
-  const hashtags = [switchHashtag.NintendoSwitch];
+  const hashtags = [switchHashtag.NintendoSwitch, switchHashtag.PS4share];
   const user: switch_share_user_type = {
     id,
     type,
@@ -206,6 +208,27 @@ export async function disconnectPhotos(id: flintId) {
     await addEvent(id, switchEvent.unlinkPhotos, t);
     cachedUsers.set(id, user);
     return user;
+  });
+}
+
+export async function cleanOutdatedHashtags() {
+  return sequelize.transaction(async (t) => {
+    const potentiallyOutdatedUsers = await switch_share_user.findAll({
+      transaction: t,
+    }); // i found no smart way to find users that have hashtags that are NOT in our array
+    await asyncForEach(potentiallyOutdatedUsers, async (u) => {
+      const response = await switch_share_user.update(
+        {
+          hashtags: u.hashtags.filter((ht) => getSwitchHashtagNumbers().includes(ht)),
+        },
+        { where: { id: u.id }, returning: true, transaction: t },
+      );
+      const user = response[1][0] as switch_share_user_type;
+      cachedUsers.set(u.id, user);
+    });
+    console.info(
+      `[Hashtag cleanup] Cleaned up hashtags of ${potentiallyOutdatedUsers.length} users.`,
+    );
   });
 }
 

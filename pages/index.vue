@@ -424,12 +424,10 @@ export default class serviceCallback extends Vue {
   get displayHashtags() {
     return (
       this.allHashtags
-      && this.allHashtags
-        .map((h, index) => {
-          const following = this.followedHashtags!.findIndex((val) => val === index) > -1;
-          return { tag: h, following, value: index as switchHashtag };
-        })
-        .slice(1) // get rid of always followed hashtag for display
+      && this.allHashtags.map((h, index) => {
+        const following = this.followedHashtags!.findIndex((val) => val === index) > -1;
+        return { tag: h, following, value: switchHashtag[h] };
+      })
     );
   }
 

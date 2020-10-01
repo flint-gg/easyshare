@@ -4,11 +4,17 @@ export enum switchAccountType {
 }
 
 export enum switchHashtag {
-  'NintendoSwitch' = 1,
+  'NintendoSwitch' = 0x0001,
   'switchshare',
   'flintggshare',
   'easyshare',
+  'PS4share' = 0x1001,
 }
+
+export function getSwitchHashtagNumbers() {
+  return Object.values(switchHashtag).filter((ht) => !isNaN(ht as any));
+}
+
 export enum switchEvent {
   'signup' = 1,
   'login',

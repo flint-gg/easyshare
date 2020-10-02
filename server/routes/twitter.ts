@@ -2,9 +2,9 @@ import express from 'express';
 import {
   getAuthFlowToken,
   getTokensetFromCompletedAuthFlow,
-} from '../switch-share/twitter';
+} from '../easy-share/twitter';
 
-import '../switch-share/gphotos';
+import '../easy-share/gphotos';
 import { getSwitchToken } from '../tokenGen';
 import { twitterTokensPolicy } from './switchPolicies';
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getGeneralStats, getLandingStats } from '../switch-share/db-queries';
+import { getGeneralStats, getLandingStats } from '../easy-share/db-queries';
 
 const app = express.Router();
 

@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { hashtagsToFollow } from '../switch-share/twitter';
+import { getSwitchHashtagNumbers } from '../easy-share/enums';
 
 const configChangeSchema = joi.object({
   hashtags: joi
@@ -9,7 +9,7 @@ const configChangeSchema = joi.object({
         .number()
         .integer()
         .greater(0)
-        .less(hashtagsToFollow.length + 1)
+        .valid(...getSwitchHashtagNumbers())
         .required(),
     )
     .min(1)
@@ -29,6 +29,7 @@ export function configChangePolicy(req, res, next) {
         } as flintError,
       });
     default:
+      console.error(error.details);
       return res.status(400).json({
         error: {
           title: 'Unknown Error.',

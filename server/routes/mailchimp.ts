@@ -1,5 +1,5 @@
 import express from 'express';
-import { subscribeEmailToMailchimp } from '../switch-share/mailchimp';
+import { subscribeEmailToMailchimp } from '../easy-share/mailchimp';
 import { mailchimpSubscribePolicy } from './switchPolicies';
 import { getSwitchAuthMiddleware } from '../tokenGen';
 

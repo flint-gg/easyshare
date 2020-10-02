@@ -1,15 +1,27 @@
-export enum switchAccountType {
+export enum easyshareAccountType {
   'twitter' = 1,
   'facebook',
 }
 
-export enum switchHashtag {
-  'NintendoSwitch' = 1,
+export enum easyshareSource {
+  'switch' = 0x0001,
+  'ps4',
+  'webclient' = 0x1001,
+}
+
+export enum easyshareHashtag {
+  'NintendoSwitch' = 0x0001,
   'switchshare',
   'flintggshare',
   'easyshare',
+  'PS4share' = 0x1001,
 }
-export enum switchEvent {
+
+export function getSwitchHashtagNumbers() {
+  return Object.values(easyshareHashtag).filter((ht) => !isNaN(ht as any));
+}
+
+export enum easyshareEvent {
   'signup' = 1,
   'login',
   'logout',
@@ -41,12 +53,12 @@ type base_share_user_type = {
   created: Date;
   updated: Date;
   id: flintId;
-  hashtags: Array<switchHashtag>;
+  hashtags: Array<easyshareHashtag>;
   autoDelete: boolean;
   token: string;
   token_secret: string;
   name: string;
-  type: switchAccountType;
+  type: easyshareAccountType;
   email?: string;
 };
 
@@ -70,12 +82,13 @@ export type switch_share_user_type =
 
 export type switchStat = {
   amount: number;
-  type: switchEvent;
+  type: easyshareEvent;
+  source: easyshareSource;
 };
 export type userForClient = {
   name: string;
   linkedPhotos: boolean;
-  hashtags: Array<switchHashtag>;
+  hashtags: Array<easyshareHashtag>;
   hashtagsToFollow: Array<string>;
   stats: Array<switchStat>;
   autoDelete: boolean;

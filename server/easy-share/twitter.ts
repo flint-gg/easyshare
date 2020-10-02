@@ -16,10 +16,11 @@ import {
   addEvent,
 } from './db-queries';
 import {
-  switchHashtag,
-  switchEvent,
-  switchAccountType,
+  easyshareHashtag,
+  easyshareEvent,
+  easyshareAccountType,
   streamEndResponse,
+  easyshareSource,
 } from './enums';
 
 if (
@@ -40,16 +41,15 @@ const twitterAPI = new Twitter({
   access_token_secret: process.env.TW_ACCESS_SECRET, // from your User (oauth_token_secret)
 });
 
-// hashtags directly map to enum switchHashtag; id 0 is the always followed hashtag
-export const hashtagsToFollow = [
-  'flintgg', // tracked because it is the dont delete flag
-  'NintendoSwitch',
-  'switchshare',
-  'flintggshare',
-  'easyshare',
-];
+export const hashtagsToFollow = Object.values(easyshareHashtag).filter((ht) => isNaN(ht as any));
+
+const hashtagsToFollowInternal = hashtagsToFollow.concat(
+  'flintgg', // always tracked because it is the dont delete flag
+);
 
 const switchShareSource = '<a href="https://www.nintendo.com/countryselector" rel="nofollow">Nintendo Switch Share</a>';
+
+const ps4ShareSource = '<a href="https://www.playstation.com" rel="nofollow">PlayStation®Network</a>';
 
 function getImageUrl(
   media: twitterMedia,
@@ -64,19 +64,38 @@ function getImageUrl(
 }
 
 function isSharedMediaBySwitch(status: twitterStatus) {
-  return (
+  return Boolean(
     status.extended_entities
-    && (status.source === switchShareSource
-      || status.source.includes('Nintendo Switch Share'))
+      && (status.source === switchShareSource
+        || status.source.includes('Nintendo Switch Share')),
   );
 }
 
+function isSharedMediaByPS4(status: twitterStatus) {
+  return Boolean(
+    status.extended_entities
+      && (status.source === ps4ShareSource
+        || status.source.includes('PlayStation')),
+  );
+}
+
+function getConsoleType(status: twitterStatus) {
+  if (isSharedMediaBySwitch(status)) {
+    return easyshareSource.switch;
+  }
+  if (isSharedMediaByPS4(status)) {
+    return easyshareSource.ps4;
+  }
+  return null;
+}
+
 async function destroyTweet(tweetId: flintId, client: Twitter) {
-  await client.post('statuses/destroy' /* /${tweetId}` */, {
+  await client.post('statuses/destroy', {
     id: tweetId,
   });
 }
 
+// old function to get all tweets of user; needs to be adjusted if used
 /* async function getUsersMedia(
   username: string,
   latestID?: flintId | bigint | number,
@@ -103,11 +122,11 @@ async function destroyTweet(tweetId: flintId, client: Twitter) {
 } */
 
 function checkHashtags(
-  userHashtags: Array<switchHashtag>,
+  userHashtags: Array<easyshareHashtag>,
   hashtagsInTweet: Array<{ text: string; indices: Array<number> }>,
 ) {
   const hashtags: Array<string> = [];
-  userHashtags.forEach((i) => hashtags.push(hashtagsToFollow[i]));
+  userHashtags.forEach((i) => hashtags.push(easyshareHashtag[i]));
   return (
     hashtagsInTweet.filter((h) => hashtags.find((hs) => hs === h.text)).length
     > 0
@@ -117,14 +136,15 @@ function checkHashtags(
 async function listenToStream(timeouted = 0) {
   let timeout = timeouted;
   const parameters = {
-    track: `#${hashtagsToFollow.join(',#')}`,
+    track: `#${hashtagsToFollowInternal.join(',#')}`,
     filter_level: 'none', // none, low, or medium ; this is a rating twitter adds, and does not go hand in hand with our query
   };
   const stream = twitterAPI.stream('statuses/filter', parameters);
   stream
-    .on('start', (/* response */) => console.log('started stream'))
+    .on('start', (/* response */) => console.log('[STREAM] started'))
     .on('data', async (tweet: twitterStatus) => {
-      if (!isSharedMediaBySwitch(tweet)) {
+      const consoleType = getConsoleType(tweet);
+      if (!consoleType) {
         /* console.log('[INCOMING] non switch tweet'); */
         return;
       }
@@ -134,14 +154,14 @@ async function listenToStream(timeouted = 0) {
         && user.ph_album
         && checkHashtags(user.hashtags, tweet.entities.hashtags)
       ) {
-        console.log('[INCOMING] twitter user:', user.name);
+        console.log('[INCOMING] twitter user', user.name, 'via source', easyshareSource[consoleType]);
 
         const imageURLs = tweet.extended_entities!.media.map((m) => {
           const imageURL = getImageUrl(m, twitterImageSize.large);
           return imageURL;
         });
         try {
-          await uploadMedia(user, imageURLs);
+          await uploadMedia(user, imageURLs, consoleType);
         } catch (e) {
           console.error(e);
         }
@@ -176,19 +196,19 @@ async function listenToStream(timeouted = 0) {
     })
     .on('end', async (response: streamEndResponse) => {
       console.log(
-        'ended stream; status:',
+        '[STREAM] ended with status:',
         response.status,
         '; text:',
         response.statusText,
       );
-      console.log('entire response:', response);
+      // console.log('entire response:', response);
       if (Number(response.status) === 420) {
         timeout = (timeout || 1) * 2;
       } else {
         timeout = 0;
       }
       // restart stream
-      console.log('restarting stream with timeout', timeout);
+      console.log('[STREAM] restarting with timeout', timeout);
       setTimeout(() => listenToStream(timeout), timeout * 1000);
     });
 }
@@ -200,7 +220,9 @@ export async function run() {
   if (listenToStreamInDev || process.env.NODE_ENV !== 'development') {
     await listenToStream();
   } else {
-    console.info('Detected development mode, not listening to to stream.');
+    console.info(
+      '[STREAM] Detected development mode, not listening to to stream.',
+    );
   }
 }
 
@@ -224,9 +246,9 @@ export async function getTokensetFromCompletedAuthFlow(tokens: {
     user = await createUser(
       response.user_id,
       response,
-      switchAccountType.twitter,
+      easyshareAccountType.twitter,
     );
   }
-  await addEvent(response.user_id, switchEvent.login);
+  await addEvent(response.user_id, easyshareEvent.login, easyshareSource.webclient);
   return user;
 }

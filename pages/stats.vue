@@ -1,7 +1,7 @@
 <template>
   <section>
     <h3 class="center-text">
-      Nintendo Switch Easyshare<!-- &trade; -->
+      Easyshare<!-- &trade; -->
       by
       <img
         ix-path="branding/textlogo"
@@ -11,19 +11,8 @@
             }'
         sizes="100px"
       />
-      usage statistic
     </h3>
-    <Button
-      style="max-width: 160px; margin: auto;"
-      :onClick="
-        () =>
-          $router.push({
-            path: '/',
-          })
-      "
-      color="grey"
-      >Back to the tool</Button
-    >
+    <h3 class="center-text">usage stats</h3>
     <section class="accounts">
       <section class="account-section">
         <section v-if="stats" class="stats">
@@ -33,7 +22,7 @@
               <div
                 class="user-score"
                 :class="{
-                  'user-score-leading': i === 3,
+                  'user-score-leading': i === 4,
                 }"
               >
                 {{ s.amount }}
@@ -44,6 +33,17 @@
         </section>
       </section>
     </section>
+    <Button
+      style="max-width: 160px; margin: auto"
+      :onClick="
+        () =>
+          $router.push({
+            path: '/',
+          })
+      "
+      color="grey"
+      >Back to the tool</Button
+    >
   </section>
 </template>
 
@@ -51,7 +51,11 @@
 import Vue from 'vue';
 import { Component } from 'nuxt-property-decorator';
 import { PostService } from '~/scripts/postService';
-import { switchStat, switchEvent } from '~/server/switch-share/enums';
+import {
+  switchStat,
+  easyshareEvent,
+  easyshareSource,
+} from '~/server/easy-share/enums';
 import Button from '~/components/Button.vue';
 
 @Component({ components: { Button } })
@@ -59,41 +63,69 @@ export default class serviceCallback extends Vue {
   stats: Array<switchStat & { author: string }> | null = null;
 
   get singleImageStat() {
-    const st = this.stats
-      && this.stats
-        .filter((s) => s.type === switchEvent.singleImage)
-        .reduce((p, n) => p + Number(n.amount), 0);
-    return st || 0;
+    return (
+      (this.stats
+        && this.stats
+          .filter((s) => s.type === easyshareEvent.singleImage)
+          .reduce((p, c) => p + Number(c.amount), 0))
+      || 0
+    );
   }
 
   get multiImageStat() {
-    const st = this.stats
-      && this.stats
-        .filter((s) => s.type === switchEvent.multiImage)
-        .reduce((p, n) => p + Number(n.amount), 0);
-    return st || 0;
+    return (
+      (this.stats
+        && this.stats
+          .filter((s) => s.type === easyshareEvent.multiImage)
+          .reduce((p, c) => p + Number(c.amount), 0))
+      || 0
+    );
   }
 
   get singleVideoStat() {
-    const st = this.stats
-      && this.stats
-        .filter((s) => s.type === switchEvent.singleVideo)
-        .reduce((p, n) => p + Number(n.amount), 0);
-    return st || 0;
+    return (
+      (this.stats
+        && this.stats
+          .filter((s) => s.type === easyshareEvent.singleVideo)
+          .reduce((p, c) => p + Number(c.amount), 0))
+      || 0
+    );
   }
 
   get signupStat() {
-    const st = this.stats
-      && this.stats
-        .filter((s) => s.type === switchEvent.signup)
-        .reduce((p, n) => p + Number(n.amount), 0);
-    return st || 0;
+    return (
+      (this.stats
+        && this.stats
+          .filter((s) => s.type === easyshareEvent.signup)
+          .reduce((p, c) => p + Number(c.amount), 0))
+      || 0
+    );
+  }
+
+  get numOfSwitchUse() {
+    return (
+      (this.stats
+        && this.stats
+          .filter((s) => s.source === easyshareSource.switch)
+          .reduce((p, c) => p + Number(c.amount), 0))
+      || 0
+    );
+  }
+
+  get numOfPS4Use() {
+    return (
+      (this.stats
+        && this.stats
+          .filter((s) => s.source === easyshareSource.ps4)
+          .reduce((p, c) => p + Number(c.amount), 0))
+      || 0
+    );
   }
 
   /* get loginStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.login)
+        .filter((s) => s.type === easyshareEvent.login)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -101,7 +133,7 @@ export default class serviceCallback extends Vue {
   get logoutStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.logout)
+        .filter((s) => s.type === easyshareEvent.logout)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -109,7 +141,7 @@ export default class serviceCallback extends Vue {
   get linkPhotosStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.linkPhotos)
+        .filter((s) => s.type === easyshareEvent.linkPhotos)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -117,7 +149,7 @@ export default class serviceCallback extends Vue {
   get unlinkPhotosStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.unlinkPhotos)
+        .filter((s) => s.type === easyshareEvent.unlinkPhotos)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
@@ -125,13 +157,17 @@ export default class serviceCallback extends Vue {
   get changeSettingsStat() {
     const st = this.stats
       && this.stats
-        .filter((s) => s.type === switchEvent.changeSettings)
+        .filter((s) => s.type === easyshareEvent.changeSettings)
         .reduce((p, n) => p + Number(n.amount), 0);
     return st || 0;
   }
 */
   get statsToDisplay() {
     const ret: Array<{ title: string; amount: number }> = [];
+    ret.push({
+      title: 'users',
+      amount: this.signupStat,
+    });
     ret.push({
       title: 'single-image uploads',
       amount: this.singleImageStat,
@@ -146,11 +182,15 @@ export default class serviceCallback extends Vue {
     });
     ret.push({
       title: 'accumulated usage',
-      amount: ret.reduce((p, n) => p + n.amount, 0),
+      amount: this.singleImageStat + this.multiImageStat + this.singleVideoStat,
     });
     ret.push({
-      title: 'users',
-      amount: this.signupStat,
+      title: 'switch shares',
+      amount: this.numOfSwitchUse,
+    });
+    ret.push({
+      title: 'ps4 shares',
+      amount: this.numOfPS4Use,
     });
     /* ret.push({
       title: 'logins',

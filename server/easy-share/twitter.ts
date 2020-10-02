@@ -141,7 +141,7 @@ async function listenToStream(timeouted = 0) {
   };
   const stream = twitterAPI.stream('statuses/filter', parameters);
   stream
-    .on('start', (/* response */) => console.log('started stream'))
+    .on('start', (/* response */) => console.log('[STREAM] started'))
     .on('data', async (tweet: twitterStatus) => {
       const consoleType = getConsoleType(tweet);
       if (!consoleType) {
@@ -154,7 +154,7 @@ async function listenToStream(timeouted = 0) {
         && user.ph_album
         && checkHashtags(user.hashtags, tweet.entities.hashtags)
       ) {
-        console.log('[INCOMING] twitter user:', user.name);
+        console.log('[INCOMING] twitter user', user.name, 'via source', easyshareSource[consoleType]);
 
         const imageURLs = tweet.extended_entities!.media.map((m) => {
           const imageURL = getImageUrl(m, twitterImageSize.large);

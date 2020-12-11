@@ -1,4 +1,6 @@
 # What's easyshare?
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fflint-gg%2Feasyshare.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fflint-gg%2Feasyshare?ref=badge_shield)
+
 
 A tool to easily and safely get the media from your Nintendo Switch to where you actually want it.
 We do this by leveraging the ability to directly post to Twitter from the Switch. Our system tracks specific hashtags on Twitter, and if you set up an Account we can get the media from it, optionally delete the tweet, and then upload your media to Google Photos.
@@ -22,3 +24,7 @@ run development environment via `npm run dev`
 build the project via `npm run build`
 
 run project via `npm run start`
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fflint-gg%2Feasyshare.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fflint-gg%2Feasyshare?ref=badge_large)

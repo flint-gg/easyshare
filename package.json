@@ -16,7 +16,7 @@
     "generate": "nuxt-ts generate"
   },
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "backpack-core": "^0.8.4",
     "bcrypt": "^5.0.0",
     "biguint-format": "^1.0.2",

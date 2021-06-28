@@ -6,21 +6,13 @@
         <div class="logocolumn w-col w-col-9" style="padding-left: 0px">
           <a class="logocolumn" href="https://flint.gg">
             <img
-              ix-path="branding/logo"
-              ix-params='{
-            "fit": "crop",
-            "auto": "format"
-            }'
+              :src="`${s3BaseUrl}branding/logo`"
               sizes="35px"
               alt="flint_logo"
               class="image-27"
             />
             <img
-              ix-path="branding/textlogo"
-              ix-params='{
-            "fit": "crop",
-            "auto": "format"
-            }'
+              :src="`${s3BaseUrl}branding/textlogo`"
               sizes="(max-width: 479px) 38vw, 102.609375px"
               alt="flint_logo_text"
               class="image-28"
@@ -76,6 +68,7 @@ import { Component } from 'nuxt-property-decorator';
 import Vue from 'vue';
 import PopUp from '~/components/Popup.vue';
 import Button from '~/components/Button.vue';
+import { s3BaseUrl } from '~/scripts/helper/helperFunctions';
 
 @Component({
   components: {
@@ -87,6 +80,8 @@ export default class Default extends Vue {
   errorMsg = null;
 
   errorTitle = null;
+
+  s3BaseUrl = s3BaseUrl;
 
   get isMobile() {
     return process.client && this.$vuetify.breakpoint.smAndDown;

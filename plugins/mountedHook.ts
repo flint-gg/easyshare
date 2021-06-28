@@ -15,12 +15,8 @@ const MountedHookPlugin: PluginObject<null> = {
           firstRun = false;
         }
         // handle redirecting
-        instance.$imgix.init();
       },
-      updated() {
-        const instance = this as Vue;
-        instance.$imgix.init();
-      },
+      updated() {},
     });
   },
 };

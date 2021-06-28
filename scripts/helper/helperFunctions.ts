@@ -5,6 +5,8 @@ const options = {
   day: 'numeric',
 };
 
+export const s3BaseUrl = 'https://flint-gg.s3.eu-central-1.amazonaws.com/images/';
+
 export function printDate(date: Date) {
   return date.toLocaleDateString('en-GB', options);
 }
@@ -12,9 +14,9 @@ export function printDate(date: Date) {
 export async function asyncForEach<T, F, O>(
   array: Array<T>,
   callback: (input: T, index: number, optionalParams?: O) => Promise<F>,
-  optionalParams?: O,
+  optionalParamsUsed?: O,
 ) {
-  const arr = array.map((e, i) => callback(e, i, optionalParams));
+  const arr = array.map((e, i) => callback(e, i, optionalParamsUsed));
   return Promise.all<F>(arr);
 }
 

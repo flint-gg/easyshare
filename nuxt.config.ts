@@ -48,10 +48,6 @@ const config: NuxtConfig = {
         content: '#1f222a',
       },
       {
-        property: 'ix:host',
-        content: 'flint-gg.imgix.net',
-      }, // this is for our imgix library
-      {
         hid: 'title',
         name: 'title',
         content: 'Easyshare by flint.gg',
@@ -133,10 +129,6 @@ const config: NuxtConfig = {
   plugins: [
     { src: '~plugins/vue-cookie-law', mode: 'client' },
     {
-      src: '~/plugins/imgixPlugin',
-      mode: 'client',
-    },
-    {
       src: '~/plugins/mountedHook',
       mode: 'client',
     },
@@ -164,7 +156,7 @@ const config: NuxtConfig = {
       runtimeCaching: [
         {
           // Should be a regex string. Compiles into new RegExp('https://my-cdn.com/.*')
-          urlPattern: 'https://flint-gg.imgix.net/.*',
+          urlPattern: 'https://flint-gg.s3.eu-central-1.amazonaws.com/images/*',
           // Defaults to `networkFirst` if omitted
           // handler: 'networkFirst',
           // Defaults to `GET` if omitted

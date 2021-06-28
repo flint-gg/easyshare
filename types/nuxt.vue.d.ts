@@ -2,9 +2,8 @@
  * Augment the typings of Vue.js
  */
 
-import Vue, { ComponentOptions } from 'vue';
-import { ImgixJs } from 'imgix.js';
-import ImgixClient from 'imgix-core-js';
+import vue from 'vue';
+
 import { NuxtCookies } from 'cookie-universal-nuxt';
 
 import { AxiosInstance } from 'axios';
@@ -98,7 +97,7 @@ interface NuxtToast {
 }
 
 declare module 'vue/types/options' {
-  interface ComponentOptions<V extends Vue> {
+  interface ComponentOptions<V extends vue> {
     auth?: boolean;
   }
 }
@@ -106,8 +105,6 @@ declare module 'vue/types/options' {
 declare module 'vue/types/vue' {
   interface Vue {
     $toast: NuxtToast;
-    $imgix: ImgixJs;
-    $imgixcore: ImgixClient;
     $socket: VueSocket;
     $copyText: (text: string) => void;
     $axios: AxiosInstance;

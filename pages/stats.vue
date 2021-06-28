@@ -3,14 +3,7 @@
     <h3 class="center-text">
       Easyshare<!-- &trade; -->
       by
-      <img
-        ix-path="branding/textlogo"
-        ix-params='{
-            "fit": "crop",
-            "auto": "format"
-            }'
-        sizes="100px"
-      />
+      <img :src="`${s3BaseUrl}branding/textlogo`" class="flint-text-logo" />
     </h3>
     <h3 class="center-text">usage stats</h3>
     <section class="accounts">
@@ -57,10 +50,13 @@ import {
   easyshareSource,
 } from '~/server/easy-share/enums';
 import Button from '~/components/Button.vue';
+import { s3BaseUrl } from '~/scripts/helper/helperFunctions';
 
 @Component({ components: { Button } })
 export default class serviceCallback extends Vue {
   stats: Array<switchStat & { author: string }> | null = null;
+
+  s3BaseUrl = s3BaseUrl;
 
   get singleImageStat() {
     return (
@@ -224,3 +220,9 @@ export default class serviceCallback extends Vue {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.flint-text-logo {
+  width: 100px;
+}
+</style>

@@ -4,14 +4,7 @@
       {{ userToken ? '' : 'Welcome to' }}
       Easyshare<!-- &trade; -->
       by
-      <img
-        ix-path="branding/textlogo"
-        ix-params='{
-            "fit": "crop",
-            "auto": "format"
-            }'
-        sizes="100px"
-      />
+      <img :src="`${s3BaseUrl}branding/textlogo`" class="flint-text-logo" />
     </h3>
     <section v-if="userToken">
       <v-alert
@@ -328,6 +321,7 @@ import linkic from '~/assets/images/switch-share/tutorial-icons/link.svg?inline'
 import pinwheel from '~/assets/images/switch-share/tutorial-icons/pinwheel.svg?inline';
 import settings from '~/assets/images/icons/settings.svg?inline';
 import fork from '~/assets/images/switch-share/tutorial-icons/fork.svg?inline';
+import { s3BaseUrl } from '~/scripts/helper/helperFunctions';
 
 /* eslint-enable import/no-unresolved */
 
@@ -349,6 +343,8 @@ import fork from '~/assets/images/switch-share/tutorial-icons/fork.svg?inline';
   },
 })
 export default class serviceCallback extends Vue {
+  s3BaseUrl = s3BaseUrl;
+
   get userToken() {
     return !this.loggingOut && process.client
       ? localStorage.getItem('switchshare/token')
@@ -697,5 +693,8 @@ export default class serviceCallback extends Vue {
   > svg {
     margin-right: 15px;
   }
+}
+.flint-text-logo {
+  width: 100px;
 }
 </style>

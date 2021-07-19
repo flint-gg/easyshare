@@ -41,6 +41,7 @@ const twitterAPI = new Twitter({
   access_token_secret: process.env.TW_ACCESS_SECRET, // from your User (oauth_token_secret)
 });
 
+// eslint-disable-next-line no-restricted-globals
 export const hashtagsToFollow = Object.values(easyshareHashtag).filter((ht) => isNaN(ht as any));
 
 const hashtagsToFollowInternal = hashtagsToFollow.concat(
@@ -154,7 +155,12 @@ async function listenToStream(timeouted = 0) {
         && user.ph_album
         && checkHashtags(user.hashtags, tweet.entities.hashtags)
       ) {
-        console.log('[INCOMING] twitter user', user.name, 'via source', easyshareSource[consoleType]);
+        console.log(
+          '[INCOMING] twitter user',
+          user.name,
+          'via source',
+          easyshareSource[consoleType],
+        );
 
         const imageURLs = tweet.extended_entities!.media.map((m) => {
           const imageURL = getImageUrl(m, twitterImageSize.large);
@@ -163,6 +169,7 @@ async function listenToStream(timeouted = 0) {
         try {
           await uploadMedia(user, imageURLs, consoleType);
         } catch (e) {
+          console.error('Failed uploading media:');
           console.error(e);
         }
         // check if deletion is turned on and "do not delete" flag is not set: flintgg
@@ -171,21 +178,26 @@ async function listenToStream(timeouted = 0) {
           && tweet.entities.hashtags.findIndex((ht) => ht.text === 'flintgg')
             === -1
         ) {
-          await destroyTweet(
-            tweet.id_str,
-            new Twitter({
-              consumer_key,
-              consumer_secret,
-              access_token_key: user.token,
-              access_token_secret: user.token_secret,
-            }),
-          );
+          try {
+            await destroyTweet(
+              tweet.id_str,
+              new Twitter({
+                consumer_key,
+                consumer_secret,
+                access_token_key: user.token,
+                access_token_secret: user.token_secret,
+              }),
+            );
+          } catch (e) {
+            console.error('Failed deleting tweet:');
+            console.error(e);
+          }
         }
       } else {
         /* console.log('[INCOMING] non tracked user'); */
       }
     })
-    .on('ping', () => console.log('ping'))
+    .on('ping', () => console.log('[STREAM] ping'))
     // error does not also throw end event, so we need to restart here as well!
     .on('error', (error: Error) => {
       console.log('[STREAM] error:', error);
@@ -249,6 +261,10 @@ export async function getTokensetFromCompletedAuthFlow(tokens: {
       easyshareAccountType.twitter,
     );
   }
-  await addEvent(response.user_id, easyshareEvent.login, easyshareSource.webclient);
+  await addEvent(
+    response.user_id,
+    easyshareEvent.login,
+    easyshareSource.webclient,
+  );
   return user;
 }

@@ -165,9 +165,10 @@
           <twicon class="tutorial-icon tutorial-icon--twitter" />
         </div>
         <h4>Upload directly from console</h4>
-        No matter if Nintendo Switch or Playstation 4, simply post your images
-        and videos to twitter using the hashtag you set up on our system!<br />We
-        support tweets containing single images, multiple images, and videos.
+        No matter if Nintendo Switch or Playstation 4 and 5, simply post your
+        images and videos to twitter using the hashtag you set up on our
+        system!<br />We support tweets containing single images, multiple
+        images, and videos.
       </section>
       <section class="tutorial-section">
         <div>
@@ -217,9 +218,9 @@
         <h3>What's this all about?</h3>
         <p>
           Getting media, such as screenshots and videos, from your Nintendo
-          Switch or Playstation 4 to your computer, smartphone and social media
-          is difficult. Easyshare by flint.gg takes care of all the difficulties
-          and makes it easy for you.
+          Switch or Playstation 4 and 5 to your computer, smartphone and social
+          media is difficult. Easyshare by flint.gg takes care of all the
+          difficulties and makes it easy for you.
         </p>
         <h4>Why Twitter and Google Photos?</h4>
         <p>

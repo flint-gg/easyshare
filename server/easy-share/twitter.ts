@@ -269,7 +269,7 @@ export async function getTokensetFromCompletedAuthFlow(tokens: {
     user.token = response.oauth_token;
     user.token_secret = response.oauth_token_secret;
     user.updated = new Date();
-    user.save();
+    await user.save();
     await updateUserInCache(user.id);
   }
   await addEvent(

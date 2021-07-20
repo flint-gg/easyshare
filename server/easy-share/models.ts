@@ -1,13 +1,18 @@
 // eslint-disable-next-line max-classes-per-file
 import Sequelize from 'sequelize';
+import { flintId } from '~/types/flintgg';
 import {
   easyshareHashtag,
   easyshareEvent,
   easyshareAccountType,
   easyshareSource,
+  switchShareUser,
 } from './enums';
 
-export class switch_share_user extends Sequelize.Model {
+export class switch_share_user extends Sequelize.Model<
+  switchShareUser,
+  switchShareUser
+> {
   public created!: Date;
 
   public updated!: Date;

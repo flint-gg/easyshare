@@ -14,6 +14,7 @@ import {
   cachedUsers,
   fillCache,
   addEvent,
+  updateUserInCache,
 } from './db-queries';
 import {
   easyshareHashtag,
@@ -21,7 +22,9 @@ import {
   easyshareAccountType,
   streamEndResponse,
   easyshareSource,
+  switchShareUser,
 } from './enums';
+import { flintId } from '~/types/flintgg';
 
 if (
   !(
@@ -42,7 +45,7 @@ const twitterAPI = new Twitter({
 });
 
 // eslint-disable-next-line no-restricted-globals
-export const hashtagsToFollow = Object.values(easyshareHashtag).filter((ht) => isNaN(ht as any));
+export const hashtagsToFollow = Object.values(easyshareHashtag).filter((ht) => isNaN(ht as number)) as Array<string>;
 
 const hashtagsToFollowInternal = hashtagsToFollow.concat(
   'flintgg', // always tracked because it is the dont delete flag
@@ -253,18 +256,26 @@ export async function getTokensetFromCompletedAuthFlow(tokens: {
   oauth_verifier: string;
 }) {
   const response = await twitterAPI.getAccessToken(tokens);
-  let user = await getUser(response.user_id);
+  const user = await getUser(response.user_id);
+  let newlyCreatedUser: switchShareUser | undefined;
   if (!user) {
-    user = await createUser(
+    newlyCreatedUser = await createUser(
       response.user_id,
       response,
       easyshareAccountType.twitter,
     );
+  } else {
+    // update tokens
+    user.token = response.oauth_token;
+    user.token_secret = response.oauth_token_secret;
+    user.updated = new Date();
+    user.save();
+    await updateUserInCache(user.id);
   }
   await addEvent(
     response.user_id,
     easyshareEvent.login,
     easyshareSource.webclient,
   );
-  return user;
+  return user || newlyCreatedUser!;
 }

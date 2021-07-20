@@ -1,0 +1,16 @@
+diff --git a/node_modules/sequelize/types/lib/model.d.ts b/node_modules/sequelize/types/lib/model.d.ts
+index cad5ff3..146d87e 100644
+--- a/node_modules/sequelize/types/lib/model.d.ts
++++ b/node_modules/sequelize/types/lib/model.d.ts
+@@ -875,6 +875,11 @@ export interface UpdateOptions<TAttributes = any> extends Logging, Transactionab
+    * Return the affected rows (only for postgres)
+    */
+   returning?: boolean;
++  /**
++   * Return the affected rows without sequelize wrapping (only for postgres when using returning)
++   */
++  raw?: boolean
++
+ 
+   /**
+    * How many rows to update (only for mysql and mariadb)

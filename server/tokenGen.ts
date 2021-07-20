@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import jwt from 'express-jwt';
 import jsonwebtoken from 'jsonwebtoken';
+import { flintId, switchShareUserToken } from '~/types/flintgg';
 
 // Create secret for sessions
 export function generateSecret(length = 64) {

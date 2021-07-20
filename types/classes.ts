@@ -1,5 +1,6 @@
 import express from 'express';
 import { HTTPStatusCodes } from './enums';
+import { flintError } from './flintgg';
 
 export class FlintError extends Error {
   statusCode: HTTPStatusCodes;
@@ -15,8 +16,8 @@ export class FlintError extends Error {
     // First log the error
     console.error(error);
     // Determine the HTTP status code to send
-    let title:string;
-    let httpCode:HTTPStatusCodes;
+    let title: string;
+    let httpCode: HTTPStatusCodes;
     if (error instanceof FlintError) {
       httpCode = error.statusCode;
       title = error.name;

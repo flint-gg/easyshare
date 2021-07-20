@@ -8,8 +8,8 @@ import flintURL from '../../scripts/flintURL';
 import {
   gphotosTokens,
   easyshareEvent,
-  switch_share_user_type,
-  switch_share_user_type_with_ph,
+  switchShareUser,
+  switchShareUserWithPh,
   easyshareSource,
 } from './enums';
 import { addEvent, connectPhotos } from './db-queries';
@@ -63,7 +63,7 @@ async function getOrCreatePhotosAlbum(user: gphotosTokens) {
   return album;
 }
 
-async function refreshToken(user: switch_share_user_type) {
+async function refreshToken(user: switchShareUser) {
   const response = await Axios.post<{
     access_token: string;
     expires_in: number;
@@ -88,7 +88,7 @@ async function refreshToken(user: switch_share_user_type) {
   } as gphotosTokens;
 }
 
-async function getAPI(user: switch_share_user_type_with_ph) {
+async function getAPI(user: switchShareUserWithPh) {
   // if it runs out in 30 seconds or less
   const needsToRefresh = user.ph_token_expiry.getTime() < Date.now() - 30 * 1000;
   let u = user;
@@ -152,7 +152,7 @@ async function downloadImageWithRetry(
 }
 
 export async function uploadMedia(
-  user: switch_share_user_type_with_ph,
+  user: switchShareUserWithPh,
   fileURLs: Array<string>,
   source: easyshareSource,
 ) {

@@ -5,9 +5,13 @@ import {
   easyshareEvent,
   easyshareAccountType,
   easyshareSource,
+  switchShareUser,
 } from './enums';
 
-export class switch_share_user extends Sequelize.Model {
+export class switch_share_user extends Sequelize.Model<
+  switchShareUser,
+  switchShareUser
+> {
   public created!: Date;
 
   public updated!: Date;

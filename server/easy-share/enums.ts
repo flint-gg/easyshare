@@ -18,7 +18,10 @@ export enum easyshareHashtag {
 }
 
 export function getSwitchHashtagNumbers() {
-  return Object.values(easyshareHashtag).filter((ht) => !isNaN(ht as any));
+  return Object.values(easyshareHashtag).filter(
+    // eslint-disable-next-line no-restricted-globals
+    (ht) => !isNaN(ht as number),
+  ) as Array<easyshareHashtag>;
 }
 
 export enum easyshareEvent {
@@ -49,7 +52,7 @@ export type gphotosTokens = {
 
 export type linkedUser = gphotosTokens & { albumId?: string };
 
-type base_share_user_type = {
+type switchShareUserBase = {
   created: Date;
   updated: Date;
   id: flintId;
@@ -62,23 +65,23 @@ type base_share_user_type = {
   email?: string;
 };
 
-export type switch_share_user_type_with_ph = base_share_user_type & {
+export type switchShareUserWithPh = switchShareUserBase & {
   ph_token: string;
   ph_refresh_token: string;
   ph_album: string;
   ph_token_expiry: Date;
 };
 
-export type switch_share_user_type_without_ph = base_share_user_type & {
+export type switchShareUserWithoutPh = switchShareUserBase & {
   ph_token: undefined;
   ph_refresh_token: undefined;
   ph_album: undefined;
   ph_token_expiry: undefined;
 };
 
-export type switch_share_user_type =
-  | switch_share_user_type_without_ph
-  | switch_share_user_type_with_ph;
+export type switchShareUser =
+  | switchShareUserWithoutPh
+  | switchShareUserWithPh;
 
 export type switchStat = {
   amount: number;

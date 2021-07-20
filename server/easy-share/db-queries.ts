@@ -1,4 +1,5 @@
 import { Transaction, Sequelize, Op } from 'sequelize';
+import { flintId } from '~/types/flintgg';
 import { asyncForEach } from '../../scripts/helper/helperFunctions';
 import { sequelize } from '../db';
 import {
@@ -164,10 +165,10 @@ export async function createUser(
     token: tw.oauth_token,
     token_secret: tw.oauth_token_secret,
     name: tw.screen_name,
-    ph_album: undefined,
-    ph_refresh_token: undefined,
-    ph_token: undefined,
-    ph_token_expiry: undefined,
+    ph_album: null,
+    ph_refresh_token: null,
+    ph_token: null,
+    ph_token_expiry: null,
   };
   await sequelize.transaction(async (t) => {
     await switch_share_user.upsert(user, { transaction: t });
@@ -205,7 +206,12 @@ export async function connectPhotos(
         ph_album: album,
         ph_token_expiry: new Date(ph.expiry_date),
       },
-      { where: { id }, returning: true, transaction: t },
+      {
+        where: { id },
+        returning: true,
+        raw: true,
+        transaction: t,
+      },
     );
     const user = response[1][0] as switchShareUserWithPh;
     if (!onlyUpdatingTokens) {
@@ -227,12 +233,17 @@ export async function disconnectPhotos(id: flintId) {
     const response = await switch_share_user.update(
       {
         updated: now,
-        ph_token: undefined,
-        ph_refresh_token: undefined,
-        ph_album: undefined,
-        ph_token_expiry: undefined,
+        ph_token: null,
+        ph_refresh_token: null,
+        ph_album: null,
+        ph_token_expiry: null,
       },
-      { where: { id }, returning: true, transaction: t },
+      {
+        where: { id },
+        returning: true,
+        raw: true,
+        transaction: t,
+      },
     );
     const user = response[1][0] as switchShareUserWithoutPh;
     await addEvent(
@@ -256,7 +267,12 @@ export async function cleanOutdatedHashtags() {
         {
           hashtags: u.hashtags.filter((ht) => getSwitchHashtagNumbers().includes(ht)),
         },
-        { where: { id: u.id }, returning: true, transaction: t },
+        {
+          where: { id: u.id },
+          returning: true,
+          raw: true,
+          transaction: t,
+        },
       );
       const user = response[1][0] as switchShareUser;
       await updateUserInCache(u.id, user);
@@ -280,7 +296,12 @@ export async function updateConfiguration(
         hashtags,
         autoDelete,
       },
-      { where: { id }, returning: true, transaction: t },
+      {
+        where: { id },
+        returning: true,
+        raw: true,
+        transaction: t,
+      },
     );
     const user = response[1][0] as switchShareUser;
     await addEvent(
@@ -302,7 +323,12 @@ export async function addUserEmail(id: flintId, email: string) {
         updated: now,
         email,
       },
-      { where: { id }, returning: true, transaction: t },
+      {
+        where: { id },
+        returning: true,
+        raw: true,
+        transaction: t,
+      },
     );
     const user = response[1][0] as switchShareUser;
     await addEvent(
@@ -324,7 +350,12 @@ export async function removeUserEmail(id: flintId) {
         updated: now,
         email: null,
       },
-      { where: { id }, returning: true, transaction: t },
+      {
+        where: { id },
+        returning: true,
+        raw: true,
+        transaction: t,
+      },
     );
     const user = response[1][0] as switchShareUser;
     await addEvent(

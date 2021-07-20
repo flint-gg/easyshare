@@ -1,5 +1,7 @@
 import axios from 'axios';
 import md5 from 'md5';
+import { flintId } from '~/types/flintgg';
+import { mailchimpResponse } from '~/types/mailchimp';
 import { mailchimpSubscribe } from '../../types/enums';
 import { getUser, addUserEmail } from './db-queries';
 

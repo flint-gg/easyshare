@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { flintError } from '~/types/flintgg';
 
 const apiurl: string = '/api/';
 

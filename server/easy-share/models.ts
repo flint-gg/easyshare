@@ -1,5 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
 import Sequelize from 'sequelize';
+import { flintId } from '~/types/flintgg';
 import {
   easyshareHashtag,
   easyshareEvent,

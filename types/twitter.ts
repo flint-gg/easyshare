@@ -1,3 +1,5 @@
+import { flintId } from './flintgg';
+
 export enum twitterMediaType {
   photo = 'photo',
   video = 'video',

@@ -1,4 +1,5 @@
 import joi from 'joi';
+import { flintError } from '~/types/flintgg';
 import { getSwitchHashtagNumbers } from '../easy-share/enums';
 
 const configChangeSchema = joi.object({

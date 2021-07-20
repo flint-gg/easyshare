@@ -1,3 +1,5 @@
+import { flintId } from '~/types/flintgg';
+
 export enum easyshareAccountType {
   'twitter' = 1,
   'facebook',
@@ -62,7 +64,7 @@ type switchShareUserBase = {
   token_secret: string;
   name: string;
   type: easyshareAccountType;
-  email?: string;
+  email?: string | null;
 };
 
 export type switchShareUserWithPh = switchShareUserBase & {
@@ -73,15 +75,13 @@ export type switchShareUserWithPh = switchShareUserBase & {
 };
 
 export type switchShareUserWithoutPh = switchShareUserBase & {
-  ph_token: undefined;
-  ph_refresh_token: undefined;
-  ph_album: undefined;
-  ph_token_expiry: undefined;
+  ph_token: undefined | null;
+  ph_refresh_token: undefined | null;
+  ph_album: undefined | null;
+  ph_token_expiry: undefined | null;
 };
 
-export type switchShareUser =
-  | switchShareUserWithoutPh
-  | switchShareUserWithPh;
+export type switchShareUser = switchShareUserWithoutPh | switchShareUserWithPh;
 
 export type switchStat = {
   amount: number;

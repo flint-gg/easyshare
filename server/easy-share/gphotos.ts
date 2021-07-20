@@ -13,6 +13,7 @@ import {
   easyshareSource,
 } from './enums';
 import { addEvent, connectPhotos } from './db-queries';
+import { flintId } from '~/types/flintgg';
 
 const { PHOTOS_CLIENT_SECRET } = process.env;
 

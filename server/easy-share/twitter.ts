@@ -24,6 +24,7 @@ import {
   easyshareSource,
   switchShareUser,
 } from './enums';
+import { flintId } from '~/types/flintgg';
 
 if (
   !(
